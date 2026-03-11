@@ -1,0 +1,14 @@
+export const scProps = {
+  camZ: 15,
+  groupX: 0,
+  groupY: 0,
+  rotX: 0,
+  rotY: 0,
+  rotZ: 0,
+  speedMul: 1.0,
+  radiusScale: 1.0,
+  formation: 0,
+  lerpSpeed: 3.0,
+  lightColor: '#ffb703',
+  lightIntensity: 10,
+};

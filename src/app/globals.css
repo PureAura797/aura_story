@@ -1,26 +1,361 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --accent: #5eead4;
+  --accent-deep: #14b8a6;
+  --sand: #d4a574;
+  --sand-dim: #a67c52;
+  --bg-deep: #0b0c0f;
+  --surface: #121418;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ===== Scroll Progress Bar ===== */
+#scroll-progress {
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep), #0d9488);
+  box-shadow: 0 0 8px rgba(94, 234, 212, 0.5), 0 0 20px rgba(94, 234, 212, 0.2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Premium icon badge treatment */
+.icon-badge {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+}
+
+.icon-badge::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, rgba(94, 234, 212, 0.12), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.icon-badge:hover::after {
+  opacity: 1;
+}
+
+.icon-badge:hover {
+  border-color: rgba(94, 234, 212, 0.15);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(94, 234, 212, 0.06);
+}
+
+/* Force pin-spacer to be transparent so page bg shows through */
+.pin-spacer {
+  background: transparent !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor,
+  .cursor-dot {
+    display: none !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-deep);
+}
+
+/* ===== Custom Cursor ===== */
+.custom-cursor {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hovering {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent);
+  background: rgba(45, 212, 191, 0.08);
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== Desktop Action / Nav Blur Override ===== */
+.nav-blur {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent), #1a1e24);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--accent), #2a2e34);
+}
+
+/* ===== Marquee ===== */
+.marquee-content {
+  animation: marquee 25s linear infinite;
+  display: inline-block;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== Bento Card Tilt & Glow ===== */
+.bento-card {
+  transition: transform 0.45s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.45s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.bento-card:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(45, 212, 191, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.bento-card .card-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.bento-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* ===== Noise Grain Overlay ===== */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* ===== Smooth Section Transitions ===== */
+section {
+  position: relative;
+}
+
+/* ===== Section Card Plate Extension ===== */
+.section-card {
+  overflow: visible !important;
+}
+
+.section-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300vh;
+  background: inherit;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  z-index: -1;
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5), 0 -5px 20px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.section-card--last::after {
+  display: none;
+}
+
+/* ===== Horizontal Panel Hover ===== */
+.horizontal-panel {
+  transition: transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease;
+}
+
+.horizontal-panel:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Icon Badges ===== */
+.bento-card .icon-badge {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.bento-card:hover .icon-badge {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(94, 234, 212, 0.12);
+}
+
+/* ===== Floating Animation ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ===== Glow Pulse for scroll indicator ===== */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 0 rgba(94, 234, 212, 0); }
+  50% { opacity: 0.7; box-shadow: 0 0 20px rgba(94, 234, 212, 0.2); }
+}
+
+.scroll-indicator {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ===== Emergency Button Pulse ===== */
+@keyframes emergency-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(94, 234, 212, 0); }
+}
+
+.emergency-btn {
+  animation: emergency-pulse 2.5s ease-in-out infinite;
+}
+
+/* ===== Review cards stagger animation ===== */
+.review-card {
+  transition: transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3), 0 0 20px rgba(94, 234, 212, 0.05);
+}
+
+/* ===== Coverage Map ===== */
+.pin-pulse {
+  animation: pin-pulse-anim 2.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.map-pin:nth-child(odd) .pin-pulse { animation-delay: 0.5s; }
+.map-pin:nth-child(3n) .pin-pulse { animation-delay: 1s; }
+
+@keyframes pin-pulse-anim {
+  0%, 100% { r: 10; opacity: 0.15; }
+  50% { r: 16; opacity: 0.05; }
+}
+
+.oblast-path {
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+}
+
+.moscow-circle {
+  transform-origin: center;
+}
+
+.map-stat {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.map-stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(45, 212, 191, 0.15);
+}
+
+/* ===== FAQ Accordion ===== */
+.faq-item:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.faq-item.active {
+  border-color: rgba(94, 234, 212, 0.15);
+  background: linear-gradient(135deg, #121418, #141820);
+}
+
+.faq-item.active .faq-icon {
+  background: rgba(94, 234, 212, 0.1);
+  border-color: rgba(94, 234, 212, 0.25);
+}
+
+.faq-item.active .faq-icon i,
+.faq-item.active .faq-icon svg {
+  color: var(--accent);
+  transform: rotate(45deg);
+}
+
+/* ===== Smooth page load ===== */
+body.loading {
+  overflow: hidden;
+}
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-deep);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-ring {
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Utils */
+.text-transparent.bg-clip-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

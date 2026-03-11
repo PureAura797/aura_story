@@ -1,65 +1,109 @@
-import Image from "next/image";
+import Navbar from "@/components/layout/Navbar";
+import Hero from "@/components/sections/Hero";
+import Services from "@/components/sections/Services";
+import Expertise from "@/components/sections/Expertise";
+import Process from "@/components/sections/Process";
+import Portfolio from "@/components/sections/Portfolio";
+import Equipment from "@/components/sections/Equipment";
+import Pricing from "@/components/sections/Pricing";
+import Reviews from "@/components/sections/Reviews";
+import FAQ from "@/components/sections/FAQ";
+import ContactForm from "@/components/sections/ContactForm";
+import Footer from "@/components/layout/Footer";
+import Scene from "@/components/canvas/Scene";
+import ScrollChoreography from "@/components/canvas/ScrollChoreography";
+import Preloader from "@/components/effects/Preloader";
+import ScrollProgress from "@/components/effects/ScrollProgress";
+import EmergencyButton from "@/components/ui/EmergencyButton";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <Preloader />
+      <ScrollProgress />
+      {/* Swiss grid line */}
+      <div className="fixed top-0 left-1/2 w-px h-screen bg-white/5 z-0 pointer-events-none transform -translate-x-1/2" />
+      
+      <Scene />
+      <ScrollChoreography />
+
+      <Navbar />
+
+      <main className="relative w-full z-10 text-white font-sans overflow-x-hidden">
+        {/* Sec 1: Hero */}
+        <section id="hero" className="h-screen w-full flex flex-col justify-center px-[10vw]">
+            <Hero />
+        </section>
+
+        {/* Sec 2: Services */}
+        <section id="services" className="min-h-screen w-full flex flex-col justify-center items-end text-right px-[10vw] py-24">
+            <div className="max-w-3xl pointer-events-auto">
+              <Services />
+            </div>
+        </section>
+
+        {/* Sec 3: Expertise */}
+        <section id="expertise" className="min-h-screen w-full flex flex-col justify-center items-start px-[10vw] py-24">
+            <div className="max-w-3xl pointer-events-auto">
+              <Expertise />
+            </div>
+        </section>
+
+        {/* Sec 4: Process */}
+        <section id="process" className="min-h-screen w-full flex flex-col justify-center items-start px-[10vw] py-24">
+            <div className="w-full pointer-events-auto">
+              <Process />
+            </div>
+        </section>
+
+        {/* Sec 5: Portfolio */}
+        <section id="portfolio" className="min-h-screen w-full flex flex-col justify-center items-end px-[10vw] py-24">
+            <div className="w-full max-w-4xl pointer-events-auto">
+              <Portfolio />
+            </div>
+        </section>
+
+        {/* Sec 6: Equipment */}
+        <section id="equipment" className="min-h-screen w-full flex flex-col justify-center items-start px-[10vw] py-24">
+            <div className="w-full max-w-4xl pointer-events-auto">
+              <Equipment />
+            </div>
+        </section>
+
+        {/* Sec 7: Pricing */}
+        <section id="pricing" className="min-h-screen w-full flex flex-col justify-center items-end px-[10vw] py-24">
+            <div className="max-w-4xl pointer-events-auto">
+              <Pricing />
+            </div>
+        </section>
+
+        {/* Sec 8: Reviews */}
+        <section id="reviews" className="min-h-screen w-full flex flex-col justify-center items-start px-[10vw] py-24">
+            <div className="w-full max-w-3xl pointer-events-auto">
+              <Reviews />
+            </div>
+        </section>
+
+        {/* Sec 9: FAQ */}
+        <section id="faq" className="min-h-screen w-full flex flex-col justify-center items-end px-[10vw] py-24">
+            <div className="w-full max-w-3xl pointer-events-auto">
+              <FAQ />
+            </div>
+        </section>
+
+        {/* Sec 10: Contact */}
+        <section id="contact" className="min-h-screen w-full flex flex-col justify-center items-start px-[10vw] py-24">
+            <div className="w-full max-w-2xl pointer-events-auto">
+              <ContactForm />
+            </div>
+        </section>
+
+        {/* Sec 11: Outro — spacing only */}
+        <section className="h-[20vh] w-full" />
       </main>
-    </div>
+
+      <EmergencyButton />
+      <Footer />
+    </>
   );
 }
