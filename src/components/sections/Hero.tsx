@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { PhoneCall } from "lucide-react";
+import { PhoneCall, ArrowRight } from "lucide-react";
+import AvailabilityPulse from "@/components/ui/AvailabilityPulse";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,10 +28,10 @@ export default function Hero() {
     <div ref={containerRef} className="relative w-full h-full flex flex-col justify-center items-start z-10 pointer-events-none">
       
       {/* USP headline */}
-      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[0.9] font-bold uppercase tracking-tighter text-white z-20 mix-blend-difference relative">
-        ПРОФЕССИОНАЛЬНАЯ
+      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[0.9] font-bold tracking-tighter text-white z-20 mix-blend-difference relative">
+        Профессиональная
         <br />
-        УБОРКА ПОСЛЕ ЧП<span style={{ color: "var(--accent)" }}>.</span>
+        уборка после ЧП
       </h1>
       
       {/* Service listing */}
@@ -45,25 +46,32 @@ export default function Hero() {
         <span>Лицензия СЭС</span>
       </div>
 
-      {/* CTA buttons */}
-      <div className="hero-reveal mt-12 md:mt-16 flex flex-col sm:flex-row gap-4 pointer-events-auto">
+      {/* Live availability pulse */}
+      <div className="hero-reveal mt-6 pointer-events-auto">
+        <AvailabilityPulse />
+      </div>
+
+      {/* CTA buttons — unified pill style */}
+      <div className="hero-reveal mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 pointer-events-auto">
+        {/* Primary — teal fill */}
         <a
           href="tel:+74951203456"
-          className="group w-full sm:w-auto px-8 py-5 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-neutral-200 transition-colors flex items-center justify-center gap-3"
+          aria-label="Экстренная связь — позвонить по телефону 8 495 120-34-56"
+          className="group w-full sm:w-auto px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] flex items-center justify-center gap-2.5 transition-all duration-300 hover:brightness-110 hover:scale-[1.02]"
+          style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-          </span>
-          <PhoneCall className="w-4 h-4" strokeWidth={1.5} />
+          <PhoneCall className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
           Экстренная связь
         </a>
-        <a
-          href="#process"
-          className="w-full sm:w-auto px-8 py-5 bg-transparent border border-white/20 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-colors text-center"
+        {/* Secondary — ghost border */}
+        <button
+          onClick={() => document.getElementById("process")?.scrollIntoView({ behavior: "smooth" })}
+          aria-label="Узнать порядок работы по дезинфекции помещений"
+          className="group w-full sm:w-auto px-7 py-3.5 rounded-full border border-white/20 text-white text-xs font-semibold uppercase tracking-[0.12em] hover:border-white/40 hover:bg-white/[0.04] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
         >
           Порядок работы
-        </a>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
+        </button>
       </div>
     </div>
   );

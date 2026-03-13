@@ -11,14 +11,14 @@ export default function ScrollChoreography() {
 
     const matchMedia = gsap.matchMedia();
 
-    // Initial state before preloader finishes
-    scProps.radiusScale = 0;
+    // Initial state: particles hidden until preloader finishes
+    scProps.entranceProgress = 0;
 
     const handlePreloaderComplete = () => {
       gsap.to(scProps, {
-        radiusScale: 1.0,
-        duration: 2.5,
-        ease: "elastic.out(1, 0.5)",
+        entranceProgress: 1,
+        duration: 2.0,
+        ease: "power3.out",
       });
     };
 

@@ -26,13 +26,13 @@ export default function ContactForm() {
     gsap.set(items, { y: 60, opacity: 0 });
 
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.08,
-          duration: 1.2,
+          stagger: 0.06,
+          duration: 0.5,
           ease: "power3.out",
         }),
       once: true,
@@ -105,7 +105,7 @@ export default function ContactForm() {
         <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter">Свяжитесь<br />с нами</h2>
       </div>
       <p className="contact-reveal text-sm text-neutral-500 font-light mb-16 max-w-md">
-        Круглосуточный диспетчерский центр. Ответ в течение 2 минут.
+        Оперативная связь с диспетчером. Перезвоним в течение 2 минут.
       </p>
 
       {/* Two glassmorphism panels */}
@@ -114,7 +114,7 @@ export default function ContactForm() {
         {/* Left: Contact info panel */}
         <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
           <p className="text-neutral-400 text-lg font-light leading-relaxed max-w-md mb-8">
-            Мы свяжемся с вами в течение 15 минут. Круглосуточно. Полная конфиденциальность.
+            Круглосуточный диспетчерский центр. Полная конфиденциальность.
           </p>
 
           <div className="flex flex-col gap-6 mb-8">
@@ -204,7 +204,8 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-5 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-neutral-200 transition-colors flex items-center justify-center gap-3 mt-4"
+                className="w-full py-4 rounded-full text-xs font-semibold uppercase tracking-[0.12em] flex items-center justify-center gap-3 mt-4 transition-all duration-300 hover:brightness-110 hover:scale-[1.01] disabled:opacity-50"
+                style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
               >
                 {loading ? (
                   <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">

@@ -65,10 +65,14 @@
 }
 
 body {
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-deep);
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), sans-serif;
 }
 
 /* ===== Custom Cursor ===== */
@@ -358,4 +362,37 @@ body.loading {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ===== Scrollbar Hide ===== */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== Story Ring Gradient ===== */
+.story-ring {
+  transition: transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease;
+}
+
+.story-ring:hover {
+  transform: scale(1.08);
+}
+
+/* ===== Scene Vignette Overlay ===== */
+.scene-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    transparent 0%,
+    rgba(11, 12, 15, 0.3) 55%,
+    rgba(11, 12, 15, 0.7) 80%,
+    rgba(11, 12, 15, 0.9) 100%
+  );
 }

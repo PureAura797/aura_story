@@ -7,6 +7,7 @@ export const scProps = {
   rotZ: 0,
   speedMul: 1.0,
   radiusScale: 1.0,
+  entranceProgress: 0,
   formation: 0,
   lerpSpeed: 3.0,
   lightColor: '#ffb703',

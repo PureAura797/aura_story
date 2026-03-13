@@ -5,6 +5,7 @@ import { Star } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import SectionCTA from "@/components/ui/SectionCTA";
 
 const reviews = [
   {
@@ -59,13 +60,13 @@ export default function Reviews() {
     const items = gsap.utils.toArray(".review-card") as HTMLElement[];
 
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
+          stagger: 0.06,
+          duration: 0.4,
           ease: "power2.out",
         }),
       once: true,
@@ -120,6 +121,8 @@ export default function Reviews() {
           </div>
         ))}
       </div>
+
+      <SectionCTA variant="form" label="Готовы довериться профессионалам? Оставьте заявку — ответим за 3 минуты." />
     </section>
   );
 }

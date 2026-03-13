@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import SectionCTA from "@/components/ui/SectionCTA";
 
 const projects = [
   {
@@ -49,13 +50,13 @@ export default function Portfolio() {
     const cards = gsap.utils.toArray(".portfolio-card") as HTMLElement[];
 
     ScrollTrigger.batch(cards, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
+          stagger: 0.06,
+          duration: 0.4,
           ease: "power2.out",
         }),
       once: true,
@@ -120,6 +121,8 @@ export default function Portfolio() {
           </div>
         ))}
       </div>
+
+      <SectionCTA variant="call" label="Похожая ситуация? Позвоните — оценим бесплатно и назовём точную стоимость." />
     </section>
   );
 }

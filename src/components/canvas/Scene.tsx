@@ -33,13 +33,6 @@ function DynamicLighting() {
 function CameraManager() {
   useFrame(({ camera }) => {
     camera.position.z = scProps.camZ;
-    
-    if (camera.position.z < 6) {
-      const darken = 1.0 - (6 - camera.position.z) / 6;
-      document.body.style.backgroundColor = `rgb(${42 * darken}, ${42 * darken}, ${42 * darken})`;
-    } else {
-      document.body.style.backgroundColor = '#171717';
-    }
   });
   return null;
 }
@@ -56,7 +49,7 @@ export default function Scene() {
       <Canvas dpr={[1, 2]} style={{ pointerEvents: 'auto' }}>
         <CameraManager />
         <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={45} near={0.1} far={100} />
-        <fog attach="fog" args={['#2a2a2a', 10, 30]} />
+        <fog attach="fog" args={['#0b0c0f', 12, 35]} />
         
         <ambientLight intensity={0.6} />
         <directionalLight position={[10, 10, 10]} intensity={3} />
@@ -67,6 +60,8 @@ export default function Scene() {
         </group>
         <TrafficStreaks />
       </Canvas>
+      {/* Vignette overlay for depth */}
+      <div className="scene-vignette" />
     </div>
   );
 }

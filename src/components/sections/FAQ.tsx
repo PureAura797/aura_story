@@ -42,13 +42,13 @@ export default function FAQ() {
     const items = gsap.utils.toArray(".faq-card") as HTMLElement[];
 
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.08,
-          duration: 1.2,
+          stagger: 0.06,
+          duration: 0.5,
           ease: "power3.out",
         }),
       once: true,
@@ -110,7 +110,7 @@ export default function FAQ() {
               aria-expanded={openIdx === idx}
               aria-controls={`faq-answer-${idx}`}
             >
-              <h3 className="text-lg md:text-xl font-bold uppercase tracking-tight pr-8 transition-colors duration-300" style={openIdx === idx ? { color: "var(--accent)" } : {}}>
+              <h3 className="text-lg md:text-xl font-bold tracking-tight pr-8 transition-colors duration-300" style={openIdx === idx ? { color: "var(--accent)" } : {}}>
                 {item.question}
               </h3>
               {openIdx === idx ? (

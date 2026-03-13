@@ -36,13 +36,13 @@ export default function Process() {
     const items = gsap.utils.toArray(".process-step") as HTMLElement[];
 
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
+          stagger: 0.06,
+          duration: 0.4,
           ease: "power2.out",
         }),
       once: true,
@@ -59,7 +59,7 @@ export default function Process() {
         От звонка до сдачи объекта — прозрачный протокол на каждом этапе.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {steps.map((step, idx) => (
           <div
             key={idx}
@@ -68,7 +68,7 @@ export default function Process() {
             <span className="text-5xl md:text-6xl font-bold text-white/[0.06] tracking-tighter block mb-6">
               {step.num}
             </span>
-            <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tighter mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">
+            <h3 className="text-xl md:text-2xl font-bold tracking-tighter mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">
               {step.title}
             </h3>
             <p className="text-neutral-500 text-sm leading-relaxed">

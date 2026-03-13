@@ -8,14 +8,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function EmergencyButton() {
   const btnRef = useRef<HTMLAnchorElement>(null);
   const [visible, setVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Watch for data-modal-open attribute changes
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setModalOpen(document.body.hasAttribute("data-modal-open"));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-modal-open"] });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Show button when Hero section is fully scrolled past
     const heroEl = document.querySelector("section") || document.querySelector("[data-section='hero']");
     if (!heroEl) {
-      // Fallback: show after scrolling 100vh
       const handleScroll = () => {
         setVisible(window.scrollY > window.innerHeight);
       };
@@ -35,9 +43,11 @@ export default function EmergencyButton() {
     };
   }, []);
 
+  const isShown = visible && !modalOpen;
+
   useEffect(() => {
     if (!btnRef.current) return;
-    if (visible) {
+    if (isShown) {
       gsap.fromTo(
         btnRef.current,
         { y: 20, opacity: 0, scale: 0.9 },
@@ -52,63 +62,38 @@ export default function EmergencyButton() {
         ease: "power2.in",
       });
     }
-  }, [visible]);
+  }, [isShown]);
 
   return (
-    <>
     <a
       ref={btnRef}
       href="tel:+74951203456"
-      className="emergency-btn fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 md:px-6 md:py-4 border border-white/10 bg-white/[0.06] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.1] hover:border-[rgba(94,234,212,0.3)] group"
-      style={{ opacity: 0, pointerEvents: visible ? "auto" : "none" }}
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-[rgba(94,234,212,0.2)] group"
+      style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"
     >
-      {/* Pulse ring */}
-      <span className="relative flex h-2.5 w-2.5 shrink-0">
+      {/* Teal dot — less aggressive than green ping */}
+      <span className="relative flex h-2 w-2 shrink-0">
         <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
           style={{ backgroundColor: "var(--accent)" }}
         />
         <span
-          className="relative inline-flex rounded-full h-2.5 w-2.5"
+          className="relative inline-flex rounded-full h-2 w-2"
           style={{ backgroundColor: "var(--accent)" }}
         />
       </span>
 
       <PhoneCall
-        className="w-4 h-4 group-hover:scale-110 transition-transform duration-300"
+        className="w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-300"
         strokeWidth={1.5}
         style={{ color: "var(--accent)" }}
       />
 
-      {/* Text hidden on mobile */}
-      <span className="hidden md:inline text-xs font-bold uppercase tracking-widest text-white">
-        Экстренный вызов
+      {/* Text — desktop only */}
+      <span className="hidden md:inline text-[10px] font-medium uppercase tracking-widest text-neutral-400 group-hover:text-white transition-colors">
+        Экстренная связь
       </span>
     </a>
-    
-    {/* Mobile Sticky CTA */}
-    <div 
-      className="fixed bottom-0 left-0 right-0 z-[9990] md:hidden transition-all duration-300"
-      style={{ 
-        transform: visible ? "translateY(0)" : "translateY(100%)",
-        opacity: visible ? 1 : 0,
-        pointerEvents: visible ? "auto" : "none"
-      }}
-    >
-      <div className="px-4 pb-5 pt-3">
-        <a
-          href="tel:+74951203456"
-          className="flex items-center justify-center gap-3 w-full py-4 px-6 bg-white text-black font-bold uppercase tracking-widest text-xs active:scale-[0.97] transition-transform duration-150"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: "var(--accent-deep)" }}></span>
-            <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: "var(--accent-deep)" }}></span>
-          </span>
-          Экстренная связь 24/7
-        </a>
-      </div>
-    </div>
-    </>
   );
 }

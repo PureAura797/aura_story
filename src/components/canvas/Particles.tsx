@@ -6,6 +6,18 @@ import * as THREE from 'three';
 import { scProps } from '@/lib/scrollProps';
 import { formations, PARTICLE_COUNT } from '@/lib/formations';
 
+// Pre-generate random scatter offsets for entrance animation
+const scatterOffsets: THREE.Vector3[] = [];
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  scatterOffsets.push(
+    new THREE.Vector3(
+      (Math.random() - 0.5) * 30,
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 15
+    )
+  );
+}
+
 export default function Particles() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -92,8 +104,12 @@ export default function Particles() {
       ? 1 + Math.sin(state.clock.elapsedTime * 3) * 0.15
       : 1;
 
-    const clampedDelta = Math.min(delta, 0.05); // prevent jumps on tab switch
+    const clampedDelta = Math.min(delta, 0.05);
     const lerpFactor = 1 - Math.exp(-lerpSpeed * clampedDelta);
+
+    // Entrance animation progress (0 = scattered/hidden, 1 = fully assembled)
+    const entrance = scProps.entranceProgress;
+    const particleScale = entrance; // blocks grow from 0 to 1
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       // Target position: lerp between two adjacent formations
@@ -106,23 +122,31 @@ export default function Particles() {
       currentPositions[i].y += (targetY - currentPositions[i].y) * lerpFactor;
       currentPositions[i].z += (targetZ - currentPositions[i].z) * lerpFactor;
 
+      // During entrance: add scatter offset that fades out
+      const scatterFade = 1 - entrance;
+      const px = currentPositions[i].x + scatterOffsets[i].x * scatterFade;
+      const py = currentPositions[i].y + scatterOffsets[i].y * scatterFade;
+      const pz = currentPositions[i].z + scatterOffsets[i].z * scatterFade;
+
       // Mouse repulsion
-      const dx = currentPositions[i].x - mouseWorld.x;
-      const dy = currentPositions[i].y - mouseWorld.y;
+      const dx = px - mouseWorld.x;
+      const dy = py - mouseWorld.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       const repulsionRadius = 4;
       
+      let finalX = px, finalY = py;
       if (dist < repulsionRadius && dist > 0.01) {
         const force = (1 - dist / repulsionRadius) * 1.5;
-        currentPositions[i].x += (dx / dist) * force * clampedDelta * 4;
-        currentPositions[i].y += (dy / dist) * force * clampedDelta * 4;
+        finalX += (dx / dist) * force * clampedDelta * 4;
+        finalY += (dy / dist) * force * clampedDelta * 4;
       }
 
-      // Apply position and rotation
-      dummy.position.copy(currentPositions[i]);
+      // Apply position, rotation, and entrance scale
+      dummy.position.set(finalX, finalY, pz);
       dummy.lookAt(0, 0, 0);
       dummy.rotateX(Math.PI / 2);
       dummy.rotateY(totalRotation);
+      dummy.scale.setScalar(particleScale);
       dummy.updateMatrix();
       meshRef.current.setMatrixAt(i, dummy.matrix);
     }

@@ -1,20 +1,47 @@
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Bebas_Neue } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
+const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin", "cyrillic-ext"], variable: "--font-body" });
+const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
 
 export const viewport: Viewport = {
   themeColor: "#0b0c0f",
 };
 
 export const metadata: Metadata = {
-  title: "PureAura | Профессиональная Дезинфекция и Биологическая Очистка в Москве 24/7",
-  description: "PureAura — профессиональная биологическая очистка и дезинфекция помещений в Москве и МО. Уборка после смерти, устранение запахов, инфекционный контроль. Конфиденциально, 24/7, выезд за 60 минут.",
-  keywords: "уборка после смерти москва, дезинфекция помещений, биологическая очистка, устранение запахов, уборка накопительства, экстренная уборка 24/7, дезинфекция после смерти",
-  robots: "index, follow",
+  title: "PureAura | Уборка после смерти в Москве — Дезинфекция помещений 24/7",
+  description: "PureAura — профессиональная уборка после смерти, дезинфекция и биологическая очистка помещений в Москве и МО. Устранение трупного запаха, уборка при накопительстве, инфекционный контроль. Выезд за 60 минут, конфиденциально, круглосуточно. АТФ-протокол, NDA, лицензия СЭС.",
+  keywords: [
+    "уборка после смерти москва",
+    "уборка после смерти цена",
+    "дезинфекция помещений москва",
+    "биологическая очистка квартиры",
+    "устранение трупного запаха",
+    "уборка после трупа москва",
+    "дезинфекция квартиры после смерти",
+    "уборка при накопительстве москва",
+    "уборка квартиры синдром плюшкина",
+    "устранение запахов в квартире москва",
+    "дезинфекция после затопления",
+    "уборка после пожара москва",
+    "озонирование помещений москва",
+    "инфекционный контроль помещений",
+    "экстренная уборка 24/7 москва",
+    "дезинсекция квартиры москва",
+    "утилизация биоотходов москва",
+    "атф тестирование помещений",
+    "профессиональная дезинфекция москва цена",
+  ].join(", "),
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
   alternates: {
     canonical: "https://pureaura.ru/",
   },
@@ -22,94 +49,249 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ru_RU",
     siteName: "PureAura",
-    title: "PureAura — Профессиональная Биологическая Очистка 24/7",
-    description: "Конфиденциальная дезинфекция и биологическая очистка помещений в Москве. Выезд за 60 минут, сертифицированные препараты, NDA.",
+    title: "PureAura — Уборка после смерти и Дезинфекция помещений в Москве 24/7",
+    description: "Профессиональная биологическая очистка и дезинфекция помещений. Уборка после смерти, устранение запахов, расхламление. Выезд за 60 минут, NDA, АТФ-протокол.",
     url: "https://pureaura.ru/",
     images: [
       {
-        url: "https://pureaura.ru/og-image.jpg",
+        url: "https://pureaura.ru/og-image.png",
         width: 1200,
         height: 630,
-        alt: "PureAura",
+        alt: "PureAura — Профессиональная дезинфекция и биологическая очистка помещений в Москве",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PureAura — Профессиональная Биологическая Очистка 24/7",
-    description: "Конфиденциальная дезинфекция и биологическая очистка помещений в Москве. Выезд за 60 минут.",
-    images: ["https://pureaura.ru/og-image.jpg"],
+    title: "PureAura — Уборка после смерти в Москве 24/7",
+    description: "Профессиональная биологическая очистка: уборка после смерти, устранение запахов, дезинфекция. Выезд за 60 минут.",
+    images: ["https://pureaura.ru/og-image.png"],
+  },
+  other: {
+    "geo.region": "RU-MOW",
+    "geo.placename": "Москва",
+    "geo.position": "55.7558;37.6173",
+    "ICBM": "55.7558, 37.6173",
   },
 };
 
-const jsonLdLocalBusiness = {
+// ─── JSON-LD: LocalBusiness + Service ────────────────────────────
+const jsonLdOrganization = {
   "@context": "https://schema.org",
-  "@graph": [
+  "@type": "LocalBusiness",
+  "@id": "https://pureaura.ru/#organization",
+  "name": "PureAura",
+  "alternateName": "ПьюрАура",
+  "description": "Профессиональная биологическая очистка и дезинфекция помещений в Москве и Московской области. Уборка после смерти, устранение запахов, расхламление, инфекционный контроль.",
+  "url": "https://pureaura.ru",
+  "telephone": "+7-495-120-34-56",
+  "email": "help@auraremediation.com",
+  "image": "https://pureaura.ru/og-image.png",
+  "logo": "https://pureaura.ru/logo.svg",
+  "priceRange": "от 3 000 ₽",
+  "currenciesAccepted": "RUB",
+  "paymentAccepted": "Наличные, Безналичный расчёт, Карта",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Москва",
+    "addressRegion": "Московская область",
+    "addressCountry": "RU",
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 55.7558,
+    "longitude": 37.6173,
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Москва" },
+    { "@type": "State", "name": "Московская область" },
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59",
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "bestRating": "5",
+    "ratingCount": "127",
+    "reviewCount": "94",
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Услуги биологической очистки и дезинфекции",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Уборка после смерти",
+          "description": "Полный демонтаж загрязнённых материалов, STP-обработка, озонация. Протокол АТФ-тестирования. Площадь до 120 кв.м.",
+        },
+        "priceCurrency": "RUB",
+        "price": "15000",
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "price": "15000",
+          "priceCurrency": "RUB",
+          "valueAddedTaxIncluded": true,
+        },
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Устранение запахов",
+          "description": "Диагностика источника, механическая зачистка, обработка активным гидроксилом. Гарантия 30 дней.",
+        },
+        "priceCurrency": "RUB",
+        "price": "10000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Расхламление / Уборка при накопительстве",
+          "description": "Сортировка, вывоз до 200 м³, дезинсекция, дезинфекция. Поиск ценных вещей по согласованию.",
+        },
+        "priceCurrency": "RUB",
+        "price": "25000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Инфекционный контроль",
+          "description": "Протокол после затопления, канализационного прорыва, пожара. Стандарты СанПиН 3.3686-21.",
+        },
+        "priceCurrency": "RUB",
+        "price": "12000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Дезинсекция",
+          "description": "Уничтожение тараканов, клопов, блох. Барьерная обработка с гарантией.",
+        },
+        "priceCurrency": "RUB",
+        "price": "5000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Озонация воздуха",
+          "description": "Глубокое обеззараживание воздуха и поверхностей промышленным озонатором.",
+        },
+        "priceCurrency": "RUB",
+        "price": "3000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Уборка после пожара",
+          "description": "Удаление копоти, сажи, запаха гари. Демонтаж повреждённых покрытий, химическая нейтрализация.",
+        },
+        "priceCurrency": "RUB",
+        "price": "20000",
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Вывоз мусора",
+          "description": "Крупногабаритный мусор, строительные отходы, старая мебель. Погрузка и утилизация.",
+        },
+        "priceCurrency": "RUB",
+        "price": "8000",
+      },
+    ],
+  },
+};
+
+// ─── JSON-LD: FAQPage ────────────────────────────────────────────
+const jsonLdFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@type": "LocalBusiness",
-      "@id": "https://pureaura.ru/#organization",
-      "name": "PureAura",
-      "description": "Профессиональная биологическая очистка и дезинфекция помещений в Москве и Московской области",
-      "url": "https://pureaura.ru",
-      "telephone": "+7-495-120-34-56",
-      "email": "help@auraremediation.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Москва",
-        "addressCountry": "RU"
+      "@type": "Question",
+      "name": "Сколько длится обработка помещения после смерти?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Зависит от площади и типа загрязнения. Очаговая обработка (до 5 кв.м) — 2–4 часа. Полный протокол (квартира) — 6–12 часов. Сложные случаи (накопительство, длительное разложение) — до 2 дней.",
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 55.7558,
-        "longitude": 37.6173
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "00:00",
-        "closes": "23:59"
-      }
     },
     {
-      "@type": "Service",
-      "serviceType": "Биологическая очистка / Дезинфекция",
-      "provider": { "@id": "https://pureaura.ru/#organization" },
-      "areaServed": {
-        "@type": "State",
-        "name": "Москва и Московская область"
+      "@type": "Question",
+      "name": "Безопасно ли находиться в квартире после дезинфекции?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. После завершения протокола помещение проходит АТФ-тестирование. Объект не сдаётся до достижения безопасных показателей. Протокол чистоты предоставляется в письменном виде.",
       },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Наши услуги",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Уборка после смерти",
-              "description": "Специализированная уборка и дезинфекция помещений после смерти человека."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Устранение запахов",
-              "description": "Удаление стойких биологических и химических запахов методом озонирования и сухим туманом."
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Уборка при накопительстве",
-              "description": "Помощь при синдроме Плюшкина: расчистка, сортировка и дезинфекция помещений."
-            }
-          }
-        ]
-      }
-    }
-  ]
+    },
+    {
+      "@type": "Question",
+      "name": "Работаете ли вы с юридическими лицами?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Управляющие компании, страховые компании, риелторские агентства — работаем по договору с полным комплектом актов и протоколов.",
+      },
+    },
+    {
+      "@type": "Question",
+      "name": "Что делать с вещами умершего при уборке?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Сортируем вещи на безопасные и контаминированные. Безопасные передаём вам или по доверенности. Контаминированные утилизируем по классу «Б» с документальным оформлением.",
+      },
+    },
+    {
+      "@type": "Question",
+      "name": "Выезжаете за МКАД для уборки и дезинфекции?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Москва и Московская область. Выезд за МКАД — +500 ₽/км от МКАД.",
+      },
+    },
+    {
+      "@type": "Question",
+      "name": "Нужно ли присутствовать при уборке после смерти?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Нет. Работаем по доверенности или с представителем (управляющая компания, риелтор, сосед). Фотоотчёт и протокол отправляем дистанционно.",
+      },
+    },
+  ],
+};
+
+// ─── JSON-LD: WebSite (enables sitelinks search) ────────────────
+const jsonLdWebSite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "PureAura",
+  "url": "https://pureaura.ru",
+  "description": "Профессиональная уборка после смерти, дезинфекция и биологическая очистка помещений в Москве 24/7",
+  "publisher": { "@id": "https://pureaura.ru/#organization" },
+};
+
+// ─── JSON-LD: BreadcrumbList ─────────────────────────────────────
+const jsonLdBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://pureaura.ru",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -118,16 +300,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`dark ${inter.variable}`}>
+    <html lang="ru" className={`dark ${plusJakarta.variable} ${bebasNeue.variable}`}>
       <head>
         <link
           rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230b0c0f'/><circle cx='50' cy='50' r='30' fill='none' stroke='%232dd4bf' stroke-width='2'/><circle cx='50' cy='38' r='6' fill='%232dd4bf'/><path d='M44 48 Q50 65 56 48' fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round'/></svg>"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b0c0f'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%232dd4bf' stroke-width='2'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232dd4bf'/%3E%3Cpath d='M44 48 Q50 65 56 48' fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"
           type="image/svg+xml"
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFAQ) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
         />
       </head>
       <body className="bg-[#0b0c0f] text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">

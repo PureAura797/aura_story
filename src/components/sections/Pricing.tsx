@@ -72,13 +72,13 @@ export default function Pricing() {
     const items = gsap.utils.toArray(".pricing-card") as HTMLElement[];
     
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.05,
-          duration: 0.6,
+          stagger: 0.04,
+          duration: 0.4,
           ease: "power2.out",
         }),
       once: true,
@@ -102,7 +102,7 @@ export default function Pricing() {
             className="pricing-card opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500 flex flex-col"
           >
             <div className="flex items-center gap-3 mb-2">
-              <h3 className="text-sm font-bold uppercase tracking-tight group-hover:text-[var(--accent)] transition-colors duration-500">
+              <h3 className="text-sm font-bold tracking-tight group-hover:text-[var(--accent)] transition-colors duration-500">
                 {plan.name}
               </h3>
             </div>

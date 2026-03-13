@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { PhoneCall } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -33,13 +32,13 @@ export default function Expertise() {
     const items = gsap.utils.toArray(".expertise-item") as HTMLElement[];
     
     ScrollTrigger.batch(items, {
-      start: "top 85%",
+      start: "top 90%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,
           opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
+          stagger: 0.06,
+          duration: 0.4,
           ease: "power2.out",
         }),
       once: true,
@@ -62,7 +61,7 @@ export default function Expertise() {
             key={idx} 
             className="expertise-item opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500"
           >
-            <h3 className="text-xl md:text-2xl font-bold uppercase tracking-tighter mb-4 transition-colors duration-500" style={{ color: "var(--sand-dim)" }}>
+            <h3 className="text-xl md:text-2xl font-bold tracking-tighter mb-4 transition-colors duration-500" style={{ color: "var(--sand-dim)" }}>
               {item.title}
             </h3>
             <p className="text-neutral-500 text-sm leading-relaxed">
@@ -72,18 +71,36 @@ export default function Expertise() {
         ))}
       </div>
 
-      {/* Conclusion CTA */}
-      <div className="expertise-item opacity-0 translate-y-10 mt-8 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 w-full max-w-3xl">
-        <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-          Каждый выезд: герметизация → зачистка → дезинфекция → АТФ-контроль → протокол чистоты.
-        </p>
-        <a
-          href="tel:+74951203456"
-          className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-neutral-200 transition-colors"
-        >
-          <PhoneCall className="w-4 h-4" strokeWidth={1.5} />
-          Бесплатная консультация
-        </a>
+      {/* Conclusion CTA — enhanced layout */}
+      <div className="expertise-item opacity-0 translate-y-10 mt-8 border border-white/10 bg-white/[0.03] backdrop-blur-sm w-full max-w-3xl overflow-hidden">
+        {/* Process chain — top bar */}
+        <div className="flex flex-wrap gap-2 px-8 pt-8 pb-4">
+          {["Герметизация", "Зачистка", "Дезинфекция", "АТФ-контроль", "Протокол"].map((step, i) => (
+            <span key={i} className="flex items-center gap-2">
+              <span
+                className="px-3 py-1.5 text-[10px] tracking-[0.1em] font-medium border border-white/10 bg-white/[0.03]"
+                style={{ color: i === 4 ? "var(--accent)" : "var(--sand-dim)" }}
+              >
+                {step}
+              </span>
+              {i < 4 && <span className="text-neutral-700 text-xs">→</span>}
+            </span>
+          ))}
+        </div>
+        
+        {/* CTA area */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-8 pb-8 pt-4 border-t border-white/5">
+          <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
+            Каждый выезд — по единому протоколу. Никакой импровизации на объекте.
+          </p>
+          <a
+            href="tel:+74951203456"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 hover:brightness-110 hover:scale-[1.02] shrink-0"
+            style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+          >
+            Бесплатная консультация
+          </a>
+        </div>
       </div>
     </section>
   );

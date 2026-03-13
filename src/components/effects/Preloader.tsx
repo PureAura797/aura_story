@@ -2,25 +2,39 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import Logo from "@/components/ui/Logo";
 
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const subtitleRef = useRef<HTMLDivElement>(null);
+  const waveTealRef = useRef<HTMLDivElement>(null);
+  const waveSandRef = useRef<HTMLDivElement>(null);
+  const waveBlackRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    if (!containerRef.current || !logoRef.current || !progressRef.current || !subtitleRef.current) return;
+    if (
+      !containerRef.current ||
+      !logoRef.current ||
+      !waveTealRef.current ||
+      !waveSandRef.current ||
+      !waveBlackRef.current ||
+      !counterRef.current
+    )
+      return;
 
     document.body.style.overflow = "hidden";
 
-    const letters = logoRef.current.querySelectorAll(".preloader-letter");
-
     // Initial states
-    gsap.set(letters, { y: 80, opacity: 0, rotateX: 90 });
-    gsap.set(progressRef.current, { scaleX: 0, transformOrigin: "left center" });
-    gsap.set(subtitleRef.current, { y: 20, opacity: 0 });
+    gsap.set(logoRef.current, { scale: 0.9, opacity: 0 });
+    gsap.set([waveTealRef.current, waveSandRef.current, waveBlackRef.current], {
+      scaleY: 0,
+      transformOrigin: "bottom center",
+    });
+    gsap.set(counterRef.current, { opacity: 0 });
+
+    const counter = { value: 0 };
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -30,51 +44,116 @@ export default function Preloader() {
       },
     });
 
-    // 1. Letters stagger in
-    tl.to(letters, {
-      y: 0,
+    // 1. Logo fade in
+    tl.to(logoRef.current, {
+      scale: 1,
       opacity: 1,
-      rotateX: 0,
       duration: 0.8,
-      stagger: 0.06,
-      ease: "power4.out",
+      ease: "power3.out",
     });
 
-    // 2. Progress line fills
-    tl.to(progressRef.current, {
-      scaleX: 1,
-      duration: 1.2,
-      ease: "power2.inOut",
-    }, "-=0.3");
+    // Counter appears
+    tl.to(
+      counterRef.current,
+      {
+        opacity: 1,
+        duration: 0.3,
+      },
+      "-=0.3"
+    );
 
-    // 3. Subtitle fades in
-    tl.to(subtitleRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.6,
-      ease: "power3.out",
-    }, "-=0.5");
+    // 2. Teal wave + counter 0→33%
+    tl.to(
+      waveTealRef.current,
+      {
+        scaleY: 1,
+        duration: 0.3,
+        ease: "power2.inOut",
+      },
+      "+=0.08"
+    );
+    tl.to(
+      counter,
+      {
+        value: 33,
+        duration: 0.3,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          if (counterRef.current) {
+            counterRef.current.textContent = `${Math.round(counter.value)}%`;
+          }
+        },
+      },
+      "<"
+    );
 
-    // 4. Hold
-    tl.to({}, { duration: 0.4 });
+    // 3. Sand wave + counter 34→66%  (pause so teal is visible)
+    tl.to(
+      waveSandRef.current,
+      {
+        scaleY: 1,
+        duration: 0.3,
+        ease: "power2.inOut",
+      },
+      "+=0.08"
+    );
+    tl.to(
+      counter,
+      {
+        value: 66,
+        duration: 0.3,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          if (counterRef.current) {
+            counterRef.current.textContent = `${Math.round(counter.value)}%`;
+          }
+        },
+      },
+      "<"
+    );
 
-    // 5. Everything exits upward
+    // 4. Black wave + counter 67→100% (pause so sand is visible)
+    tl.to(
+      waveBlackRef.current,
+      {
+        scaleY: 1,
+        duration: 0.3,
+        ease: "power2.inOut",
+      },
+      "+=0.08"
+    );
+    tl.to(
+      counter,
+      {
+        value: 100,
+        duration: 0.3,
+        ease: "power2.inOut",
+        onUpdate: () => {
+          if (counterRef.current) {
+            counterRef.current.textContent = `${Math.round(counter.value)}%`;
+          }
+        },
+      },
+      "<"
+    );
+
+    // 5. Hold
+    tl.to({}, { duration: 0.08 });
+
+    // 6. Exit — everything flies up
     tl.to(containerRef.current, {
       y: "-100%",
       duration: 1,
       ease: "expo.inOut",
     });
-
   }, []);
 
   if (isComplete) return null;
 
-  const logoText = "PUREAURA";
-
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center"
       style={{ backgroundColor: "var(--bg-deep)" }}
     >
       {/* Subtle grid lines */}
@@ -84,42 +163,40 @@ export default function Preloader() {
         <div className="absolute left-3/4 top-0 w-px h-full bg-white" />
       </div>
 
-      {/* Logo */}
+      {/* Logo — mix-blend-difference for automatic color inversion */}
       <div
         ref={logoRef}
-        className="relative z-10 flex overflow-hidden"
-        style={{ perspective: "600px" }}
+        className="relative z-20"
+        style={{ mixBlendMode: "difference" }}
       >
-        {logoText.split("").map((char, i) => (
-          <span
-            key={i}
-            className="preloader-letter inline-block text-5xl md:text-8xl font-bold uppercase tracking-tighter text-white"
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            {char}
-          </span>
-        ))}
+        <Logo size="lg" className="text-white" />
       </div>
 
-      {/* Progress line */}
-      <div className="relative z-10 w-48 md:w-64 h-px mt-8 bg-white/10 overflow-hidden">
-        <div
-          ref={progressRef}
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(90deg, var(--accent), var(--accent-deep), #0d9488)",
-            boxShadow: "0 0 12px rgba(94, 234, 212, 0.6)",
-          }}
-        />
-      </div>
-
-      {/* Subtitle */}
+      {/* Color waves — stack bottom to top */}
       <div
-        ref={subtitleRef}
-        className="relative z-10 text-xs md:text-sm tracking-[0.3em] uppercase text-neutral-500 mt-6 font-medium"
+        ref={waveTealRef}
+        className="absolute inset-0 z-[1]"
+        style={{ backgroundColor: "#5eead4" }}
+      />
+      <div
+        ref={waveSandRef}
+        className="absolute inset-0 z-[2]"
+        style={{ backgroundColor: "#d4a574" }}
+      />
+      <div
+        ref={waveBlackRef}
+        className="absolute inset-0 z-[3]"
+        style={{ backgroundColor: "var(--bg-deep)" }}
+      />
+
+      {/* Percentage counter — bottom right, monospace */}
+      <span
+        ref={counterRef}
+        className="absolute bottom-8 right-8 z-30 text-xs tracking-[0.15em] text-neutral-500 font-mono"
+        style={{ mixBlendMode: "difference" }}
       >
-        Профессиональная уборка
-      </div>
+        0%
+      </span>
     </div>
   );
 }
