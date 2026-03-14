@@ -4,11 +4,13 @@ import { useRef, useState, useEffect } from "react";
 import { PhoneCall } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function EmergencyButton() {
   const btnRef = useRef<HTMLAnchorElement>(null);
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   // Watch for data-modal-open attribute changes
   useEffect(() => {
@@ -68,7 +70,7 @@ export default function EmergencyButton() {
     <a
       ref={btnRef}
       href="tel:+74951203456"
-      className="fixed bottom-14 right-4 md:bottom-6 md:right-6 z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
+      className="fixed bottom-[72px] right-4 lg:bottom-6 lg:right-6 z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"
     >
@@ -89,7 +91,7 @@ export default function EmergencyButton() {
 
       {/* Text — desktop only */}
       <span className="hidden md:inline text-[10px] font-medium uppercase tracking-widest text-neutral-400 group-hover:text-white transition-colors">
-        Экстренная связь
+        {t("emergency.label")}
       </span>
     </a>
   );

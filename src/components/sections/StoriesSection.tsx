@@ -61,7 +61,7 @@ export default function StoriesSection() {
     const items = gsap.utils.toArray(".story-item") as HTMLElement[];
     gsap.set(items, { y: 20, opacity: 0 });
     ScrollTrigger.batch(items, {
-      start: "top 92%",
+      start: "top 98%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,

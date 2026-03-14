@@ -15,14 +15,15 @@ export default function Equipment() {
   const { t } = useTranslation();
 
   const equipment = [
-    { image: "/equipment/ozone.png", specs: "20 г/ч", color: "#5eead4" },
-    { image: "/equipment/hydroxyl.png", specs: "PCO + UV-C", color: "#38bdf8" },
-    { image: "/equipment/fogger.png", specs: "5L / 800W", color: "#d4a574" },
-    { image: "/equipment/atp.png", specs: "15 сек", color: "#a78bfa" },
-    { image: "/equipment/dehumidifier.png", specs: "70 л/сут", color: "#fb7185" },
-    { image: "/equipment/ppe.png", specs: "класс 3", color: "#14b8a6" },
+    { image: "/equipment/ozone.png", color: "#5eead4" },
+    { image: "/equipment/hydroxyl.png", color: "#38bdf8" },
+    { image: "/equipment/fogger.png", color: "#d4a574" },
+    { image: "/equipment/atp.png", color: "#a78bfa" },
+    { image: "/equipment/dehumidifier.png", color: "#fb7185" },
+    { image: "/equipment/ppe.png", color: "#14b8a6" },
   ].map((item, i) => ({
     ...item,
+    specs: t(`equipment.${i + 1}.specs`),
     name: t(`equipment.${i + 1}.name`),
     purpose: t(`equipment.${i + 1}.purpose`),
     tag: t(`equipment.${i + 1}.tag`),
@@ -36,7 +37,7 @@ export default function Equipment() {
     const cards = gsap.utils.toArray(".equip-card") as HTMLElement[];
     gsap.set(cards, { y: 40, opacity: 0, scale: 0.95 });
     ScrollTrigger.batch(cards, {
-      start: "top 92%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }),
       once: true,
     });

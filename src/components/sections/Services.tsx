@@ -25,7 +25,7 @@ export default function Services() {
     gsap.set(cards, { y: 30, opacity: 0 });
     
     ScrollTrigger.batch(cards, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) =>
         gsap.to(batch, {
           y: 0,

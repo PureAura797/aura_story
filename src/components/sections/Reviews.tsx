@@ -8,26 +8,25 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SectionCTA from "@/components/ui/SectionCTA";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-/* Reviews data stays as-is — names/dates/text are proper nouns + real content */
-const reviews = [
-  { name: "Андрей М.", date: "Февраль 2026", serviceKey: "pricing.1.name", text: "Обратились после смерти отца. Квартира была в тяжёлом состоянии 3 недели. Бригада приехала через 40 минут, работали 10 часов. Получили протокол с АТФ-тестами. Запаха нет." },
-  { name: "Ольга К.", date: "Январь 2026", serviceKey: "pricing.2.name", text: "Купили квартиру, где предыдущий владелец скончался. Три клининга не помогли. PureAura нашли источник в стяжке, демонтировали, обработали. Гарантия 30 дней — запах не вернулся." },
-  { name: "УК «Домсервис»", date: "Декабрь 2025", serviceKey: "pricing.4.name", text: "Прорыв канализации на первом этаже. Затопило подвал и два помещения. Выполнили полный протокол за 12 часов. Акты для страховой предоставили в тот же день." },
-  { name: "Сергей В.", date: "Ноябрь 2025", serviceKey: "pricing.3.name", text: "Нужно было подготовить «бабушкину» квартиру к продаже. Объем мусора был колоссальный. Ребята за два дня вывезли всё, отчистили полы до бетона и устранили едкий запах. Очень профессионально." },
-  { name: "Марина Т.", date: "Сентябрь 2025", serviceKey: "pricing.7.name", text: "Сгорела кухня. Вся квартира была в черной саже и копоти. Мастера демонтировали обожженные элементы и провели химическую отмывку со спецрастворами. Ни следа гари не осталось." },
-  { name: "ООО «Логистика Плюс»", date: "Август 2025", serviceKey: "pricing.5.name", text: "Заказывали санитарную обработку склада площадью 800 кв.м. Все сделано быстро, по нормам Роспотребнадзора, предоставили договор и акты выполненных работ. Будем сотрудничать на постоянной основе." },
-  { name: "Елена Д.", date: "Июнь 2025", serviceKey: "pricing.5.name", text: "Безуспешно боролись с клопами 3 месяца своими силами. Обратились в PureAura — приехали ночью (!), поставили барьер, все сделали конфиденциально. Спим спокойно уже полгода." },
-];
-
 export default function Reviews() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+
+  const reviews = [
+    { nameKey: "reviews.1.name", dateKey: "reviews.1.date", serviceKey: "pricing.1.name", textKey: "reviews.1.text" },
+    { nameKey: "reviews.2.name", dateKey: "reviews.2.date", serviceKey: "pricing.2.name", textKey: "reviews.2.text" },
+    { nameKey: "reviews.3.name", dateKey: "reviews.3.date", serviceKey: "pricing.4.name", textKey: "reviews.3.text" },
+    { nameKey: "reviews.4.name", dateKey: "reviews.4.date", serviceKey: "pricing.3.name", textKey: "reviews.4.text" },
+    { nameKey: "reviews.5.name", dateKey: "reviews.5.date", serviceKey: "pricing.7.name", textKey: "reviews.5.text" },
+    { nameKey: "reviews.6.name", dateKey: "reviews.6.date", serviceKey: "pricing.5.name", textKey: "reviews.6.text" },
+    { nameKey: "reviews.7.name", dateKey: "reviews.7.date", serviceKey: "pricing.5.name", textKey: "reviews.7.text" },
+  ];
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     const items = gsap.utils.toArray(".review-card") as HTMLElement[];
     ScrollTrigger.batch(items, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
       once: true,
     });
@@ -46,14 +45,14 @@ export default function Reviews() {
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">4.9</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">Яндекс</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_yandex")}</span>
           </div>
         </div>
         <div className="border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex items-center gap-4">
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">5.0</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">Авито</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_avito")}</span>
           </div>
         </div>
       </div>
@@ -63,12 +62,12 @@ export default function Reviews() {
           <div key={idx} className="review-card opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-white font-bold text-sm">{review.name}</span>
+                <span className="text-white font-bold text-sm">{t(review.nameKey)}</span>
                 <span className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{t(review.serviceKey)}</span>
               </div>
-              <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600">{review.date}</span>
+              <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600">{t(review.dateKey)}</span>
             </div>
-            <p className="text-neutral-400 text-sm leading-relaxed">«{review.text}»</p>
+            <p className="text-neutral-400 text-sm leading-relaxed">«{t(review.textKey)}»</p>
           </div>
         ))}
       </div>

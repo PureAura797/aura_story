@@ -22,7 +22,7 @@ export default function FAQ() {
     const items = gsap.utils.toArray(".faq-card") as HTMLElement[];
 
     ScrollTrigger.batch(items, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) =>
         gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: "power3.out" }),
       once: true,

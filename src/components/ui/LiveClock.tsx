@@ -4,10 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { Clock } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function LiveClock() {
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const { t } = useTranslation();
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const clockRef = useRef<HTMLDivElement>(null);
@@ -86,15 +88,15 @@ export default function LiveClock() {
   return (
     <div
       ref={clockRef}
-      className="fixed z-50 border-white/10 bg-white/[0.04] backdrop-blur-xl
-        bottom-0 left-0 right-0 h-11 flex items-center justify-center gap-3 px-5 border-t border-x-0 border-b-0
-        md:bottom-6 md:left-1/2 md:-translate-x-1/2 md:right-auto md:h-12 md:border md:w-auto"
+      className="fixed z-50 border border-white/10 bg-white/[0.04] backdrop-blur-xl
+        bottom-4 left-4 right-4 h-11 flex items-center justify-center gap-3 px-5
+        lg:bottom-6 lg:left-1/2 lg:-translate-x-1/2 lg:right-auto lg:h-12 lg:w-auto"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Текущие дата и время"
     >
-      {/* "СЕЙЧАС" label */}
+      {/* "Now" label */}
       <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-neutral-500">
-        Сейчас
+        {t("bottom.now")}
       </span>
 
       {/* Separator */}

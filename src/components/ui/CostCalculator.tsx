@@ -61,7 +61,7 @@ export default function CostCalculator() {
 
   useEffect(() => {
     if (!containerRef.current) return;
-    gsap.fromTo(containerRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", scrollTrigger: { trigger: containerRef.current, start: "top 90%", once: true } });
+    gsap.fromTo(containerRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", scrollTrigger: { trigger: containerRef.current, start: "top 98%", once: true } });
   }, []);
 
   return (

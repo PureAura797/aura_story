@@ -3,22 +3,13 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-
-const badges = [
-  "Лицензия СЭС",
-  "NDA-договор",
-  "1 200+ объектов",
-  "4.9 ★ на Яндекс",
-  "Оплата после работ",
-  "Гарантия 30 дней",
-  "Выезд за 60 минут",
-  "Работаем 24/7",
-  "Сертифицированные препараты",
-  "АТФ-протокол чистоты",
-];
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function TrustMarquee() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
+  const badges = Array.from({ length: 10 }, (_, i) => t(`marquee.${i + 1}`));
 
   useGSAP(() => {
     if (!trackRef.current) return;

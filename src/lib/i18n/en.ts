@@ -285,6 +285,91 @@ const en: Record<string, string> = {
 
   // ═══ Language ═══
   "lang.switch": "RU",
+
+  // ═══ Trust Marquee ═══
+  "marquee.1": "SES Licensed",
+  "marquee.2": "NDA Agreement",
+  "marquee.3": "1,200+ Sites",
+  "marquee.4": "4.9 ★ on Yandex",
+  "marquee.5": "Pay After Completion",
+  "marquee.6": "30-Day Guarantee",
+  "marquee.7": "60-Min Response",
+  "marquee.8": "24/7 Operation",
+  "marquee.9": "Certified Chemicals",
+  "marquee.10": "ATP Cleanliness Protocol",
+
+  // ═══ Team experience ═══
+  "team.1.exp_value": "12 yrs",
+  "team.2.exp_value": "8 yrs",
+  "team.3.exp_value": "6 yrs",
+  "team.4.exp_value": "5 yrs",
+  "team.5.exp_value": "10 yrs",
+  "team.6.exp_value": "7 yrs",
+
+  // ═══ Portfolio metrics ═══
+  "portfolio.1.area": "48 m²",
+  "portfolio.1.time": "8 hours",
+  "portfolio.2.area": "72 m²",
+  "portfolio.2.time": "2 days",
+  "portfolio.3.area": "95 m²",
+  "portfolio.3.time": "6 hours",
+  "portfolio.4.area": "110 m²",
+  "portfolio.4.time": "10 hours",
+
+  // ═══ Equipment specs ═══
+  "equipment.1.specs": "20 g/hr",
+  "equipment.2.specs": "PCO + UV-C",
+  "equipment.3.specs": "5L / 800W",
+  "equipment.4.specs": "15 sec",
+  "equipment.5.specs": "70 L/day",
+  "equipment.6.specs": "Class 3",
+
+  // ═══ Reviews content ═══
+  "reviews.platform_yandex": "Yandex",
+  "reviews.platform_avito": "Avito",
+  "reviews.1.name": "Andrey M.",
+  "reviews.1.date": "February 2026",
+  "reviews.1.text": "Called after father's death. The apartment had been in severe condition for 3 weeks. The crew arrived within 40 minutes, worked 10 hours. Received a protocol with ATP tests. No odor.",
+  "reviews.2.name": "Olga K.",
+  "reviews.2.date": "January 2026",
+  "reviews.2.text": "Bought an apartment where the previous owner had passed away. Three cleaning services couldn't help. PureAura found the source in the screed, dismantled it, treated it. 30-day guarantee — the odor never returned.",
+  "reviews.3.name": "MC «DomService»",
+  "reviews.3.date": "December 2025",
+  "reviews.3.text": "Sewage rupture on the first floor. Flooded the basement and two rooms. Completed the full protocol in 12 hours. Insurance documents provided the same day.",
+  "reviews.4.name": "Sergey V.",
+  "reviews.4.date": "November 2025",
+  "reviews.4.text": "Needed to prepare grandmother's apartment for sale. The volume of waste was colossal. The team cleared everything in two days, cleaned floors down to concrete and eliminated the pungent odor. Very professional.",
+  "reviews.5.name": "Marina T.",
+  "reviews.5.date": "September 2025",
+  "reviews.5.text": "Kitchen burned down. The entire apartment was covered in black soot. Technicians dismantled burned elements and performed chemical cleaning with special solutions. Not a trace of fire smell left.",
+  "reviews.6.name": "LLC «Logistics Plus»",
+  "reviews.6.date": "August 2025",
+  "reviews.6.text": "Ordered sanitary treatment of an 800 m² warehouse. Everything done quickly, per regulatory standards, provided contract and completion reports. Will continue cooperation.",
+  "reviews.7.name": "Elena D.",
+  "reviews.7.date": "June 2025",
+  "reviews.7.text": "Unsuccessfully fought bedbugs for 3 months on our own. Called PureAura — they came at night (!), set up a barrier, everything done confidentially. Haven't had an issue for half a year.",
+
+  // ═══ Footer ═══
+  "footer.about_label": "About",
+  "footer.about_text": "Professional death cleanup, disinfection and biological remediation in Moscow. Confidential, 24/7.",
+  "footer.services_label": "Services",
+  "footer.services.1": "Death Cleanup & Disinfection",
+  "footer.services.2": "Pricing",
+  "footer.services.3": "Before & After Cases",
+  "footer.services.4": "Client Reviews",
+  "footer.company_label": "Company",
+  "footer.company.1": "Disinfection Protocol",
+  "footer.company.2": "Treatment Equipment",
+  "footer.company.3": "Expertise",
+  "footer.company.4": "FAQ",
+  "footer.contact_label": "Emergency Line",
+  "footer.contact_schedule": "24/7. 365 days. Moscow & Region.",
+  "footer.copyright": "© 2026 PureAura Remediation Inc.",
+  "footer.location": "Moscow & Moscow Region",
+
+  // ═══ Emergency Button ═══
+  "emergency.label": "Emergency Call",
+  "emergency.call_label": "Emergency Call",
 };
 
 export default en;

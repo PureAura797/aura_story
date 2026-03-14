@@ -25,7 +25,7 @@ export default function Expertise() {
     const els = gsap.utils.toArray(".expertise-item") as HTMLElement[];
     
     ScrollTrigger.batch(els, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) =>
         gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
       once: true,

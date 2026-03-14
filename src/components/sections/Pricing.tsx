@@ -25,7 +25,7 @@ export default function Pricing() {
     gsap.registerPlugin(ScrollTrigger);
     const items = gsap.utils.toArray(".pricing-card") as HTMLElement[];
     ScrollTrigger.batch(items, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.04, duration: 0.4, ease: "power2.out" }),
       once: true,
     });

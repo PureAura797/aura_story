@@ -21,7 +21,7 @@ export default function ContactForm() {
     const items = sectionRef.current.querySelectorAll(".contact-reveal");
     gsap.set(items, { y: 60, opacity: 0 });
     ScrollTrigger.batch(items, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: "power3.out" }),
       once: true,
     });

@@ -12,12 +12,12 @@ export default function Team() {
   const { t } = useTranslation();
 
   const team = [
-    { name: t("team.1.name"), role: t("team.1.role"), status: t("team.1.status"), experience: "12 лет", objects: "2 400+", specialization: t("team.1.spec"), avatar: "/team/alexey.png", color: "#5eead4" },
-    { name: t("team.2.name"), role: t("team.2.role"), status: t("team.2.status"), experience: "8 лет", objects: "1 800+", specialization: t("team.2.spec"), avatar: "/team/marina.png", color: "#d4a574" },
-    { name: t("team.3.name"), role: t("team.3.role"), status: t("team.3.status"), experience: "6 лет", objects: "900+", specialization: t("team.3.spec"), avatar: "/team/dmitry.png", color: "#a78bfa" },
-    { name: t("team.4.name"), role: t("team.4.role"), status: t("team.4.status"), experience: "5 лет", objects: "3 000+", specialization: t("team.4.spec"), avatar: "/team/elena.png", color: "#fb7185" },
-    { name: t("team.5.name"), role: t("team.5.role"), status: t("team.5.status"), experience: "10 лет", objects: "2 100+", specialization: t("team.5.spec"), avatar: "/team/igor.png", color: "#14b8a6" },
-    { name: t("team.6.name"), role: t("team.6.role"), status: t("team.6.status"), experience: "7 лет", objects: "1 500+", specialization: t("team.6.spec"), avatar: "/team/anna.png", color: "#38bdf8" },
+    { name: t("team.1.name"), role: t("team.1.role"), status: t("team.1.status"), experience: t("team.1.exp_value"), objects: "2 400+", specialization: t("team.1.spec"), avatar: "/team/alexey.png", color: "#5eead4" },
+    { name: t("team.2.name"), role: t("team.2.role"), status: t("team.2.status"), experience: t("team.2.exp_value"), objects: "1 800+", specialization: t("team.2.spec"), avatar: "/team/marina.png", color: "#d4a574" },
+    { name: t("team.3.name"), role: t("team.3.role"), status: t("team.3.status"), experience: t("team.3.exp_value"), objects: "900+", specialization: t("team.3.spec"), avatar: "/team/dmitry.png", color: "#a78bfa" },
+    { name: t("team.4.name"), role: t("team.4.role"), status: t("team.4.status"), experience: t("team.4.exp_value"), objects: "3 000+", specialization: t("team.4.spec"), avatar: "/team/elena.png", color: "#fb7185" },
+    { name: t("team.5.name"), role: t("team.5.role"), status: t("team.5.status"), experience: t("team.5.exp_value"), objects: "2 100+", specialization: t("team.5.spec"), avatar: "/team/igor.png", color: "#14b8a6" },
+    { name: t("team.6.name"), role: t("team.6.role"), status: t("team.6.status"), experience: t("team.6.exp_value"), objects: "1 500+", specialization: t("team.6.spec"), avatar: "/team/anna.png", color: "#38bdf8" },
   ];
 
   useGSAP(() => {
@@ -25,7 +25,7 @@ export default function Team() {
     const cards = gsap.utils.toArray(".team-card") as HTMLElement[];
     gsap.set(cards, { y: 30, opacity: 0 });
     ScrollTrigger.batch(cards, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: "power3.out" }),
       once: true,
     });

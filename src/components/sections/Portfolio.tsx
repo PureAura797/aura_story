@@ -13,17 +13,17 @@ export default function Portfolio() {
   const { t } = useTranslation();
 
   const projects = [
-    { type: t("portfolio.1.type"), area: "48 кв.м", time: "8 часов", description: t("portfolio.1.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
-    { type: t("portfolio.2.type"), area: "72 кв.м", time: "2 дня", description: t("portfolio.2.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
-    { type: t("portfolio.3.type"), area: "95 кв.м", time: "6 часов", description: t("portfolio.3.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
-    { type: t("portfolio.4.type"), area: "110 кв.м", time: "10 часов", description: t("portfolio.4.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
+    { type: t("portfolio.1.type"), area: t("portfolio.1.area"), time: t("portfolio.1.time"), description: t("portfolio.1.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
+    { type: t("portfolio.2.type"), area: t("portfolio.2.area"), time: t("portfolio.2.time"), description: t("portfolio.2.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
+    { type: t("portfolio.3.type"), area: t("portfolio.3.area"), time: t("portfolio.3.time"), description: t("portfolio.3.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
+    { type: t("portfolio.4.type"), area: t("portfolio.4.area"), time: t("portfolio.4.time"), description: t("portfolio.4.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
   ];
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".portfolio-card") as HTMLElement[];
     ScrollTrigger.batch(cards, {
-      start: "top 90%",
+      start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
       once: true,
     });
