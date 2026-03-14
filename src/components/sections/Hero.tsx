@@ -30,7 +30,7 @@ export default function Hero() {
     <div ref={containerRef} className="relative w-full h-full flex flex-col justify-center items-start z-10 pointer-events-none">
       
       {/* USP headline */}
-      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[0.9] font-bold tracking-tighter text-white z-20 mix-blend-difference relative">
+      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[1.05] font-bold tracking-tighter text-white z-20 mix-blend-difference relative">
         {t("hero.h1_1")}
         <br />
         {t("hero.h1_2")}
