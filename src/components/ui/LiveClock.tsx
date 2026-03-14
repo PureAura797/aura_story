@@ -86,7 +86,9 @@ export default function LiveClock() {
   return (
     <div
       ref={clockRef}
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 h-12 flex items-center gap-3 px-5 border border-white/10 bg-white/[0.04] backdrop-blur-xl"
+      className="fixed z-50 border-white/10 bg-white/[0.04] backdrop-blur-xl
+        bottom-0 left-0 right-0 h-11 flex items-center justify-center gap-3 px-5 border-t border-x-0 border-b-0
+        md:bottom-6 md:left-1/2 md:-translate-x-1/2 md:right-auto md:h-12 md:border md:w-auto"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Текущие дата и время"
     >

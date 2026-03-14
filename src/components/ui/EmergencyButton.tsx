@@ -68,7 +68,7 @@ export default function EmergencyButton() {
     <a
       ref={btnRef}
       href="tel:+74951203456"
-      className="fixed bottom-6 right-6 z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
+      className="fixed bottom-14 right-4 md:bottom-6 md:right-6 z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"
     >

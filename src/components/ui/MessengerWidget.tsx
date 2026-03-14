@@ -68,7 +68,7 @@ export default function MessengerWidget() {
       {/* Expanded panel */}
       <div
         ref={panelRef}
-        className={`fixed bottom-20 left-6 z-50 ${expanded && isShown ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed bottom-28 left-4 md:bottom-20 md:left-6 z-50 ${expanded && isShown ? "pointer-events-auto" : "pointer-events-none"}`}
         style={{ opacity: 0 }}
       >
         <div className="bg-[#111214] border border-white/10 backdrop-blur-xl p-5 w-[260px] sm:w-[280px] shadow-2xl">
@@ -114,7 +114,7 @@ export default function MessengerWidget() {
       <button
         ref={fabRef}
         onClick={() => setExpanded(!expanded)}
-        className="fixed bottom-6 left-6 z-50 w-12 h-12 sm:w-13 sm:h-13 border border-white/15 bg-white/[0.04] backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-white/30 cursor-pointer group"
+        className="fixed bottom-14 left-4 md:bottom-6 md:left-6 z-50 w-12 h-12 sm:w-13 sm:h-13 border border-white/15 bg-white/[0.04] backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-white/30 cursor-pointer group"
         style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
         aria-label={expanded ? "Закрыть мессенджеры" : "Написать в мессенджер"}
       >
