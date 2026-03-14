@@ -5,36 +5,18 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SectionCTA from "@/components/ui/SectionCTA";
-
-const services = [
-  {
-    title: "После Смерти",
-    description: "Полный демонтаж загрязнённых материалов, STP-обработка, озонация. Объект сдаётся с протоколом АТФ-тестирования.",
-    meta: "от 60 мин · до 120 кв.м · от 15 000 ₽",
-    num: "01",
-  },
-  {
-    title: "Устранение Запахов",
-    description: "Диагностика источника, механическая зачистка, обработка активным гидроксилом. Гарантия: запах вернётся — повторная обработка бесплатно.",
-    meta: "от 40 мин · до 200 кв.м · от 10 000 ₽",
-    num: "02",
-  },
-  {
-    title: "Накопительство",
-    description: "Сортировка, вывоз до 200 м³, дезинсекция, дезинфекция. Поиск ценных вещей и документов по согласованию.",
-    meta: "от 4 ч · без ограничений · от 25 000 ₽",
-    num: "03",
-  },
-  {
-    title: "Инфекционный Контроль",
-    description: "Протокол после затопления, канализационного прорыва, пожара. Обработка по стандартам СанПиН 3.3686-21.",
-    meta: "от 60 мин · до 300 кв.м · от 12 000 ₽",
-    num: "04",
-  },
-];
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function Services() {
   const containerRef = useRef<HTMLElement>(null);
+  const { t } = useTranslation();
+
+  const services = [
+    { num: "01", title: t("services.1.title"), description: t("services.1.desc"), meta: t("services.1.meta") },
+    { num: "02", title: t("services.2.title"), description: t("services.2.desc"), meta: t("services.2.meta") },
+    { num: "03", title: t("services.3.title"), description: t("services.3.desc"), meta: t("services.3.meta") },
+    { num: "04", title: t("services.4.title"), description: t("services.4.desc"), meta: t("services.4.meta") },
+  ];
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -61,11 +43,11 @@ export default function Services() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-4">
         <div>
-          <p className="text-xs tracking-[0.2em] uppercase font-medium mb-3" style={{ color: "var(--accent)" }}>Направления</p>
-          <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">Экспертиза</h2>
+          <p className="text-xs tracking-[0.2em] uppercase font-medium mb-3" style={{ color: "var(--accent)" }}>{t("services.label")}</p>
+          <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("services.heading")}</h2>
         </div>
         <p className="text-sm text-neutral-500 font-light max-w-xs md:text-right">
-          Четыре направления. Одна цель — биологически безопасный объект.
+          {t("services.desc")}
         </p>
       </div>
 
@@ -115,7 +97,7 @@ export default function Services() {
         ))}
       </div>
 
-      <SectionCTA variant="form" label="Не знаете какая услуга нужна? Оставьте заявку — проконсультируем бесплатно." />
+      <SectionCTA variant="form" label={t("services.cta")} />
     </section>
   );
 }

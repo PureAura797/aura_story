@@ -94,8 +94,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
 
           <button
             type="submit"
-            className="w-full mt-2 px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.12em] flex items-center justify-center gap-3 cursor-pointer transition-all duration-300 hover:brightness-110 hover:scale-[1.01]"
-            style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+            className="btn-primary w-full mt-2 px-8 py-4"
           >
             <Phone className="w-4 h-4" strokeWidth={1.5} />
             Перезвоните мне

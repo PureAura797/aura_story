@@ -178,19 +178,88 @@ function createRain(): Formation {
   return { positions };
 }
 
-// Pre-generate all formations
+/** Cross — 3D plus/cross shape (Team — unity symbol) */
+function createCross(): Formation {
+  const positions: THREE.Vector3[] = [];
+  const armLength = 6;
+  const gap = 0.9;
+  const arms = [
+    { axis: 'x', sign: 1 },
+    { axis: 'x', sign: -1 },
+    { axis: 'y', sign: 1 },
+    { axis: 'y', sign: -1 },
+    { axis: 'z', sign: 1 },
+    { axis: 'z', sign: -1 },
+  ];
+
+  const perArm = Math.floor(COUNT / arms.length);
+  const center = Math.floor(COUNT - perArm * arms.length);
+
+  // Center cluster
+  for (let i = 0; i < center; i++) {
+    positions.push(new THREE.Vector3(0, 0, 0));
+  }
+
+  for (const arm of arms) {
+    for (let i = 0; i < perArm; i++) {
+      const t = ((i + 1) / perArm) * armLength;
+      const pos = new THREE.Vector3(0, 0, 0);
+      if (arm.axis === 'x') pos.x = t * arm.sign;
+      else if (arm.axis === 'y') pos.y = t * arm.sign;
+      else pos.z = t * arm.sign;
+      // Slight offset along perpendicular axes for thickness
+      const rng = seededRandom(i * 17 + arms.indexOf(arm) * 31);
+      const off = (rng() - 0.5) * gap;
+      if (arm.axis !== 'x') pos.x += off;
+      if (arm.axis !== 'y') pos.y += off;
+      if (arm.axis !== 'z') pos.z += off;
+      positions.push(pos);
+    }
+  }
+
+  // Fill remaining if any
+  while (positions.length < COUNT) {
+    positions.push(new THREE.Vector3(0, 0, 0));
+  }
+
+  return { positions: positions.slice(0, COUNT) };
+}
+
+/** Sphere — full 3D sphere (Equipment — completeness) */
+function createSphere(): Formation {
+  const positions: THREE.Vector3[] = [];
+  const radius = 5.5;
+
+  for (let i = 0; i < COUNT; i++) {
+    // Fibonacci sphere for even distribution
+    const phi = Math.acos(1 - 2 * (i + 0.5) / COUNT);
+    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    positions.push(new THREE.Vector3(
+      radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.cos(phi),
+      radius * Math.sin(phi) * Math.sin(theta)
+    ));
+  }
+  return { positions };
+}
+
+// Pre-generate all formations (14 total — one per visual section)
 export const formations: Formation[] = [
-  createRing(6),         // 0: Hero
-  createVortex(),        // 1: Services
-  createScatter(),       // 2: Expertise
-  createColumn(),        // 3: Process
-  createGrid(),          // 4: Portfolio
-  createHelix(),         // 5: Equipment
-  createPanel(),         // 6: Pricing
-  createDome(),          // 7: Reviews
-  createRing(7),         // 8: FAQ (slightly larger ring)
-  createRing(6.5),       // 9: Contact (pulse ring — pulsation in useFrame)
-  createRain(),          // 10: Footer
+  createRing(6),         // 0:  Hero
+  createVortex(),        // 1:  TrustMarquee
+  createVortex(),        // 2:  Stories (sustained vortex)
+  createScatter(),       // 3:  Services
+  createColumn(),        // 4:  Expertise
+  createCross(),         // 5:  Team (NEW)
+  createGrid(),          // 6:  Process
+  createHelix(),         // 7:  Portfolio
+  createSphere(),        // 8:  Equipment (NEW)
+  createPanel(),         // 9:  Pricing
+  createDome(),          // 10: Reviews
+  createRing(7),         // 11: FAQ (large ring)
+  createRing(6.5),       // 12: Contact (pulse ring)
+  createRain(),          // 13: Footer/Outro
 ];
 
 export const PARTICLE_COUNT = COUNT;
+

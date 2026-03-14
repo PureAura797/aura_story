@@ -6,86 +6,15 @@ import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import StoryModal from "@/components/ui/StoryModal";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
-const stories = [
-  {
-    id: 1,
-    title: "Дезинфекция",
-    subtitle: "Квартира 85 м²",
-    gradient: "from-teal-400 to-cyan-600",
-    color: "#5eead4",
-    videos: [
-      "/stories/story-1_1.mp4",
-      "/stories/story-1_2.mp4",
-      "/stories/story-1_3.mp4",
-      "/stories/story-1_4.mp4",
-    ],
-  },
-  {
-    id: 2,
-    title: "До / После",
-    subtitle: "Накопительство",
-    gradient: "from-amber-500 to-orange-600",
-    color: "#d4a574",
-    videos: [
-      "/stories/story-2_1.mp4",
-      "/stories/story-2_2.mp4",
-      "/stories/story-2_3.mp4",
-      "/stories/story-2_4.mp4",
-    ],
-  },
-  {
-    id: 3,
-    title: "Оборудование",
-    subtitle: "Обзор техники",
-    gradient: "from-teal-500 to-emerald-600",
-    color: "#14b8a6",
-    videos: [
-      "/stories/story-3_1.mp4",
-      "/stories/story-3_2.mp4",
-      "/stories/story-3_3.mp4",
-      "/stories/story-3_4.mp4",
-    ],
-  },
-  {
-    id: 4,
-    title: "Процесс",
-    subtitle: "Озонирование",
-    gradient: "from-rose-400 to-pink-600",
-    color: "#fb7185",
-    videos: [
-      "/stories/story-4_1.mp4",
-      "/stories/story-4_2.mp4",
-      "/stories/story-4_3.mp4",
-      "/stories/story-4_4.mp4",
-    ],
-  },
-  {
-    id: 5,
-    title: "Команда",
-    subtitle: "На выезде",
-    gradient: "from-violet-400 to-purple-600",
-    color: "#a78bfa",
-    videos: [
-      "/stories/story-5_1.mp4",
-      "/stories/story-5_2.mp4",
-      "/stories/story-5_3.mp4",
-      "/stories/story-5_4.mp4",
-    ],
-  },
-  {
-    id: 6,
-    title: "Результат",
-    subtitle: "Сдача объекта",
-    gradient: "from-teal-400 to-teal-600",
-    color: "#5eead4",
-    videos: [
-      "/stories/story-6_1.mp4",
-      "/stories/story-6_2.mp4",
-      "/stories/story-6_3.mp4",
-      "/stories/story-6_4.mp4",
-    ],
-  },
+const storyMeta = [
+  { id: 1, gradient: "from-teal-400 to-cyan-600", color: "#5eead4", cover: "/stories/covers/cover-1.png", videos: ["/stories/story-1_1.mp4", "/stories/story-1_2.mp4", "/stories/story-1_3.mp4", "/stories/story-1_4.mp4"] },
+  { id: 2, gradient: "from-amber-500 to-orange-600", color: "#d4a574", cover: "/stories/covers/cover-2.png", videos: ["/stories/story-2_1.mp4", "/stories/story-2_2.mp4", "/stories/story-2_3.mp4", "/stories/story-2_4.mp4"] },
+  { id: 3, gradient: "from-teal-500 to-emerald-600", color: "#14b8a6", cover: "/stories/covers/cover-3.png", videos: ["/stories/story-3_1.mp4", "/stories/story-3_2.mp4", "/stories/story-3_3.mp4", "/stories/story-3_4.mp4"] },
+  { id: 4, gradient: "from-rose-400 to-pink-600", color: "#fb7185", cover: "/stories/covers/cover-4.png", videos: ["/stories/story-4_1.mp4", "/stories/story-4_2.mp4", "/stories/story-4_3.mp4", "/stories/story-4_4.mp4"] },
+  { id: 5, gradient: "from-violet-400 to-purple-600", color: "#a78bfa", cover: "/stories/covers/cover-5.png", videos: ["/stories/story-5_1.mp4", "/stories/story-5_2.mp4", "/stories/story-5_3.mp4", "/stories/story-5_4.mp4"] },
+  { id: 6, gradient: "from-teal-400 to-teal-600", color: "#5eead4", cover: "/stories/covers/cover-6.png", videos: ["/stories/story-6_1.mp4", "/stories/story-6_2.mp4", "/stories/story-6_3.mp4", "/stories/story-6_4.mp4"] },
 ];
 
 export default function StoriesSection() {
@@ -94,6 +23,13 @@ export default function StoriesSection() {
   const [activeStory, setActiveStory] = useState<number | null>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const { t } = useTranslation();
+
+  const stories = storyMeta.map((s, i) => ({
+    ...s,
+    title: t(`stories.${i + 1}.title`),
+    subtitle: t(`stories.${i + 1}.subtitle`),
+  }));
 
   const checkScroll = () => {
     if (!scrollRef.current) return;
@@ -147,7 +83,7 @@ export default function StoriesSection() {
             className="text-[10px] tracking-[0.2em] uppercase font-medium"
             style={{ color: "var(--accent)" }}
           >
-            Наша работа
+            {t("stories.label")}
           </p>
 
           {/* Mobile scroll arrows — only show on small screens */}
@@ -209,20 +145,26 @@ export default function StoriesSection() {
                 className="story-item flex-shrink-0 flex flex-col items-center gap-2.5 group cursor-pointer"
                 style={{ scrollSnapAlign: "start" }}
               >
-                {/* Ring */}
-                <div className="story-ring relative w-16 h-16 md:w-[88px] md:h-[88px] rounded-full p-[2px]">
+                {/* Rotating gradient ring */}
+                <div className="story-ring relative w-16 h-16 md:w-[88px] md:h-[88px] rounded-full p-[2.5px]">
                   <div
-                    className="absolute inset-0 rounded-full"
+                    className="absolute inset-0 rounded-full story-ring-spin"
                     style={{
-                      background: `linear-gradient(135deg, ${story.color}, ${story.color}44)`,
+                      background: `conic-gradient(from 0deg, ${story.color}, ${story.color}44, ${story.color})`,
                     }}
                   />
-                  <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[var(--bg-deep)]">
-                    <div
-                      className={`w-full h-full bg-gradient-to-br ${story.gradient} opacity-40 group-hover:opacity-60 transition-opacity duration-500`}
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-[2.5px] border-[var(--bg-deep)]">
+                    {/* Thumbnail */}
+                    <img
+                      src={story.cover}
+                      alt={story.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
+                    {/* Darken overlay */}
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-500" />
+                    {/* Play icon */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
+                      <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
                         <svg
                           viewBox="0 0 24 24"
                           className="w-2.5 h-2.5 md:w-3 md:h-3 text-white ml-0.5"

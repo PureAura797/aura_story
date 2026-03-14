@@ -69,7 +69,7 @@ export default function ExitIntentPopup() {
     >
       <div
         ref={panelRef}
-        className="bg-[#111214] border border-white/10 rounded-2xl p-8 sm:p-10 max-w-md w-full relative"
+        className="bg-[#111214] border border-white/10 p-8 sm:p-10 max-w-md w-full relative"
         onClick={(e) => e.stopPropagation()}
         style={{ opacity: 0 }}
       >
@@ -98,8 +98,7 @@ export default function ExitIntentPopup() {
         <div className="flex flex-col sm:flex-row gap-3">
           <a
             href="tel:+74951203456"
-            className="flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300 hover:brightness-110 hover:scale-[1.02]"
-            style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+            className="btn-primary px-6 py-3.5"
             aria-label="Позвонить 8 495 120-34-56"
           >
             <PhoneCall className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
@@ -107,7 +106,7 @@ export default function ExitIntentPopup() {
           </a>
           <button
             onClick={handleDismiss}
-            className="px-6 py-3.5 rounded-full border border-white/10 text-xs font-medium uppercase tracking-[0.12em] text-neutral-500 hover:text-white hover:border-white/20 transition-all duration-300 cursor-pointer"
+            className="btn-ghost px-6 py-3.5 text-neutral-500 hover:text-white"
           >
             Не сейчас
           </button>

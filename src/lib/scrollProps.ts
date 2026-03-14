@@ -12,4 +12,5 @@ export const scProps = {
   lerpSpeed: 3.0,
   lightColor: '#ffb703',
   lightIntensity: 10,
+  bgColor: '#0b0c0f',
 };

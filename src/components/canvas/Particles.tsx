@@ -99,8 +99,8 @@ export default function Particles() {
     // Mouse world position for repulsion (approximate)
     mouseWorld.set(mouse.x * 10, mouse.y * 6, 0);
 
-    // Pulse for Contact section (formation 9)
-    const pulseScale = formation >= 8.5 && formation <= 9.5
+    // Pulse for Contact section (formation 12)
+    const pulseScale = formation >= 11.5 && formation <= 12.5
       ? 1 + Math.sin(state.clock.elapsedTime * 3) * 0.15
       : 1;
 

@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 
+const SWIPE_THRESHOLD = 50;
+
 interface Story {
   id: number;
   title: string;
@@ -133,6 +135,31 @@ export default function StoryModal({
     }
   }, [isPaused]);
 
+  // Swipe gesture tracking
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!touchStart.current) return;
+      const dx = e.changedTouches[0].clientX - touchStart.current.x;
+      const dy = e.changedTouches[0].clientY - touchStart.current.y;
+      // Only horizontal swipes (ignore vertical)
+      if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+          handleTapNav("right");
+        } else {
+          handleTapNav("left");
+        }
+      }
+      touchStart.current = null;
+    },
+    [handleTapNav]
+  );
+
   // Keyboard navigation
   useEffect(() => {
     if (!isOpen) return;
@@ -198,11 +225,11 @@ export default function StoryModal({
             <X className="w-5 h-5 text-white" strokeWidth={1.5} />
           </button>
 
-          {/* Story-level navigation arrows */}
+          {/* Story-level arrows — DESKTOP ONLY */}
           {storyIndex > 0 && (
             <button
               onClick={goPrevStory}
-              className="absolute left-4 md:left-8 z-50 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute left-8 z-50 w-10 h-10 rounded-full bg-white/10 hidden md:flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5 text-white" strokeWidth={1.5} />
             </button>
@@ -210,7 +237,7 @@ export default function StoryModal({
           {storyIndex < stories.length - 1 && (
             <button
               onClick={goNextStory}
-              className="absolute right-4 md:right-8 z-50 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
+              className="absolute right-8 z-50 w-10 h-10 rounded-full bg-white/10 hidden md:flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
             >
               <ChevronRight className="w-5 h-5 text-white" strokeWidth={1.5} />
             </button>
@@ -316,23 +343,21 @@ export default function StoryModal({
               )}
             </AnimatePresence>
 
-            {/* Click/tap zones for navigation */}
-            <div className="absolute inset-0 z-30 flex">
+            {/* Click/tap zones for navigation + swipe */}
+            <div
+              className="absolute inset-0 z-30 flex"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               <div
-                className="w-1/3 h-full"
+                className="w-1/2 h-full"
                 onClick={() => handleTapNav("left")}
                 onPointerDown={handlePointerDown}
                 onPointerUp={handlePointerUp}
                 onPointerLeave={handlePointerUp}
               />
               <div
-                className="w-1/3 h-full"
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlePointerUp}
-                onPointerLeave={handlePointerUp}
-              />
-              <div
-                className="w-1/3 h-full"
+                className="w-1/2 h-full"
                 onClick={() => handleTapNav("right")}
                 onPointerDown={handlePointerDown}
                 onPointerUp={handlePointerUp}

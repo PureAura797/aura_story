@@ -68,13 +68,13 @@ export default function Footer() {
 
           <div className="flex gap-6">
             <a
-              href="https://wa.me/74951203456"
+              href="https://max.ru/pureaura"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Написать в WhatsApp"
+              aria-label="Написать в MAX"
               className="group text-xs text-neutral-500 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1"
             >
-              WA <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
+              MAX <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
             </a>
             <a
               href="https://t.me/pureaura"

@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { Phone, Menu, X, ArrowUpRight } from "lucide-react";
+import { useState, useRef, useCallback } from "react";
+import { Phone, Menu, X, ArrowUpRight, Globe } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import CallbackModal from "@/components/ui/CallbackModal";
 import Logo from "@/components/ui/Logo";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 /** Scroll to section by id — without polluting the URL hash */
 function scrollToSection(id: string) {
@@ -19,6 +20,9 @@ function scrollToSection(id: string) {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const { t, locale, setLocale } = useTranslation();
+  const isAnimating = useRef(false);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -47,31 +51,107 @@ export default function Navbar() {
     }
   }, []);
 
+  const openMenu = useCallback(() => {
+    if (isAnimating.current) return;
+    isAnimating.current = true;
+    setMenuOpen(true);
+    document.body.style.overflow = "hidden";
+    document.body.setAttribute("data-menu-open", "true");
+
+    // Force navbar visible
+    const nav = document.querySelector("nav");
+    if (nav) gsap.to(nav, { y: 0, duration: 0.3, ease: "power3.inOut" });
+
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    // Circle reveal from top-right (burger icon position)
+    const tl = gsap.timeline({
+      onComplete: () => { isAnimating.current = false; },
+    });
+
+    tl.set(overlay, {
+      clipPath: "circle(0% at calc(100% - 32px) 28px)",
+      visibility: "visible",
+      opacity: 1,
+    });
+
+    tl.to(overlay, {
+      clipPath: "circle(150% at calc(100% - 32px) 28px)",
+      duration: 0.7,
+      ease: "power3.inOut",
+    });
+
+    // Stagger links in
+    tl.fromTo(
+      ".mobile-link",
+      { y: 50, opacity: 0, filter: "blur(8px)" },
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        stagger: 0.06,
+        duration: 0.5,
+        ease: "power3.out",
+      },
+      "-=0.25"
+    );
+
+    // Divider line grows from left
+    tl.fromTo(
+      ".menu-divider",
+      { scaleX: 0 },
+      { scaleX: 1, duration: 0.4, ease: "power2.out" },
+      "-=0.3"
+    );
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    if (isAnimating.current) return;
+    isAnimating.current = true;
+
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        isAnimating.current = false;
+        setMenuOpen(false);
+        document.body.style.overflow = "";
+        document.body.removeAttribute("data-menu-open");
+        gsap.set(overlay, { visibility: "hidden" });
+      },
+    });
+
+    // Fade links out fast
+    tl.to(".mobile-link, .menu-divider", {
+      opacity: 0,
+      y: -20,
+      duration: 0.2,
+      ease: "power2.in",
+      stagger: 0.02,
+    });
+
+    // Circle contract back
+    tl.to(overlay, {
+      clipPath: "circle(0% at calc(100% - 32px) 28px)",
+      duration: 0.5,
+      ease: "power3.inOut",
+    }, "-=0.1");
+  }, []);
+
   const toggleMenu = () => {
-    if (!menuOpen) {
-      setMenuOpen(true);
-      document.body.style.overflow = "hidden";
-      document.body.setAttribute("data-menu-open", "true");
-      // Force navbar visible
-      const nav = document.querySelector("nav");
-      if (nav) gsap.to(nav, { y: 0, duration: 0.3, ease: "power3.inOut" });
-      gsap.fromTo(
-        ".mobile-link",
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.06, duration: 0.8, ease: "power4.out", delay: 0.1 }
-      );
+    if (menuOpen) {
+      closeMenu();
     } else {
-      setMenuOpen(false);
-      document.body.style.overflow = "";
-      document.body.removeAttribute("data-menu-open");
+      openMenu();
     }
   };
 
   /** Close mobile menu + scroll to section */
   const handleMobileNav = (id: string) => {
-    toggleMenu();
-    // Small delay so menu closes first, then scroll
-    setTimeout(() => scrollToSection(id), 300);
+    closeMenu();
+    setTimeout(() => scrollToSection(id), 600);
   };
 
   return (
@@ -86,14 +166,22 @@ export default function Navbar() {
 
           {/* Center: Navigation links */}
           <div className="hidden lg:flex items-center gap-10 text-[11px] font-medium text-neutral-500 uppercase tracking-[0.2em]">
-            <button onClick={() => scrollToSection("services")} className="hover:text-white transition-colors duration-300 cursor-pointer">Услуги</button>
-            <button onClick={() => scrollToSection("expertise")} className="hover:text-white transition-colors duration-300 cursor-pointer">Экспертиза</button>
-            <button onClick={() => scrollToSection("pricing")} className="hover:text-white transition-colors duration-300 cursor-pointer">Тарифы</button>
-            <button onClick={() => scrollToSection("contact")} className="hover:text-white transition-colors duration-300 cursor-pointer">Контакт</button>
+            <button onClick={() => scrollToSection("services")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.services")}</button>
+            <button onClick={() => scrollToSection("expertise")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.expertise")}</button>
+            <button onClick={() => scrollToSection("pricing")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.pricing")}</button>
+            <button onClick={() => scrollToSection("contact")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.contact")}</button>
           </div>
 
           {/* Right: Phone + CTA — only visible when burger is hidden (lg+) */}
           <div className="hidden lg:flex items-center gap-8">
+            <button
+              onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
+              className="flex items-center gap-1.5 text-[11px] font-medium text-neutral-500 uppercase tracking-[0.15em] hover:text-white transition-colors cursor-pointer"
+              aria-label="Switch language"
+            >
+              <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
+              {t("lang.switch")}
+            </button>
             <a
               href="tel:+74951203456"
               className="text-[11px] font-medium text-neutral-500 uppercase tracking-[0.15em] hover:text-white transition-colors flex items-center gap-2"
@@ -104,10 +192,9 @@ export default function Navbar() {
             </a>
             <button 
               onClick={() => setModalOpen(true)}
-              className="px-6 py-2.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.12em] transition-all duration-300 hover:brightness-110 hover:scale-[1.02] cursor-pointer"
-              style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+              className="btn-primary px-6 py-2.5"
             >
-              Обратный звонок
+              {t("nav.callback")}
             </button>
           </div>
 
@@ -123,35 +210,43 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Fullscreen overlay — clip-path animated */}
       <div
-        className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] transition-all duration-500 flex flex-col items-start justify-center px-10 ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        ref={overlayRef}
+        className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] flex flex-col items-start justify-center px-10"
+        style={{ visibility: "hidden", clipPath: "circle(0% at calc(100% - 32px) 28px)" }}
       >
         <div className="flex flex-col gap-6">
-          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">Услуги</button>
-          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">Экспертиза</button>
-          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">Тарифы</button>
-          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">Контакт</button>
+          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>
+          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.expertise")}</button>
+          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.pricing")}</button>
+          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.contact")}</button>
           
-          <div className="w-16 h-[1px] bg-white/20 my-4 mobile-link"></div>
+          <div className="w-16 h-[1px] bg-white/20 my-4 menu-divider origin-left"></div>
           
           <a href="tel:+74951203456" className="text-lg text-neutral-400 hover:text-white flex items-center gap-3 transition-colors mobile-link" aria-label="Позвонить 8 495 120-34-56">
             <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             8 (495) 120-34-56
           </a>
           
-          <button 
-            onClick={() => { toggleMenu(); setModalOpen(true); }}
-            className="px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-[0.12em] transition-all duration-300 hover:brightness-110 hover:scale-[1.02] cursor-pointer mt-2"
-            style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+          <button
+            onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
+            className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mobile-link cursor-pointer"
           >
-            Обратный звонок
+            <Globe className="w-4 h-4" strokeWidth={1.5} />
+            {t("lang.switch")}
+          </button>
+
+          <button 
+            onClick={() => { closeMenu(); setTimeout(() => setModalOpen(true), 600); }}
+            className="btn-primary px-6 py-3 text-sm mt-2 mobile-link"
+          >
+            {t("nav.callback")}
           </button>
           
           <div className="flex gap-8 mt-2 mobile-link">
-            <a href="https://wa.me/74951203456" target="_blank" rel="noopener noreferrer" aria-label="Написать в WhatsApp" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
-              WhatsApp <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
+            <a href="https://max.ru/pureaura" target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
+              MAX <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
             <a href="https://t.me/pureaura" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
               Telegram <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
@@ -165,3 +260,4 @@ export default function Navbar() {
     </>
   );
 }
+

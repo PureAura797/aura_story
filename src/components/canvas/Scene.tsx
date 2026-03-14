@@ -1,6 +1,6 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import Particles from './Particles';
 import TrafficStreaks from './TrafficStreaks';
@@ -30,6 +30,30 @@ function DynamicLighting() {
   );
 }
 
+function DynamicBackground() {
+  const { scene } = useThree();
+  const bgColorObj = useRef(new THREE.Color('#0b0c0f'));
+
+  // Set initial background
+  if (!scene.background) {
+    scene.background = new THREE.Color('#0b0c0f');
+  }
+
+  useFrame(() => {
+    bgColorObj.current.set(scProps.bgColor);
+    // Smoothly lerp scene background
+    if (scene.background instanceof THREE.Color) {
+      scene.background.lerp(bgColorObj.current, 0.05);
+    }
+    // Also update fog color to match
+    if (scene.fog && scene.fog instanceof THREE.Fog) {
+      scene.fog.color.lerp(bgColorObj.current, 0.05);
+    }
+  });
+
+  return null;
+}
+
 function CameraManager() {
   useFrame(({ camera }) => {
     camera.position.z = scProps.camZ;
@@ -48,6 +72,7 @@ export default function Scene() {
     >
       <Canvas dpr={[1, 2]} style={{ pointerEvents: 'auto' }}>
         <CameraManager />
+        <DynamicBackground />
         <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={45} near={0.1} far={100} />
         <fog attach="fog" args={['#0b0c0f', 12, 35]} />
         
@@ -65,3 +90,4 @@ export default function Scene() {
     </div>
   );
 }
+

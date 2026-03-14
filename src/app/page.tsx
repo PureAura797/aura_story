@@ -19,6 +19,7 @@ import ScrollProgress from "@/components/effects/ScrollProgress";
 import EmergencyButton from "@/components/ui/EmergencyButton";
 import TrustMarquee from "@/components/ui/TrustMarquee";
 import MessengerWidget from "@/components/ui/MessengerWidget";
+import LiveClock from "@/components/ui/LiveClock";
 import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
 
 {/* 
@@ -137,6 +138,7 @@ export default function Home() {
       </main>
 
       <EmergencyButton />
+      <LiveClock />
       <MessengerWidget />
       <ExitIntentPopup />
       <Footer />

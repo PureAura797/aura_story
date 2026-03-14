@@ -71,23 +71,23 @@ export default function MessengerWidget() {
         className={`fixed bottom-20 left-6 z-50 ${expanded && isShown ? "pointer-events-auto" : "pointer-events-none"}`}
         style={{ opacity: 0 }}
       >
-        <div className="bg-[#111214] border border-white/10 backdrop-blur-xl rounded-2xl p-5 w-[260px] sm:w-[280px] shadow-2xl">
+        <div className="bg-[#111214] border border-white/10 backdrop-blur-xl p-5 w-[260px] sm:w-[280px] shadow-2xl">
           <p className="text-xs text-neutral-400 font-light mb-4 leading-relaxed">
             Напишите нам — ответим за 2 минуты. Конфиденциально.
           </p>
           <div className="flex flex-col gap-2.5">
             <a
-              href="https://wa.me/74951203456?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%BD%D1%83%D0%B6%D0%BD%D0%B0%20%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C"
+              href="https://max.ru/pureaura"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Написать в WhatsApp"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20 hover:bg-[#25D366]/20 transition-all duration-300 group"
+              aria-label="Написать в MAX"
+              className="flex items-center gap-3 px-4 py-3 bg-[#0077FF]/10 border border-[#0077FF]/20 hover:bg-[#0077FF]/20 transition-all duration-300 group"
             >
-              <div className="w-8 h-8 rounded-full bg-[#25D366] flex items-center justify-center shrink-0">
-                <span className="text-white text-sm font-bold">W</span>
+              <div className="w-8 h-8 rounded-full bg-[#0077FF] flex items-center justify-center shrink-0">
+                <span className="text-white text-sm font-bold">M</span>
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">WhatsApp</p>
+                <p className="text-sm font-semibold text-white">MAX</p>
                 <p className="text-[10px] text-neutral-500">Онлайн · ответ ~2 мин</p>
               </div>
             </a>
@@ -96,7 +96,7 @@ export default function MessengerWidget() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в Telegram"
-              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#229ED9]/10 border border-[#229ED9]/20 hover:bg-[#229ED9]/20 transition-all duration-300 group"
+              className="flex items-center gap-3 px-4 py-3 bg-[#229ED9]/10 border border-[#229ED9]/20 hover:bg-[#229ED9]/20 transition-all duration-300 group"
             >
               <div className="w-8 h-8 rounded-full bg-[#229ED9] flex items-center justify-center shrink-0">
                 <span className="text-white text-sm font-bold">T</span>
@@ -110,18 +110,18 @@ export default function MessengerWidget() {
         </div>
       </div>
 
-      {/* FAB button */}
+      {/* FAB button — compact square, sharp corners */}
       <button
         ref={fabRef}
         onClick={() => setExpanded(!expanded)}
-        className="fixed bottom-6 left-6 z-50 w-12 h-12 sm:w-13 sm:h-13 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-[rgba(94,234,212,0.2)] cursor-pointer group"
+        className="fixed bottom-6 left-6 z-50 w-12 h-12 sm:w-13 sm:h-13 border border-white/15 bg-white/[0.04] backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-white/30 cursor-pointer group"
         style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
         aria-label={expanded ? "Закрыть мессенджеры" : "Написать в мессенджер"}
       >
         {expanded ? (
           <X className="w-4 h-4 text-neutral-400 group-hover:text-white transition-colors" strokeWidth={1.5} />
         ) : (
-          <MessageCircle className="w-4 h-4 group-hover:text-[var(--accent)] transition-colors" strokeWidth={1.5} style={{ color: "var(--accent)" }} />
+          <MessageCircle className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" strokeWidth={1.5} />
         )}
       </button>
     </>

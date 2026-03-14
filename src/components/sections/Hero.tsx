@@ -5,9 +5,11 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { PhoneCall, ArrowRight } from "lucide-react";
 import AvailabilityPulse from "@/components/ui/AvailabilityPulse";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -29,21 +31,21 @@ export default function Hero() {
       
       {/* USP headline */}
       <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[0.9] font-bold tracking-tighter text-white z-20 mix-blend-difference relative">
-        Профессиональная
+        {t("hero.h1_1")}
         <br />
-        уборка после ЧП
+        {t("hero.h1_2")}
       </h1>
       
       {/* Service listing */}
       <p className="hero-reveal mt-8 text-[11px] md:text-xs tracking-[0.15em] text-neutral-400 uppercase font-medium mix-blend-difference">
-        Уборка после смерти · Дезинфекция · Устранение запахов · Расхламление
+        {t("hero.services")}
       </p>
 
       {/* Trust triggers */}
       <div className="hero-reveal mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[11px] tracking-[0.15em] text-neutral-600 uppercase font-medium mix-blend-difference">
-        <span>Выезд 60 мин</span>
-        <span>Москва 24/7</span>
-        <span>Лицензия СЭС</span>
+        <span>{t("hero.trust1")}</span>
+        <span>{t("hero.trust2")}</span>
+        <span>{t("hero.trust3")}</span>
       </div>
 
       {/* Live availability pulse */}
@@ -51,25 +53,24 @@ export default function Hero() {
         <AvailabilityPulse />
       </div>
 
-      {/* CTA buttons — unified pill style */}
+      {/* CTA buttons — sharp brutalist style */}
       <div className="hero-reveal mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 pointer-events-auto">
-        {/* Primary — teal fill */}
+        {/* Primary — white fill + shimmer + glow pulse */}
         <a
           href="tel:+74951203456"
-          aria-label="Экстренная связь — позвонить по телефону 8 495 120-34-56"
-          className="group w-full sm:w-auto px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] flex items-center justify-center gap-2.5 transition-all duration-300 hover:brightness-110 hover:scale-[1.02]"
-          style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
+          aria-label={t("hero.cta_emergency")}
+          className="btn-primary btn-primary--hero w-full sm:w-auto"
         >
           <PhoneCall className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
-          Экстренная связь
+          {t("hero.cta_emergency")}
         </a>
-        {/* Secondary — ghost border */}
+        {/* Ghost — sharp outline */}
         <button
           onClick={() => document.getElementById("process")?.scrollIntoView({ behavior: "smooth" })}
-          aria-label="Узнать порядок работы по дезинфекции помещений"
-          className="group w-full sm:w-auto px-7 py-3.5 rounded-full border border-white/20 text-white text-xs font-semibold uppercase tracking-[0.12em] hover:border-white/40 hover:bg-white/[0.04] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+          aria-label={t("hero.cta_process")}
+          className="btn-ghost group w-full sm:w-auto"
         >
-          Порядок работы
+          {t("hero.cta_process")}
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
         </button>
       </div>

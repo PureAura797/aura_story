@@ -68,26 +68,23 @@ export default function EmergencyButton() {
     <a
       ref={btnRef}
       href="tel:+74951203456"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-[rgba(94,234,212,0.2)] group"
+      className="fixed bottom-6 right-6 z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"
     >
-      {/* Teal dot — less aggressive than green ping */}
+      {/* White dot pulse */}
       <span className="relative flex h-2 w-2 shrink-0">
         <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-          style={{ backgroundColor: "var(--accent)" }}
+          className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/50"
         />
         <span
-          className="relative inline-flex rounded-full h-2 w-2"
-          style={{ backgroundColor: "var(--accent)" }}
+          className="relative inline-flex rounded-full h-2 w-2 bg-white"
         />
       </span>
 
       <PhoneCall
-        className="w-3.5 h-3.5 group-hover:scale-110 transition-transform duration-300"
+        className="w-3.5 h-3.5 text-white group-hover:scale-110 transition-transform duration-300"
         strokeWidth={1.5}
-        style={{ color: "var(--accent)" }}
       />
 
       {/* Text — desktop only */}

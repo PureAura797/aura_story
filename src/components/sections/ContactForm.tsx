@@ -5,45 +5,31 @@ import { Phone, Send, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 export default function ContactForm() {
   const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    message: "",
-    website: "",
-  });
+  const [formData, setFormData] = useState({ name: "", phone: "", message: "", website: "" });
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     if (!sectionRef.current) return;
     const items = sectionRef.current.querySelectorAll(".contact-reveal");
     gsap.set(items, { y: 60, opacity: 0 });
-
     ScrollTrigger.batch(items, {
       start: "top 90%",
-      onEnter: (batch) =>
-        gsap.to(batch, {
-          y: 0,
-          opacity: 1,
-          stagger: 0.06,
-          duration: 0.5,
-          ease: "power3.out",
-        }),
+      onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: "power3.out" }),
       once: true,
     });
   }, { scope: sectionRef });
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.replace(/\D/g, "");
-    if (val.startsWith("7") || val.startsWith("8")) {
-      val = val.substring(1);
-    }
+    if (val.startsWith("7") || val.startsWith("8")) val = val.substring(1);
     let formatted = "+7";
     if (val.length > 0) formatted += ` (${val.substring(0, 3)}`;
     if (val.length > 3) formatted += `) ${val.substring(3, 6)}`;
@@ -54,44 +40,22 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (formData.website) {
-      console.warn("Spam detected");
-      return;
-    }
-
+    if (formData.website) return;
     setLoading(true);
-
     const WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "";
-
     try {
       if (WEBHOOK_URL) {
         await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            form_type: "contact_form",
-            name: formData.name,
-            phone: formData.phone,
-            message: formData.message,
-            source: window.location.href,
-            submitted_at: new Date().toISOString(),
-          }),
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ form_type: "contact_form", name: formData.name, phone: formData.phone, message: formData.message, source: window.location.href, submitted_at: new Date().toISOString() }),
         });
       } else {
         await new Promise((resolve) => setTimeout(resolve, 1500));
       }
-
       setSuccess(true);
-
-      gsap.fromTo(
-        ".success-check",
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)", delay: 0.1 }
-      );
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Произошла ошибка при отправке. Пожалуйста, позвоните нам.");
+      gsap.fromTo(".success-check", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)", delay: 0.1 });
+    } catch {
+      alert(t("contact.error"));
     } finally {
       setLoading(false);
     }
@@ -99,138 +63,66 @@ export default function ContactForm() {
 
   return (
     <section ref={sectionRef} className="w-full flex flex-col items-start z-10 relative">
-      {/* Section Header */}
       <div className="contact-reveal mb-4">
-        <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>ОБРАТНАЯ СВЯЗЬ</p>
-        <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter">Свяжитесь<br />с нами</h2>
+        <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("contact.label")}</p>
+        <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter">{t("contact.heading_1")}<br />{t("contact.heading_2")}</h2>
       </div>
-      <p className="contact-reveal text-sm text-neutral-500 font-light mb-16 max-w-md">
-        Оперативная связь с диспетчером. Перезвоним в течение 2 минут.
-      </p>
+      <p className="contact-reveal text-sm text-neutral-500 font-light mb-16 max-w-md">{t("contact.desc")}</p>
 
-      {/* Two glassmorphism panels */}
       <div className="flex flex-col md:flex-row w-full gap-4">
-        
-        {/* Left: Contact info panel */}
         <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
-          <p className="text-neutral-400 text-lg font-light leading-relaxed max-w-md mb-8">
-            Круглосуточный диспетчерский центр. Полная конфиденциальность.
-          </p>
-
+          <p className="text-neutral-400 text-lg font-light leading-relaxed max-w-md mb-8">{t("contact.info")}</p>
           <div className="flex flex-col gap-6 mb-8">
             <a href="tel:+74951203456" className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
               <Phone className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
               <span className="text-lg tracking-wide">8 (495) 120-34-56</span>
               <span className="text-xs text-neutral-600 uppercase tracking-widest">24/7</span>
             </a>
-
             <a href="mailto:help@auraremediation.com" className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
               <Send className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
               <span className="text-lg tracking-wide">help@auraremediation.com</span>
             </a>
           </div>
-
           <div className="flex gap-6">
-            <a
-              href="https://wa.me/74951203456"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
-            >
-              WhatsApp
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
+            <a href="https://max.ru/pureaura" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+              MAX <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
-            <a
-              href="https://t.me/pureaura"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
-            >
-              Telegram
-              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
+            <a href="https://t.me/pureaura" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+              Telegram <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
           </div>
         </div>
 
-        {/* Right: Form panel */}
         <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
           {!success ? (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
-                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Имя</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="—"
-                  required
-                  className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 text-lg"
-                />
+                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.name")}</label>
+                <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="—" required className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 text-lg" />
               </div>
-
               <div className="flex flex-col gap-2">
-                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Телефон</label>
-                <input
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handlePhoneChange}
-                  placeholder="+7 (___) ___-__-__"
-                  required
-                  className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 text-lg"
-                />
+                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.phone")}</label>
+                <input type="tel" value={formData.phone} onChange={handlePhoneChange} placeholder="+7 (___) ___-__-__" required className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 text-lg" />
               </div>
-
               <div className="flex flex-col gap-2">
-                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">Сообщение (необязательно)</label>
-                <textarea
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Опишите ситуацию..."
-                  rows={2}
-                  className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 resize-none text-lg"
-                ></textarea>
+                <label className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.message")}</label>
+                <textarea value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-white/20 py-4 focus:outline-none focus:border-[rgba(94,234,212,0.5)] transition-colors text-white placeholder-neutral-700 resize-none text-lg"></textarea>
               </div>
-
-              {/* Honeypot */}
-              <input
-                type="text"
-                value={formData.website}
-                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                className="absolute -left-[9999px] opacity-0"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 rounded-full text-xs font-semibold uppercase tracking-[0.12em] flex items-center justify-center gap-3 mt-4 transition-all duration-300 hover:brightness-110 hover:scale-[1.01] disabled:opacity-50"
-                style={{ backgroundColor: "var(--accent)", color: "var(--bg-deep)" }}
-              >
+              <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" />
+              <button type="submit" disabled={loading} className="btn-primary w-full py-4 mt-4 disabled:opacity-50">
                 {loading ? (
-                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.3" />
-                    <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
+                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.3" /><path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
                 ) : (
-                  <>
-                    <Send className="w-4 h-4" strokeWidth={1.5} />
-                    Отправить запрос
-                  </>
+                  <><Send className="w-4 h-4" strokeWidth={1.5} />{t("contact.submit")}</>
                 )}
               </button>
-
-              <p className="text-[11px] text-neutral-600 tracking-wide">
-                Нажимая кнопку, вы подтверждаете согласие на обработку персональных данных.
-              </p>
+              <p className="text-[11px] text-neutral-600 tracking-wide">{t("contact.consent")}</p>
             </form>
           ) : (
             <div className="flex flex-col items-center justify-center py-24">
               <div className="success-check text-6xl mb-6">✓</div>
-              <h3 className="text-3xl font-bold uppercase tracking-tighter mb-4">Запрос отправлен</h3>
-              <p className="text-neutral-500 text-sm tracking-wide">
-                Мы свяжемся с вами в течение 15 минут.
-              </p>
+              <h3 className="text-3xl font-bold uppercase tracking-tighter mb-4">{t("contact.success_heading")}</h3>
+              <p className="text-neutral-500 text-sm tracking-wide">{t("contact.success_desc")}</p>
             </div>
           )}
         </div>

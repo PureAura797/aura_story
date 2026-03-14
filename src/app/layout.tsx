@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
+import Providers from "@/components/Providers";
 
 const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin", "cyrillic-ext"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -325,9 +326,11 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#0b0c0f] text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
-        <SmoothScroller />
-        <CustomCursor />
-        {children}
+        <Providers>
+          <SmoothScroller />
+          <CustomCursor />
+          {children}
+        </Providers>
       </body>
     </html>
   );
