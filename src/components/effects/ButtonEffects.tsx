@@ -1,162 +1,176 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 
 /**
- * ButtonEffects — Global event-delegation component.
- * Automatically applies magnetic-fill hover + border-trace click effect
- * to all matching interactive button elements on the page.
+ * ButtonEffects — "Blur Materialisation" system.
+ * 
+ * Matches the blur-to-focus aesthetic from Preloader (blur 20→0)
+ * and Burger Menu (blur 8→0) — adapted for button micro-interactions.
  *
- * Targeted selectors:
- *   .btn-primary, .btn-ghost, .mag-btn
+ * HOVER IN:  text briefly blurs (3px) + fades → snaps back to sharp focus
+ * HOVER OUT: quick micro-blur (2px) → resolves back
+ * CLICK:     sharp blur pulse (4px) + scale(0.97) → elastic snap-back
+ *            + accent border flash with glow
  *
- * Technique:
- *   HOVER: accent-colored overlay expands as a circle from cursor position via clipPath
- *   CLICK: border briefly flashes accent + scale bounce (0.97 → 1.0)
+ * Targeted: .btn-primary, .btn-ghost, .mag-btn
  */
 
 const SELECTORS = ".btn-primary, .btn-ghost, .mag-btn";
 
-// Overlay element pool (reuse the same overlay div per button)
-const overlayMap = new WeakMap<HTMLElement, HTMLDivElement>();
-
-function getOrCreateOverlay(btn: HTMLElement): HTMLDivElement {
-  let overlay = overlayMap.get(btn);
-  if (overlay && overlay.parentElement === btn) return overlay;
-
-  overlay = document.createElement("div");
-  overlay.className = "mag-fill-overlay";
-  overlay.style.cssText = `
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    clip-path: circle(0% at 50% 50%);
-  `;
-
-  // Make sure button has relative positioning for overlay
-  const computed = getComputedStyle(btn);
-  if (computed.position === "static") {
-    btn.style.position = "relative";
-  }
-
-  // Ensure button content stays above the overlay
-  Array.from(btn.children).forEach((child) => {
-    if (child !== overlay && child instanceof HTMLElement) {
-      if (!child.style.position || child.style.position === "static") {
-        child.style.position = "relative";
-        child.style.zIndex = "1";
-      }
-    }
-  });
-
-  btn.style.overflow = "hidden";
-  btn.appendChild(overlay);
-  overlayMap.set(btn, overlay);
-  return overlay;
-}
-
-function getAccentColor(btn: HTMLElement): string {
-  // btn-primary is white bg → accent fill is dark teal on hover
-  if (btn.classList.contains("btn-primary")) {
-    return "rgba(94, 234, 212, 0.15)";
-  }
-  // Ghost & mag-btn → accent teal fill
-  return "rgba(94, 234, 212, 0.08)";
-}
-
-function getBorderColor(btn: HTMLElement): string {
-  if (btn.classList.contains("btn-primary")) {
-    return "rgba(94, 234, 212, 0.4)";
-  }
-  return "rgba(94, 234, 212, 0.35)";
-}
-
 export default function ButtonEffects() {
-  const lastEnterPos = useRef<{ x: string; y: string }>({ x: "50%", y: "50%" });
-
   useEffect(() => {
-    // --- HOVER: Radial fill from cursor ---
+    // Track which buttons are currently animating to prevent conflicts
+    const animatingSet = new WeakSet<HTMLElement>();
+
+    // --- HOVER IN: Blur materialisation ---
     const handleMouseEnter = (e: MouseEvent) => {
       const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
-      if (!btn) return;
+      if (!btn || animatingSet.has(btn)) return;
+      animatingSet.add(btn);
 
-      const rect = btn.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      const pos = { x: `${x}%`, y: `${y}%` };
-      lastEnterPos.current = pos;
+      // Get all direct text/icon children (skip overlay divs)
+      const content = Array.from(btn.children).filter(
+        (c) => c instanceof HTMLElement && !c.classList.contains("mag-fill-overlay")
+      ) as HTMLElement[];
 
-      const overlay = getOrCreateOverlay(btn);
-      overlay.style.background = getAccentColor(btn);
-
-      gsap.killTweensOf(overlay);
-      gsap.set(overlay, { clipPath: `circle(0% at ${pos.x} ${pos.y})` });
-      gsap.to(overlay, {
-        clipPath: `circle(150% at ${pos.x} ${pos.y})`,
-        duration: 0.5,
-        ease: "power2.out",
+      const tl = gsap.timeline({
+        onComplete: () => animatingSet.delete(btn),
       });
+
+      // Phase 1: Instant blur + slight opacity drop
+      tl.set(content, {
+        filter: "blur(3px)",
+        opacity: 0.5,
+      });
+
+      // Phase 2: Materialise — snap into focus (like preloader letters landing)
+      tl.to(content, {
+        filter: "blur(0px)",
+        opacity: 1,
+        duration: 0.35,
+        ease: "power3.out",
+        stagger: 0.03,
+      });
+
+      // Subtle border glow fade-in
+      const isPrimary = btn.classList.contains("btn-primary");
+      const glowColor = isPrimary
+        ? "rgba(255, 255, 255, 0.12)"
+        : "rgba(94, 234, 212, 0.15)";
+
+      tl.to(btn, {
+        boxShadow: `0 0 20px ${glowColor}, inset 0 0 0 1px ${glowColor}`,
+        duration: 0.4,
+        ease: "power2.out",
+      }, 0.05);
+
+      // Gentle lift
+      tl.to(btn, {
+        y: -2,
+        duration: 0.4,
+        ease: "power3.out",
+      }, 0);
     };
 
+    // --- HOVER OUT: Quick blur dissolve ---
     const handleMouseLeave = (e: MouseEvent) => {
       const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
       if (!btn) return;
 
-      const overlay = overlayMap.get(btn);
-      if (!overlay) return;
+      const content = Array.from(btn.children).filter(
+        (c) => c instanceof HTMLElement && !c.classList.contains("mag-fill-overlay")
+      ) as HTMLElement[];
 
-      const rect = btn.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      animatingSet.delete(btn);
 
-      gsap.killTweensOf(overlay);
-      gsap.to(overlay, {
-        clipPath: `circle(0% at ${x}% ${y}%)`,
-        duration: 0.4,
+      const tl = gsap.timeline();
+
+      // Brief blur out (like menu links fading)
+      tl.to(content, {
+        filter: "blur(2px)",
+        opacity: 0.7,
+        duration: 0.1,
         ease: "power2.in",
       });
+
+      // Resolve back to sharp
+      tl.to(content, {
+        filter: "blur(0px)",
+        opacity: 1,
+        duration: 0.25,
+        ease: "power2.out",
+      });
+
+      // Reset glow + position
+      tl.to(btn, {
+        boxShadow: "0 0 0 0 transparent",
+        y: 0,
+        duration: 0.35,
+        ease: "power3.out",
+      }, 0);
     };
 
-    // --- CLICK: Border flash + scale bounce ---
+    // --- CLICK: Impact blur + elastic snap ---
     const handleClick = (e: MouseEvent) => {
       const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
       if (!btn) return;
 
-      // Scale bounce
-      gsap.to(btn, {
-        scale: 0.97,
-        duration: 0.1,
+      const content = Array.from(btn.children).filter(
+        (c) => c instanceof HTMLElement && !c.classList.contains("mag-fill-overlay")
+      ) as HTMLElement[];
+
+      const isPrimary = btn.classList.contains("btn-primary");
+      const accentColor = isPrimary
+        ? "rgba(255, 255, 255, 0.25)"
+        : "rgba(94, 234, 212, 0.35)";
+
+      const tl = gsap.timeline();
+
+      // Impact — blur + scale crush
+      tl.to(content, {
+        filter: "blur(4px)",
+        opacity: 0.6,
+        duration: 0.08,
         ease: "power2.in",
-        onComplete: () => {
-          gsap.to(btn, {
-            scale: 1,
-            duration: 0.4,
-            ease: "elastic.out(1, 0.4)",
-          });
-        },
       });
 
-      // Border trace flash
-      const borderColor = getBorderColor(btn);
-      const origBoxShadow = getComputedStyle(btn).boxShadow;
+      tl.to(btn, {
+        scale: 0.97,
+        duration: 0.08,
+        ease: "power2.in",
+      }, 0);
 
-      gsap.to(btn, {
-        boxShadow: `inset 0 0 0 1.5px ${borderColor}, 0 0 16px ${borderColor}`,
-        duration: 0.15,
+      // Snap-back with elastic (like preloader breath pulse)
+      tl.to(content, {
+        filter: "blur(0px)",
+        opacity: 1,
+        duration: 0.5,
+        ease: "power3.out",
+      });
+
+      tl.to(btn, {
+        scale: 1,
+        duration: 0.6,
+        ease: "elastic.out(1, 0.4)",
+      }, "-=0.5");
+
+      // Border flash
+      tl.to(btn, {
+        boxShadow: `inset 0 0 0 1.5px ${accentColor}, 0 0 24px ${accentColor}`,
+        duration: 0.1,
         ease: "power2.out",
-        onComplete: () => {
-          gsap.to(btn, {
-            boxShadow: origBoxShadow === "none" ? "0 0 0 0 transparent" : origBoxShadow,
-            duration: 0.6,
-            ease: "power3.out",
-          });
-        },
-      });
+      }, 0);
+
+      tl.to(btn, {
+        boxShadow: "0 0 0 0 transparent",
+        duration: 0.8,
+        ease: "power3.out",
+      }, 0.15);
     };
 
-    // Event delegation on document
+    // Event delegation on document (capture phase)
     document.addEventListener("mouseenter", handleMouseEnter, true);
     document.addEventListener("mouseleave", handleMouseLeave, true);
     document.addEventListener("click", handleClick, true);
@@ -168,5 +182,5 @@ export default function ButtonEffects() {
     };
   }, []);
 
-  return null; // This is a side-effect-only component
+  return null; // Side-effect-only component
 }

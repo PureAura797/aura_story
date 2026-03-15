@@ -86,7 +86,7 @@ export default function ExitIntentPopup() {
         <p className="text-[10px] uppercase tracking-[0.2em] font-medium mb-4" style={{ color: "var(--accent)" }}>
           Подождите
         </p>
-        <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tighter mb-4">
+        <h3 className="text-2xl sm:text-3xl font-bold tracking-tighter mb-4">
           Нужна помощь
           <br />
           прямо сейчас?

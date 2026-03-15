@@ -198,7 +198,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile burger — z-[70] stays above overlay */}
+          {/* Mobile burger — clean instant swap */}
           <button 
             onClick={toggleMenu} 
             className="lg:hidden text-white cursor-pointer p-1 -mr-1 relative z-[70]" 
