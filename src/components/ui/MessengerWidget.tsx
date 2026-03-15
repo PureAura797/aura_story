@@ -68,7 +68,7 @@ export default function MessengerWidget() {
       {/* Expanded panel */}
       <div
         ref={panelRef}
-        className={`fixed bottom-[120px] left-4 lg:bottom-20 lg:left-6 z-50 ${expanded && isShown ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed bottom-[120px] left-5 sm:left-10 lg:bottom-20 lg:left-[8vw] z-50 ${expanded && isShown ? "pointer-events-auto" : "pointer-events-none"}`}
         style={{ opacity: 0 }}
       >
         <div className="bg-[#111214] border border-white/10 backdrop-blur-xl p-5 w-[260px] sm:w-[280px] shadow-2xl">
@@ -114,7 +114,7 @@ export default function MessengerWidget() {
       <button
         ref={fabRef}
         onClick={() => setExpanded(!expanded)}
-        className="fixed bottom-[68px] left-4 lg:bottom-6 lg:left-6 z-50 w-12 h-12 sm:w-13 sm:h-13 border border-white/15 bg-white/[0.04] backdrop-blur-xl flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-white/30 cursor-pointer group"
+        className="fixed bottom-[68px] left-5 sm:left-10 lg:bottom-6 lg:left-[8vw] z-50 w-12 h-12 sm:w-13 sm:h-13 border border-white/15 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)] flex items-center justify-center transition-all duration-300 hover:bg-white/[0.08] hover:border-white/30 cursor-pointer group"
         style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
         aria-label={expanded ? "Закрыть мессенджеры" : "Написать в мессенджер"}
       >
