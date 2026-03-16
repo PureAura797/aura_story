@@ -8,7 +8,7 @@ import { scProps } from '@/lib/scrollProps';
 export default function TrafficStreaks() {
   const lineRef = useRef<THREE.LineSegments>(null);
   
-  const streakCount = 500;
+  const streakCount = 250;
   
   const { positions, colors, speeds } = useMemo(() => {
     const pos = new Float32Array(streakCount * 2 * 3);

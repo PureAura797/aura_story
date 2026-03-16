@@ -1,7 +1,8 @@
 'use client';
 
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera, Environment } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import Particles from './Particles';
 import TrafficStreaks from './TrafficStreaks';
 import { useRef } from 'react';
@@ -76,6 +77,9 @@ export default function Scene() {
         <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={45} near={0.1} far={100} />
         <fog attach="fog" args={['#0b0c0f', 12, 35]} />
         
+        {/* HDRI environment for realistic reflections on physical material */}
+        <Environment preset="city" background={false} environmentIntensity={0.4} />
+
         <ambientLight intensity={0.6} />
         <directionalLight position={[10, 10, 10]} intensity={3} />
         <DynamicLighting />
@@ -84,10 +88,19 @@ export default function Scene() {
           <Particles />
         </group>
         <TrafficStreaks />
+
+        {/* Subtle cinematic bloom on bright edges */}
+        <EffectComposer>
+          <Bloom 
+            luminanceThreshold={0.6}
+            luminanceSmoothing={0.9}
+            intensity={0.35}
+            mipmapBlur
+          />
+        </EffectComposer>
       </Canvas>
       {/* Vignette overlay for depth */}
       <div className="scene-vignette" />
     </div>
   );
 }
-

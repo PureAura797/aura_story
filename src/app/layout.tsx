@@ -1,12 +1,14 @@
-import { Plus_Jakarta_Sans, Bebas_Neue } from "next/font/google";
+import { Inter, Bebas_Neue, Unbounded, Jost } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
 
-const plusJakarta = Plus_Jakarta_Sans({ subsets: ["latin", "cyrillic-ext"], variable: "--font-body" });
+const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
+const unbounded = Unbounded({ subsets: ["latin", "cyrillic"], variable: "--font-unbounded", weight: ["200","300","400","500","600","700"] });
+const jost = Jost({ subsets: ["latin", "cyrillic"], variable: "--font-jost" });
 
 export const viewport: Viewport = {
   themeColor: "#0b0c0f",
@@ -301,8 +303,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`dark ${plusJakarta.variable} ${bebasNeue.variable}`}>
+    <html lang="ru" className={`dark ${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} style={{ backgroundColor: "#0b0c0f" }}>
       <head>
+        {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
+        <style dangerouslySetInnerHTML={{ __html: `html{background:#0b0c0f!important}body{background:transparent!important}` }} />
         <link
           rel="icon"
           href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b0c0f'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%232dd4bf' stroke-width='2'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232dd4bf'/%3E%3Cpath d='M44 48 Q50 65 56 48' fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"
@@ -325,7 +329,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
         />
       </head>
-      <body className="bg-[#0b0c0f] text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
+      <body className="text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
         <Providers>
           <SmoothScroller />
           <CustomCursor />

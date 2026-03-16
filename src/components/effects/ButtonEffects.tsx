@@ -26,7 +26,9 @@ export default function ButtonEffects() {
 
     // --- HOVER IN: Blur materialisation ---
     const handleMouseEnter = (e: MouseEvent) => {
-      const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
+      const target = e.target as Element;
+      if (!target || typeof target.closest !== 'function') return;
+      const btn = target.closest<HTMLElement>(SELECTORS);
       if (!btn || animatingSet.has(btn)) return;
       animatingSet.add(btn);
 
@@ -76,7 +78,9 @@ export default function ButtonEffects() {
 
     // --- HOVER OUT: Quick blur dissolve ---
     const handleMouseLeave = (e: MouseEvent) => {
-      const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
+      const target = e.target as Element;
+      if (!target || typeof target.closest !== 'function') return;
+      const btn = target.closest<HTMLElement>(SELECTORS);
       if (!btn) return;
 
       const content = Array.from(btn.children).filter(
@@ -114,7 +118,9 @@ export default function ButtonEffects() {
 
     // --- CLICK: Impact blur + elastic snap ---
     const handleClick = (e: MouseEvent) => {
-      const btn = (e.target as HTMLElement).closest<HTMLElement>(SELECTORS);
+      const target = e.target as Element;
+      if (!target || typeof target.closest !== 'function') return;
+      const btn = target.closest<HTMLElement>(SELECTORS);
       if (!btn) return;
 
       const content = Array.from(btn.children).filter(
