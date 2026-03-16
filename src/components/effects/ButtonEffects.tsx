@@ -36,7 +36,7 @@ export default function ButtonEffects() {
       ) as HTMLElement[];
 
       const tl = gsap.timeline({
-        onComplete: () => animatingSet.delete(btn),
+        onComplete: () => { animatingSet.delete(btn); },
       });
 
       // Phase 1: Instant blur + slight opacity drop
