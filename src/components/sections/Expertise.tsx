@@ -6,10 +6,12 @@ import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { PhoneCall } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function Expertise() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   const items = [
     { title: t("expertise.1.title"), description: t("expertise.1.desc") },
@@ -68,7 +70,7 @@ export default function Expertise() {
         
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 px-8 pb-8 pt-4 border-t border-white/5">
           <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">{t("expertise.cta_text")}</p>
-          <a href="tel:+74951203456" className="btn-primary shrink-0">
+          <a href={`tel:${contacts.phone}`} className="btn-primary shrink-0">
             <PhoneCall className="w-3.5 h-3.5" strokeWidth={1.5} />
             {t("expertise.cta_btn")}
           </a>

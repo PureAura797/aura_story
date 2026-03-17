@@ -2,6 +2,7 @@
 
 import { PhoneCall } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 interface SectionCTAProps {
   variant?: "call" | "form";
@@ -14,6 +15,7 @@ function scrollToSection(id: string) {
 
 export default function SectionCTA({ variant = "call", label }: SectionCTAProps) {
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   if (variant === "form") {
     return (
@@ -37,12 +39,12 @@ export default function SectionCTA({ variant = "call", label }: SectionCTAProps)
         {label || t("cta.call_default")}
       </p>
       <a
-        href="tel:+74951203456"
+        href={`tel:${contacts.phone}`}
         className="btn-primary shrink-0 px-5 sm:px-6 py-2.5"
-        aria-label="8 495 120-34-56"
+        aria-label={contacts.phoneDisplay}
       >
         <PhoneCall className="w-3 h-3" strokeWidth={2} aria-hidden="true" />
-        8 (495) 120-34-56
+        {contacts.phoneDisplay}
       </a>
     </div>
   );

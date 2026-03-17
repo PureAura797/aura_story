@@ -5,12 +5,14 @@ import { PhoneCall } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function EmergencyButton() {
   const btnRef = useRef<HTMLAnchorElement>(null);
   const [visible, setVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   // Watch for data-modal-open attribute changes
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function EmergencyButton() {
   return (
     <a
       ref={btnRef}
-      href="tel:+74951203456"
+      href={`tel:${contacts.phone}`}
       className="fixed bottom-[68px] right-5 sm:right-10 lg:bottom-6 lg:right-[8vw] z-50 h-12 flex items-center gap-2.5 px-4 border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-300 hover:bg-white/[0.08] hover:border-white/20 group"
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"

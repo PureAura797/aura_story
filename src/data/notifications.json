@@ -1,0 +1,26 @@
+{
+  "email": {
+    "enabled": false,
+    "recipients": "",
+    "smtp": {
+      "host": "",
+      "port": 587,
+      "user": "",
+      "pass": "pureaura2026"
+    }
+  },
+  "telegram": {
+    "enabled": false,
+    "botToken": "",
+    "chatIds": ""
+  },
+  "max": {
+    "enabled": false,
+    "botToken": "",
+    "chatIds": ""
+  },
+  "webhook": {
+    "enabled": false,
+    "url": ""
+  }
+}

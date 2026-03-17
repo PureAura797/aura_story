@@ -3,6 +3,7 @@
 import { Phone, ArrowUpRight } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 /** Scroll to section by id — without polluting the URL hash */
 function scrollToSection(id: string) {
@@ -14,6 +15,7 @@ function scrollToSection(id: string) {
 
 export default function Footer() {
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   return (
     <footer className="bg-black text-white relative z-[60] border-t border-white/10" role="contentinfo" aria-label="Footer">
@@ -60,18 +62,18 @@ export default function Footer() {
         <address className="not-italic">
           <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.contact_label")}</p>
           <a
-            href="tel:+74951203456"
+            href={`tel:${contacts.phone}`}
             className="group flex items-center gap-2 text-white hover:opacity-80 transition-opacity mb-4"
-            aria-label="Call 8 495 120-34-56"
+            aria-label={`Call ${contacts.phoneDisplay}`}
           >
             <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
-            <span className="text-sm font-medium tracking-wide">8 (495) 120-34-56</span>
+            <span className="text-sm font-medium tracking-wide">{contacts.phoneDisplay}</span>
           </a>
           <p className="text-xs text-neutral-600 mb-6">{t("footer.contact_schedule")}</p>
 
           <div className="flex gap-6">
             <a
-              href="https://max.ru/pureaura"
+              href={contacts.max}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Message on MAX"
@@ -80,7 +82,7 @@ export default function Footer() {
               MAX <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
             </a>
             <a
-              href="https://t.me/pureaura"
+              href={contacts.telegram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Message on Telegram"

@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
+import AnalyticsScripts from "@/components/AnalyticsScripts";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -335,6 +336,7 @@ export default function RootLayout({
           <CustomCursor />
           {children}
         </Providers>
+        <AnalyticsScripts />
       </body>
     </html>
   );

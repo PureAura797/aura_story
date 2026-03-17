@@ -3,12 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import { X, PhoneCall } from "lucide-react";
 import gsap from "gsap";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function ExitIntentPopup() {
   const [shown, setShown] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const contacts = useContacts();
 
   useEffect(() => {
     // Only on desktop (mouse-based)
@@ -97,7 +99,7 @@ export default function ExitIntentPopup() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <a
-            href="tel:+74951203456"
+            href={`tel:${contacts.phone}`}
             className="btn-primary px-6 py-3.5"
             aria-label="Позвонить 8 495 120-34-56"
           >

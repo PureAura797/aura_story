@@ -8,6 +8,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import CallbackModal from "@/components/ui/CallbackModal";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 /** Scroll to section by id — without polluting the URL hash */
 function scrollToSection(id: string) {
@@ -22,6 +23,7 @@ export default function Navbar() {
   const [modalOpen, setModalOpen] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t, locale, setLocale } = useTranslation();
+  const contacts = useContacts();
   const isAnimating = useRef(false);
 
   useGSAP(() => {
@@ -183,12 +185,12 @@ export default function Navbar() {
               {t("lang.switch")}
             </button>
             <a
-              href="tel:+74951203456"
+              href={`tel:${contacts.phone}`}
               className="text-[11px] font-medium text-neutral-500 uppercase tracking-[0.15em] hover:text-white transition-colors flex items-center gap-2"
-              aria-label="Позвонить 8 495 120-34-56"
+              aria-label={`Позвонить ${contacts.phoneDisplay}`}
             >
               <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
-              8 (495) 120-34-56
+              {contacts.phoneDisplay}
             </a>
             <button 
               onClick={() => setModalOpen(true)}
@@ -224,9 +226,9 @@ export default function Navbar() {
           
           <div className="w-16 h-[1px] bg-white/20 my-4 menu-divider origin-left"></div>
           
-          <a href="tel:+74951203456" className="text-lg text-neutral-400 hover:text-white flex items-center gap-3 transition-colors mobile-link" aria-label="Позвонить 8 495 120-34-56">
+          <a href={`tel:${contacts.phone}`} className="text-lg text-neutral-400 hover:text-white flex items-center gap-3 transition-colors mobile-link" aria-label={`Позвонить ${contacts.phoneDisplay}`}>
             <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-            8 (495) 120-34-56
+            {contacts.phoneDisplay}
           </a>
           
           <button
@@ -245,10 +247,10 @@ export default function Navbar() {
           </button>
           
           <div className="flex gap-8 mt-2 mobile-link">
-            <a href="https://max.ru/pureaura" target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
+            <a href={contacts.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
               MAX <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
-            <a href="https://t.me/pureaura" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
+            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
               Telegram <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
           </div>

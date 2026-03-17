@@ -6,10 +6,12 @@ import { useGSAP } from "@gsap/react";
 import { PhoneCall, ArrowRight } from "lucide-react";
 import AvailabilityPulse from "@/components/ui/AvailabilityPulse";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -57,7 +59,7 @@ export default function Hero() {
       <div className="hero-reveal mt-8 md:mt-10 flex flex-col sm:flex-row gap-3 pointer-events-auto">
         {/* Primary — white fill + shimmer + glow pulse */}
         <a
-          href="tel:+74951203456"
+          href={`tel:${contacts.phone}`}
           aria-label={t("hero.cta_emergency")}
           className="btn-primary btn-primary--hero w-full sm:w-auto"
         >

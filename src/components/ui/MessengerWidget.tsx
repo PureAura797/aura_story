@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function MessengerWidget() {
   const [visible, setVisible] = useState(false);
@@ -11,6 +12,7 @@ export default function MessengerWidget() {
   const [modalOpen, setModalOpen] = useState(false);
   const fabRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const contacts = useContacts();
 
   // Show after scrolling past hero
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function MessengerWidget() {
           </p>
           <div className="flex flex-col gap-2.5">
             <a
-              href="https://max.ru/pureaura"
+              href={contacts.max}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в MAX"
@@ -92,7 +94,7 @@ export default function MessengerWidget() {
               </div>
             </a>
             <a
-              href="https://t.me/pureaura"
+              href={contacts.telegram}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в Telegram"

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { PhoneCall, Zap, Clock, Calculator } from "lucide-react";
 import gsap from "gsap";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 function formatPrice(n: number): string {
   return n.toLocaleString("ru-RU") + " ₽";
@@ -11,6 +12,7 @@ function formatPrice(n: number): string {
 
 export default function CostCalculator() {
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   const services = [
     { id: "death", label: t("calc.service_death"), base: 15000 },
@@ -157,7 +159,7 @@ export default function CostCalculator() {
               })}
             </div>
           </div>
-          <a href="tel:+74951203456" className="btn-primary w-full flex items-center justify-center gap-2 text-center">
+          <a href={`tel:${contacts.phone}`} className="btn-primary w-full flex items-center justify-center gap-2 text-center">
             <PhoneCall className="w-4 h-4" strokeWidth={1.5} />
             <span>{t("calc.cta")}</span>
           </a>

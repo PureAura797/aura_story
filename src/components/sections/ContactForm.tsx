@@ -6,12 +6,14 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
+import { useContacts } from "@/lib/contacts-context";
 
 export default function ContactForm() {
   const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const { t } = useTranslation();
+  const contacts = useContacts();
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "", website: "" });
 
@@ -42,16 +44,19 @@ export default function ContactForm() {
     e.preventDefault();
     if (formData.website) return;
     setLoading(true);
-    const WEBHOOK_URL = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "";
     try {
-      if (WEBHOOK_URL) {
-        await fetch(WEBHOOK_URL, {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ form_type: "contact_form", name: formData.name, phone: formData.phone, message: formData.message, source: window.location.href, submitted_at: new Date().toISOString() }),
-        });
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      }
+      await fetch("/api/submit-form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          form_type: "contact_form",
+          name: formData.name,
+          phone: formData.phone,
+          message: formData.message,
+          source: window.location.href,
+          submitted_at: new Date().toISOString(),
+        }),
+      });
       setSuccess(true);
       gsap.fromTo(".success-check", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)", delay: 0.1 });
     } catch {
@@ -60,6 +65,7 @@ export default function ContactForm() {
       setLoading(false);
     }
   };
+
 
   return (
     <section ref={sectionRef} className="w-full flex flex-col items-start z-10 relative">
@@ -73,21 +79,21 @@ export default function ContactForm() {
         <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
           <p className="text-neutral-400 text-lg font-light leading-relaxed max-w-md mb-8">{t("contact.info")}</p>
           <div className="flex flex-col gap-6 mb-8">
-            <a href="tel:+74951203456" className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
+            <a href={`tel:${contacts.phone}`} className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
               <Phone className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
-              <span className="text-lg tracking-wide">8 (495) 120-34-56</span>
+              <span className="text-lg tracking-wide">{contacts.phoneDisplay}</span>
               <span className="text-xs text-neutral-600 uppercase tracking-widest">24/7</span>
             </a>
-            <a href="mailto:help@auraremediation.com" className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
+            <a href={`mailto:${contacts.email}`} className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
               <Send className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
-              <span className="text-lg tracking-wide">help@auraremediation.com</span>
+              <span className="text-lg tracking-wide">{contacts.email}</span>
             </a>
           </div>
           <div className="flex gap-6">
-            <a href="https://max.ru/pureaura" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+            <a href={contacts.max} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
               MAX <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
-            <a href="https://t.me/pureaura" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
               Telegram <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
           </div>
