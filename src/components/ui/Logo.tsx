@@ -19,7 +19,7 @@ const sizeConfig = {
   sm:  { emblem: "w-6 h-auto",  text: "text-[12px]", gap: "gap-2"  },
   md:  { emblem: "w-10 h-auto", text: "text-[18px]", gap: "gap-3"  },
   lg:  { emblem: "w-14 h-auto", text: "text-[24px]", gap: "gap-3"  },
-  xl:  { emblem: "w-24 md:w-32 h-auto", text: "text-[40px] md:text-[56px]", gap: "gap-4 md:gap-6" },
+  xl:  { emblem: "w-28 sm:w-32 md:w-32 h-auto", text: "text-[48px] sm:text-[52px] md:text-[56px]", gap: "gap-4 md:gap-6" },
 };
 
 export default function Logo({ size = "md", ghost = false, className }: LogoProps) {

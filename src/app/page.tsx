@@ -64,7 +64,7 @@ export default function Home() {
         <StoriesSection />
 
         {/* Sec 2: Services — Услуги дезинфекции и биологической очистки */}
-        <section id="services" aria-label="Услуги профессиональной дезинфекции и биологической очистки" className={`min-h-screen w-full flex flex-col justify-center items-end text-right ${SP} py-24`}>
+        <section id="services" aria-label="Услуги профессиональной дезинфекции и биологической очистки" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end text-right ${SP} py-24`}>
             <div className="max-w-3xl pointer-events-auto">
               <Services />
             </div>
@@ -78,7 +78,7 @@ export default function Home() {
         </section>
 
         {/* Sec 3.5: Team — Команда специалистов */}
-        <section id="team" aria-label="Команда сертифицированных специалистов PureAura" className={`min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="team" aria-label="Команда сертифицированных специалистов PureAura" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-5xl pointer-events-auto">
               <Team />
             </div>
@@ -92,7 +92,7 @@ export default function Home() {
         </section>
 
         {/* Sec 5: Portfolio — Кейсы до/после */}
-        <section id="portfolio" aria-label="Портфолио — результаты уборки до и после обработки" className={`min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="portfolio" aria-label="Портфолио — результаты уборки до и после обработки" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-4xl pointer-events-auto">
               <Portfolio />
             </div>
@@ -106,7 +106,7 @@ export default function Home() {
         </section>
 
         {/* Sec 7: Pricing — Цены на уборку и дезинфекцию */}
-        <section id="pricing" aria-label="Стоимость услуг — фиксированные цены на уборку и дезинфекцию" className={`min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="pricing" aria-label="Стоимость услуг — фиксированные цены на уборку и дезинфекцию" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="max-w-4xl pointer-events-auto">
               <Pricing />
             </div>
@@ -120,7 +120,7 @@ export default function Home() {
         </section>
 
         {/* Sec 9: FAQ — Частые вопросы */}
-        <section id="faq" aria-label="Частые вопросы об уборке после смерти и дезинфекции" className={`min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="faq" aria-label="Частые вопросы об уборке после смерти и дезинфекции" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-3xl pointer-events-auto">
               <FAQ />
             </div>
