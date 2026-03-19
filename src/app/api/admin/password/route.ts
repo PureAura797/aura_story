@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // ─── Change password (requires auth) ───
     if (action === "change") {
-      if (!isAdminAuthenticatedFromRequest(request)) {
+      if (!(await isAdminAuthenticatedFromRequest(request))) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
 
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Заполните все поля" }, { status: 400 });
       }
 
-      const result = changePassword(currentPassword, newPassword);
+      const result = await changePassword(currentPassword, newPassword);
       if (!result.success) {
         return NextResponse.json({ error: result.error }, { status: 400 });
       }
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Заполните все поля" }, { status: 400 });
       }
 
-      const result = resetPasswordWithCode(code, newPassword);
+      const result = await resetPasswordWithCode(code, newPassword);
       if (!result.success) {
         return NextResponse.json({ error: result.error }, { status: 400 });
       }

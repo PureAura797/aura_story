@@ -1,47 +1,24 @@
-import fs from "fs";
-import path from "path";
+import { readData, writeData } from "./supabase";
 
-const DATA_DIR = path.join(process.cwd(), "src", "data");
+/* ─── Generic helpers (Supabase-backed) ─── */
 
-function ensureDataDir() {
-  try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-  } catch { /* read-only FS (Vercel) */ }
+export async function readJSON<T>(key: string, fallback: T): Promise<T> {
+  return readData<T>(key, fallback);
 }
 
-export function readJSON<T>(filename: string, fallback: T): T {
-  try {
-    ensureDataDir();
-    const filePath = path.join(DATA_DIR, filename);
-    if (!fs.existsSync(filePath)) return fallback;
-    const raw = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
-
-export function writeJSON<T>(filename: string, data: T): void {
-  try {
-    ensureDataDir();
-    const filePath = path.join(DATA_DIR, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
-  } catch {
-    console.log(`[data] Read-only FS, skipping write: ${filename}`);
-  }
+export async function writeJSON<T>(key: string, data: T): Promise<void> {
+  await writeData(key, data);
 }
 
 // ─── Content ─────────────────────────────────────────
 export type ContentDict = Record<string, string>;
 
-export function getContent(locale: "ru" | "en"): ContentDict {
-  return readJSON<ContentDict>(`content-${locale}.json`, {});
+export async function getContent(locale: "ru" | "en"): Promise<ContentDict> {
+  return readJSON<ContentDict>(`content-${locale}`, {});
 }
 
-export function saveContent(locale: "ru" | "en", data: ContentDict): void {
-  writeJSON(`content-${locale}.json`, data);
+export async function saveContent(locale: "ru" | "en", data: ContentDict): Promise<void> {
+  await writeJSON(`content-${locale}`, data);
 }
 
 // ─── Calculator Config ───────────────────────────────
@@ -94,12 +71,12 @@ const DEFAULT_CALC: CalculatorConfig = {
   },
 };
 
-export function getCalculatorConfig(): CalculatorConfig {
-  return readJSON<CalculatorConfig>("calculator.json", DEFAULT_CALC);
+export async function getCalculatorConfig(): Promise<CalculatorConfig> {
+  return readJSON<CalculatorConfig>("calculator", DEFAULT_CALC);
 }
 
-export function saveCalculatorConfig(config: CalculatorConfig): void {
-  writeJSON("calculator.json", config);
+export async function saveCalculatorConfig(config: CalculatorConfig): Promise<void> {
+  await writeJSON("calculator", config);
 }
 
 // ─── Reviews ─────────────────────────────────────────
@@ -124,10 +101,10 @@ const DEFAULT_REVIEWS: Review[] = [
   { id: "7", author: "Елена Д.", service: "Дезинсекция", text: "Безуспешно боролись с клопами 3 месяца своими силами. Обратились в PureAura — приехали ночью (!), поставили барьер, все сделали конфиденциально. Спим спокойно уже полгода.", date_label: "Июнь 2025", rating: 5, published: true, sort_order: 6 },
 ];
 
-export function getReviews(): Review[] {
-  return readJSON<Review[]>("reviews.json", DEFAULT_REVIEWS);
+export async function getReviews(): Promise<Review[]> {
+  return readJSON<Review[]>("reviews", DEFAULT_REVIEWS);
 }
 
-export function saveReviews(reviews: Review[]): void {
-  writeJSON("reviews.json", reviews);
+export async function saveReviews(reviews: Review[]): Promise<void> {
+  await writeJSON("reviews", reviews);
 }

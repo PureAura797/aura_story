@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!password || !verifyPassword(password)) {
+    if (!password || !(await verifyPassword(password))) {
       return NextResponse.json(
         { error: "Неверный пароль" },
         {

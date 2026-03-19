@@ -5,13 +5,13 @@ import ru from "@/lib/i18n/ru";
 import en from "@/lib/i18n/en";
 
 export async function GET(request: NextRequest) {
-  if (!isAdminAuthenticatedFromRequest(request)) {
+  if (!(await isAdminAuthenticatedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const locale = request.nextUrl.searchParams.get("locale") || "ru";
   const defaults = locale === "en" ? en : ru;
-  const overrides = getContent(locale as "ru" | "en");
+  const overrides = await getContent(locale as "ru" | "en");
 
   // Merge defaults with overrides
   const merged = { ...defaults, ...overrides };
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  if (!isAdminAuthenticatedFromRequest(request)) {
+  if (!(await isAdminAuthenticatedFromRequest(request))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    saveContent(locale, overrides);
+    await saveContent(locale, overrides);
     return NextResponse.json({ success: true, overrideCount: Object.keys(overrides).length });
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
