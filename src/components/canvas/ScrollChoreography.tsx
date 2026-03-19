@@ -222,7 +222,7 @@ export default function ScrollChoreography() {
       if (totalScroll <= 0) return;
 
       // Collect valid sections with their DOM positions
-      const sections: { progress: number; props: Partial<typeof scProps>; trigger: string }[] = [];
+      const sections: { progress: number; props: Partial<typeof scProps> }[] = [];
 
       STEPS.forEach((step) => {
         const el = document.querySelector(step.trigger) as HTMLElement | null;
@@ -232,7 +232,7 @@ export default function ScrollChoreography() {
         // Normalize position to 0–1 range (fraction of total scroll)
         const progress = Math.min(top / totalScroll, 1);
 
-        sections.push({ progress, props: step.props, trigger: step.trigger });
+        sections.push({ progress, props: step.props });
       });
 
       if (sections.length === 0) return;
@@ -240,11 +240,6 @@ export default function ScrollChoreography() {
       // Sort by progress (should already be sorted, but safety)
       sections.sort((a, b) => a.progress - b.progress);
 
-      // Debug: log section positions
-      console.log('[Choreography] Total scroll:', totalScroll, 'Page height:', document.documentElement.scrollHeight);
-      sections.forEach((s) => {
-        console.log(`  ${s.trigger}: progress=${(s.progress * 100).toFixed(1)}%`);
-      });
 
       // Build master timeline using normalized time scale (0–100)
       const SCALE = 100;
@@ -265,7 +260,6 @@ export default function ScrollChoreography() {
         }, section.progress * SCALE);
       });
 
-      console.log('[Choreography] Timeline duration:', masterTl.duration());
 
       // Single ScrollTrigger for the ENTIRE page
       scrollTrigger = ScrollTrigger.create({
@@ -285,10 +279,26 @@ export default function ScrollChoreography() {
       });
 
       // Build timeline after preloader (layout is stable)
-      // Increased delay to allow API-fetched sections to load
+      // Large delay ensures API-fetched sections have loaded their data
       setTimeout(() => {
         buildMasterTimeline();
-      }, 600);
+
+        // Poll page height for changes (API sections loading changes height)
+        // Only rebuild if height changed significantly (>200px)
+        let lastHeight = document.documentElement.scrollHeight;
+        let pollCount = 0;
+        const heightPoll = setInterval(() => {
+          pollCount++;
+          const currentHeight = document.documentElement.scrollHeight;
+          if (Math.abs(currentHeight - lastHeight) > 200) {
+            lastHeight = currentHeight;
+            buildMasterTimeline();
+            ScrollTrigger.refresh();
+          }
+          // Stop polling after 8 checks (16 seconds total)
+          if (pollCount >= 8) clearInterval(heightPoll);
+        }, 2000);
+      }, 1500);
     };
 
     window.addEventListener('preloaderComplete', handlePreloaderComplete);
@@ -304,29 +314,10 @@ export default function ScrollChoreography() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Rebuild when API sections finish loading (skeleton → content changes page height)
-    let mutationTimer: ReturnType<typeof setTimeout>;
-    const observer = new MutationObserver(() => {
-      clearTimeout(mutationTimer);
-      mutationTimer = setTimeout(() => {
-        buildMasterTimeline();
-        ScrollTrigger.refresh();
-      }, 500);
-    });
-
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-      observer.observe(mainContent, { childList: true, subtree: true });
-      // Auto-disconnect after 10s (all API data should be loaded by then)
-      setTimeout(() => observer.disconnect(), 10000);
-    }
-
     return () => {
       window.removeEventListener('preloaderComplete', handlePreloaderComplete);
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
-      clearTimeout(mutationTimer);
-      observer.disconnect();
       scrollTrigger?.kill();
       masterTl?.kill();
     };
