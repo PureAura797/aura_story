@@ -47,12 +47,15 @@ export async function GET(request: NextRequest) {
   for (const [category, config] of Object.entries(MEDIA_SLOTS)) {
     const files = config.files.map((filename) => {
       const filePath = path.join(PUBLIC_DIR, config.dir, filename);
-      const exists = fs.existsSync(filePath);
+      let exists = false;
       let size = 0;
-      if (exists) {
-        const stats = fs.statSync(filePath);
-        size = stats.size;
-      }
+      try {
+        exists = fs.existsSync(filePath);
+        if (exists) {
+          const stats = fs.statSync(filePath);
+          size = stats.size;
+        }
+      } catch { /* read-only FS (Vercel) — treat as missing */ }
       return {
         name: filename,
         exists,
