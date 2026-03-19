@@ -190,19 +190,6 @@ const STEPS: ChoreographyStep[] = [
     },
   },
 
-  // Footer — dim everything
-  {
-    trigger: 'footer',
-    props: {
-      formation: 14,
-      groupX: 0,
-      groupY: 0,
-      speedMul: 0.5,
-      lightColor: '#333333',
-      lightIntensity: 4,
-      bgColor: '#080808',
-    },
-  },
 ];
 
 /** Get element's absolute top position */
