@@ -37,7 +37,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "logout" }),
     });
-    router.push("/admin/login");
+    window.location.href = "/admin/login";
   };
 
   const closeSidebar = () => setSidebarOpen(false);

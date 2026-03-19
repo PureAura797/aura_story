@@ -8,6 +8,10 @@ import {
   MAX_FILE_SIZE,
   ALLOWED_EXTENSIONS,
 } from "@/lib/supabase-storage";
+import fs from "fs";
+import path from "path";
+
+const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 // Media categories — folders in Supabase Storage bucket
 const MEDIA_CATEGORIES: Record<string, { dir: string; category: string }> = {
@@ -16,6 +20,23 @@ const MEDIA_CATEGORIES: Record<string, { dir: string; category: string }> = {
   portfolio: { dir: "images/portfolio", category: "portfolio" },
   equipment: { dir: "equipment", category: "equipment" },
 };
+
+// Scan local public/ directory for legacy files
+function scanLocalDir(dirPath: string, extensions: string[]): { name: string; size: number; url: string }[] {
+  const fullDir = path.join(PUBLIC_DIR, dirPath);
+  try {
+    if (!fs.existsSync(fullDir)) return [];
+    return fs.readdirSync(fullDir)
+      .filter((f) => extensions.includes(path.extname(f).toLowerCase()))
+      .sort()
+      .map((name) => {
+        const stats = fs.statSync(path.join(fullDir, name));
+        return { name, size: stats.size, url: `/${dirPath}/${name}` };
+      });
+  } catch {
+    return [];
+  }
+}
 
 export async function GET(request: NextRequest) {
   if (!(await isAdminAuthenticatedFromRequest(request)))
@@ -27,16 +48,28 @@ export async function GET(request: NextRequest) {
   > = {};
 
   for (const [key, config] of Object.entries(MEDIA_CATEGORIES)) {
-    const files = await listFiles(config.dir);
-    // Filter by allowed extensions for this category
     const allowedExts = ALLOWED_EXTENSIONS[config.category] ?? [];
-    const filtered = files.filter((f) => {
+
+    // Get files from Supabase Storage
+    const supabaseFiles = await listFiles(config.dir);
+    const supaFiltered = supabaseFiles.filter((f) => {
       const ext = "." + f.name.split(".").pop()?.toLowerCase();
       return allowedExts.includes(ext);
     });
+
+    // Get files from local public/ (legacy)
+    const localFiles = scanLocalDir(config.dir, allowedExts);
+
+    // Merge: Supabase files take priority, add local files not in Supabase
+    const supaNames = new Set(supaFiltered.map((f) => f.name));
+    const merged = [
+      ...supaFiltered,
+      ...localFiles.filter((f) => !supaNames.has(f.name)),
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
     result[key] = {
       dir: config.dir,
-      files: filtered.map((f) => ({ ...f, exists: true })),
+      files: merged.map((f) => ({ ...f, exists: true })),
     };
   }
 
@@ -96,7 +129,15 @@ export async function DELETE(request: NextRequest) {
     if (!targetPath)
       return NextResponse.json({ error: "Путь обязателен" }, { status: 400 });
 
+    // Try delete from both Supabase and local
     const result = await deleteFile(targetPath);
+
+    // Also try to delete from local filesystem
+    const localPath = path.resolve(PUBLIC_DIR, targetPath);
+    if (localPath.startsWith(PUBLIC_DIR) && fs.existsSync(localPath)) {
+      try { fs.unlinkSync(localPath); } catch { /* ignore */ }
+    }
+
     if (result.error)
       return NextResponse.json({ error: result.error }, { status: 500 });
 
@@ -106,12 +147,11 @@ export async function DELETE(request: NextRequest) {
   }
 }
 
-/** Detect category from path (e.g. "stories/covers/foo.png" → "stories_covers") */
+/** Detect category from path */
 function detectCategory(filePath: string): string {
-  for (const [key, config] of Object.entries(MEDIA_CATEGORIES)) {
+  for (const [, config] of Object.entries(MEDIA_CATEGORIES)) {
     if (filePath.startsWith(config.dir)) return config.category;
   }
-  // Fallback for team/certificates
   if (filePath.startsWith("team/")) return "team";
   if (filePath.startsWith("certificates/")) return "certificates";
   return "portfolio";
