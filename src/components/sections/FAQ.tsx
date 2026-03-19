@@ -69,7 +69,30 @@ export default function FAQ() {
         {t("faq.desc")}
       </p>
 
-      <div className="flex flex-col w-full max-w-3xl gap-3">
+      <div
+        className="flex flex-col w-full max-w-3xl gap-3"
+        role="region"
+        aria-label={t("faq.heading")}
+        onKeyDown={(e) => {
+          const buttons = containerRef.current?.querySelectorAll<HTMLButtonElement>('.faq-card > button');
+          if (!buttons || buttons.length === 0) return;
+          const idx = Array.from(buttons).indexOf(e.target as HTMLButtonElement);
+          if (idx === -1) return;
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            buttons[(idx + 1) % buttons.length]?.focus();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            buttons[(idx - 1 + buttons.length) % buttons.length]?.focus();
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            buttons[0]?.focus();
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            buttons[buttons.length - 1]?.focus();
+          }
+        }}
+      >
         {faqItems.map((item, idx) => (
           <div
             key={item.id}

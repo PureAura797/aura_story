@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Phone, Menu, X, ArrowUpRight, Globe } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -25,6 +25,39 @@ export default function Navbar() {
   const { t, locale, setLocale } = useTranslation();
   const contacts = useContacts();
   const isAnimating = useRef(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // P2: Escape key closes menu + focus trap
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        triggerRef.current?.focus();
+      }
+      // Focus trap: Tab cycles within overlay
+      if (e.key === 'Tab' && overlayRef.current) {
+        const focusable = overlayRef.current.querySelectorAll<HTMLElement>('button, a[href]');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    // Move focus into overlay on open
+    requestAnimationFrame(() => {
+      const firstBtn = overlayRef.current?.querySelector<HTMLElement>('button');
+      firstBtn?.focus();
+    });
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -201,6 +234,7 @@ export default function Navbar() {
           </div>
 
           <button 
+            ref={triggerRef}
             onClick={toggleMenu} 
             className="lg:hidden text-white cursor-pointer p-3 -mr-3 relative z-[70]" 
             aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
@@ -216,6 +250,9 @@ export default function Navbar() {
         ref={overlayRef}
         className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] flex flex-col items-start justify-center px-10"
         style={{ visibility: "hidden", clipPath: "circle(0% at calc(100% - 32px) 28px)" }}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Меню навигации"
       >
         <div className="flex flex-col gap-6">
           <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>

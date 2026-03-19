@@ -367,7 +367,7 @@ export default function StoryModal({
           </motion.div>
 
           {/* Story counter */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-neutral-600 uppercase tracking-[0.2em]">
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] text-neutral-600 uppercase tracking-[0.2em]">
             {storyIndex + 1} / {stories.length}
           </div>
         </motion.div>
