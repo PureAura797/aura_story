@@ -51,8 +51,12 @@ export async function verifyPassword(password: string): Promise<boolean> {
     return isValid;
   }
 
-  // Fallback to env var (first login)
-  const envPassword = process.env.ADMIN_PASSWORD || "pureaura2026";
+  // Fallback to env var (first login — saves hash to DB)
+  const envPassword = process.env.ADMIN_PASSWORD;
+  if (!envPassword) {
+    console.error("🔒 ADMIN_PASSWORD env var not set");
+    return false;
+  }
   if (password === envPassword) {
     await writeData("password", {
       hash: hashPassword(password),
