@@ -177,22 +177,9 @@ const STEPS: ChoreographyStep[] = [
     },
   },
 
-  // Contact
+  // Contact — scatter and fall like leaves as user reaches the form
   {
     trigger: '#contact',
-    props: {
-      formation: 13,
-      groupX: -3,
-      speedMul: 2.0,
-      lightColor: '#5eead4',
-      lightIntensity: 14,
-      bgColor: '#0a0d0f',
-    },
-  },
-
-  // Scatter/Fall — blocks fall like leaves below the footer
-  {
-    trigger: '#scatter-point',
     props: {
       formation: 14,
       groupX: 0,
