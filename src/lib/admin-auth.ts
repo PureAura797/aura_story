@@ -20,7 +20,9 @@ interface Session {
 }
 
 function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  } catch { /* read-only FS (Vercel) */ }
 }
 
 function readSessions(): Session[] {
@@ -28,13 +30,17 @@ function readSessions(): Session[] {
     if (fs.existsSync(SESSIONS_FILE)) {
       return JSON.parse(fs.readFileSync(SESSIONS_FILE, "utf-8"));
     }
-  } catch { /* ignore */ }
+  } catch { /* read-only FS (Vercel) */ }
   return [];
 }
 
 function writeSessions(sessions: Session[]): void {
-  ensureDataDir();
-  fs.writeFileSync(SESSIONS_FILE, JSON.stringify(sessions, null, 2));
+  try {
+    ensureDataDir();
+    fs.writeFileSync(SESSIONS_FILE, JSON.stringify(sessions, null, 2));
+  } catch {
+    console.log("[admin-auth] Read-only FS, skipping session write");
+  }
 }
 
 function hashToken(token: string): string {

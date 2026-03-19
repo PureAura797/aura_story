@@ -38,8 +38,18 @@ function getSavedPasswordData(): { hash: string; changedAt?: string } | null {
       const data = JSON.parse(fs.readFileSync(PASSWORD_FILE, "utf-8"));
       return data.hash ? data : null;
     }
-  } catch { /* ignore */ }
+  } catch { /* read-only FS (Vercel) — fall through */ }
   return null;
+}
+
+/** Safe file write — silently fails on read-only FS (Vercel) */
+function safeWriteJSON(filePath: string, data: unknown): void {
+  try {
+    ensureDataDir();
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  } catch {
+    console.log("[admin-password] Read-only FS, skipping file write");
+  }
 }
 
 export function verifyPassword(password: string): boolean {
@@ -50,29 +60,25 @@ export function verifyPassword(password: string): boolean {
 
     // Auto-migrate legacy SHA256 → scrypt on successful login
     if (isValid && !saved.hash.includes(":")) {
-      ensureDataDir();
-      const migrated = {
+      safeWriteJSON(PASSWORD_FILE, {
         hash: hashPassword(password),
         changedAt: new Date().toISOString(),
         migratedFrom: "sha256",
-      };
-      fs.writeFileSync(PASSWORD_FILE, JSON.stringify(migrated, null, 2));
+      });
       console.log("🔒 Password hash migrated from SHA256 to scrypt");
     }
 
     return isValid;
   }
 
-  // Fallback to .env.local
+  // Fallback to .env.local (works on Vercel without file system)
   const envPassword = process.env.ADMIN_PASSWORD || "pureaura2026";
   if (password === envPassword) {
-    // First login — save as scrypt hash
-    ensureDataDir();
-    const data = {
+    // Try to save hash — silently fails on Vercel
+    safeWriteJSON(PASSWORD_FILE, {
       hash: hashPassword(password),
       changedAt: new Date().toISOString(),
-    };
-    fs.writeFileSync(PASSWORD_FILE, JSON.stringify(data, null, 2));
+    });
     console.log("🔒 Initial password saved with scrypt hash");
     return true;
   }
