@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Upload, Check, AlertCircle, Film, ImageIcon, Briefcase, Wrench, Plus, Trash2 } from "lucide-react";
 import AdminLoader from "../AdminLoader";
+import { useToast } from "@/components/ui/Toast";
+import { ALLOWED_EXTENSIONS, MAX_FILE_SIZE } from "@/lib/supabase-storage";
 
 interface MediaFile {
   name: string;
@@ -35,12 +37,14 @@ function formatSize(bytes: number): string {
 function SlotCard({
   file,
   dir,
+  category,
   onUploadDone,
   onDelete,
   isVideo,
 }: {
   file: MediaFile;
   dir: string;
+  category: string;
   onUploadDone: () => void;
   onDelete: (dir: string, name: string) => void;
   isVideo: boolean;
@@ -49,10 +53,23 @@ function SlotCard({
   const [uploaded, setUploaded] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
+
+    // Client-side validation
+    const ext = "." + selectedFile.name.split(".").pop()?.toLowerCase();
+    const allowed = ALLOWED_EXTENSIONS[category] ?? [];
+    if (!allowed.includes(ext)) {
+      toast.error(`Неверный формат (${ext}). Допустимые: ${allowed.join(", ")}`);
+      return;
+    }
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      toast.error(`Файл слишком большой (${(selectedFile.size / 1024 / 1024).toFixed(1)}MB). Макс: 10MB`);
+      return;
+    }
 
     setUploading(true);
     setError("");
@@ -61,6 +78,7 @@ function SlotCard({
       const formData = new FormData();
       formData.append("file", selectedFile);
       formData.append("path", `${dir}/${file.name}`);
+      formData.append("category", category);
 
       const res = await fetch("/api/admin/media", {
         method: "POST",
@@ -69,16 +87,20 @@ function SlotCard({
 
       if (res.ok) {
         setUploaded(true);
+        toast.success(`${file.name} загружен`);
         setTimeout(() => {
           setUploaded(false);
           onUploadDone();
         }, 1500);
       } else {
         const data = await res.json();
-        setError(data.error || "Upload failed");
+        const msg = data.error || "Ошибка загрузки";
+        setError(msg);
+        toast.error(msg);
       }
     } catch {
       setError("Ошибка загрузки");
+      toast.error("Сетевая ошибка при загрузке");
     }
     setUploading(false);
   };
@@ -194,15 +216,36 @@ export default function MediaManager() {
     }
   };
 
-  const handleAddFile = async (category: string, dir: string, file: File) => {
+  const { toast } = useToast();
+
+  const handleAddFile = async (cat: string, dir: string, file: File) => {
+    // Client-side validation
+    const ext = "." + file.name.split(".").pop()?.toLowerCase();
+    const allowed = ALLOWED_EXTENSIONS[cat] ?? [];
+    if (!allowed.includes(ext)) {
+      toast.error(`${file.name}: неверный формат (${ext})`);
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error(`${file.name}: слишком большой (${(file.size / 1024 / 1024).toFixed(1)}MB)`);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("path", `${dir}/${file.name}`);
+    formData.append("category", cat);
     try {
       const res = await fetch("/api/admin/media", { method: "POST", body: formData });
-      if (res.ok) loadMedia();
+      if (res.ok) {
+        toast.success(`${file.name} загружен`);
+        loadMedia();
+      } else {
+        const data = await res.json();
+        toast.error(data.error || `Ошибка загрузки ${file.name}`);
+      }
     } catch {
-      console.error("Failed to upload");
+      toast.error(`Сетевая ошибка: ${file.name}`);
     }
   };
 
@@ -282,6 +325,7 @@ export default function MediaManager() {
                       key={file.name}
                       file={file}
                       dir={category.dir}
+                      category={key}
                       onUploadDone={loadMedia}
                       onDelete={handleDelete}
                       isVideo={isVideo}

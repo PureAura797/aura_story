@@ -2,14 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import AdminShellInner from "./AdminShell";
+import { ToastProvider } from "@/components/ui/Toast";
 
 export default function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   // Login and recovery pages render without the shell
   if (pathname === "/admin/login" || pathname === "/admin/recovery") {
-    return <>{children}</>;
+    return <ToastProvider>{children}</ToastProvider>;
   }
 
-  return <AdminShellInner>{children}</AdminShellInner>;
+  return <ToastProvider><AdminShellInner>{children}</AdminShellInner></ToastProvider>;
 }

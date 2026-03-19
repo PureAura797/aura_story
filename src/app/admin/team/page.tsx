@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, Trash2, Eye, EyeOff, ArrowUp, ArrowDown, Upload, Check } from "lucide-react";
 import Image from "next/image";
+import { useToast } from "@/components/ui/Toast";
 
 interface TeamMember {
   id: string;
@@ -105,21 +106,40 @@ function MemberCard({ member, idx, total, update, move, remove }: {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
+  const { toast } = useToast();
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    // Client-side validation
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+    if (!["png", "jpg", "jpeg", "webp"].includes(ext)) {
+      toast.error(`Неверный формат (.${ext}). Допустимые: PNG, JPG, WebP`);
+      return;
+    }
+
     setUploading(true);
 
     const formData = new FormData();
     formData.append("file", file);
     formData.append("path", `team/member-${member.id}.webp`);
+    formData.append("category", "team");
 
-    const res = await fetch("/api/admin/media", { method: "POST", body: formData });
-    if (res.ok) {
-      update(member.id, "avatar", `/team/member-${member.id}.webp?t=${Date.now()}`);
-      setUploaded(true);
-      setTimeout(() => setUploaded(false), 1500);
+    try {
+      const res = await fetch("/api/admin/media", { method: "POST", body: formData });
+      if (res.ok) {
+        const data = await res.json();
+        update(member.id, "avatar", data.url || `/team/member-${member.id}.webp?t=${Date.now()}`);
+        setUploaded(true);
+        toast.success("Фото загружено");
+        setTimeout(() => setUploaded(false), 1500);
+      } else {
+        const data = await res.json();
+        toast.error(data.error || "Ошибка загрузки фото");
+      }
+    } catch {
+      toast.error("Сетевая ошибка при загрузке фото");
     }
     setUploading(false);
   };

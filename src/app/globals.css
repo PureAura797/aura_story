@@ -622,6 +622,11 @@ body.loading {
   to { clip-path: inset(0 0 0% 0); }
 }
 
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
 /* Link underline from left — for Footer and nav links */
 .link-underline {
   position: relative;
