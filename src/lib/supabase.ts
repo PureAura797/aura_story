@@ -1,14 +1,30 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+/** Lazy singleton — created on first use, not at import time */
+let _client: SupabaseClient | null = null;
 
-/**
- * Server-side Supabase client with service_role key.
- * Use ONLY in API routes / server components — never expose to client.
- */
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: { persistSession: false },
+function getClient(): SupabaseClient {
+  if (!_client) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!url || !key) {
+      console.error("[supabase] Missing env vars:", { url: !!url, key: !!key });
+      throw new Error("Supabase env vars not configured");
+    }
+
+    _client = createClient(url, key, {
+      auth: { persistSession: false },
+    });
+  }
+  return _client;
+}
+
+/** Readonly accessor for other modules */
+export const supabaseAdmin = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    return (getClient() as unknown as Record<string, unknown>)[prop as string];
+  },
 });
 
 /* ─── Generic helpers ─── */
@@ -16,7 +32,7 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 /** Read a JSON value from admin_data by key */
 export async function readData<T>(key: string, fallback: T): Promise<T> {
   try {
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getClient()
       .from("admin_data")
       .select("value")
       .eq("key", key)
@@ -24,7 +40,8 @@ export async function readData<T>(key: string, fallback: T): Promise<T> {
 
     if (error || !data) return fallback;
     return data.value as T;
-  } catch {
+  } catch (e) {
+    console.error(`[supabase] readData("${key}") failed:`, e);
     return fallback;
   }
 }
@@ -32,13 +49,16 @@ export async function readData<T>(key: string, fallback: T): Promise<T> {
 /** Write a JSON value to admin_data (upsert) */
 export async function writeData<T>(key: string, value: T): Promise<void> {
   try {
-    await supabaseAdmin
+    const { error } = await getClient()
       .from("admin_data")
       .upsert(
-        { key, value, updated_at: new Date().toISOString() },
+        { key, value: value as unknown, updated_at: new Date().toISOString() },
         { onConflict: "key" }
       );
+    if (error) {
+      console.error(`[supabase] writeData("${key}") error:`, error.message);
+    }
   } catch (e) {
-    console.error(`[supabase] Failed to write key "${key}":`, e);
+    console.error(`[supabase] writeData("${key}") failed:`, e);
   }
 }
