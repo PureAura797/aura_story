@@ -102,7 +102,7 @@ const jsonLdOrganization = {
   },
   "hasCredential": {
     "@type": "GovernmentPermit",
-    "name": "Лицензия на осуществление медицинской деятельности",
+    "name": "Лицензия на дезинфекцию, дезинсекцию и дератизацию",
     "identifier": "77.01.13.003.Л.000022.02.26",
     "validFrom": "2026-02-24",
   },

@@ -135,24 +135,36 @@ export default function ScrollChoreography() {
         ease: "power2.inOut",
       }, 7);
 
-      // === 8 → 9: Equipment → Pricing ===
-      // Sphere → Panel, far right (content right), slow, warm sand
+      // === 8 → 9: Equipment → Certificate ===
+      // Sphere → Dome, shift left (content right), slow elegant, warm sand
       tl.to(scProps, {
         formation: 9,
-        groupX: -4,
+        groupX: -3,
         rotY: 0,
-        speedMul: 0.3,
+        speedMul: 0.4,
         lightColor: '#d4a574',
         lightIntensity: 8,
-        bgColor: '#0f0d0b',
+        bgColor: '#0e0d0b',
         ease: "power3.inOut",
       }, 8);
 
-      // === 9 → 10: Pricing → Reviews ===
-      // Panel → Dome, shift right (content left), teal
+      // === 9 → 10: Certificate → Pricing ===
+      // Dome → Panel, shift right (content left), slow, sand
       tl.to(scProps, {
         formation: 10,
         groupX: 3,
+        speedMul: 0.3,
+        lightColor: '#a67c52',
+        lightIntensity: 7,
+        bgColor: '#0f0d0b',
+        ease: "power3.inOut",
+      }, 9);
+
+      // === 10 → 11: Pricing → Reviews ===
+      // Panel → Cross, shift left (content right), teal
+      tl.to(scProps, {
+        formation: 11,
+        groupX: -4,
         groupY: 1,
         speedMul: 0.8,
         rotX: Math.PI / 8,
@@ -161,13 +173,13 @@ export default function ScrollChoreography() {
         lightIntensity: 10,
         bgColor: '#0b0d10',
         ease: "power2.inOut",
-      }, 9);
+      }, 10);
 
-      // === 10 → 11: Reviews → FAQ ===
-      // Dome → Large Ring, shift left (content right), slow, sand-dim
+      // === 11 → 12: Reviews → FAQ ===
+      // Cross → Large Ring, shift right (content left), slow, sand-dim
       tl.to(scProps, {
-        formation: 11,
-        groupX: -3,
+        formation: 12,
+        groupX: 3,
         groupY: 0,
         rotX: 0,
         rotZ: 0,
@@ -176,31 +188,32 @@ export default function ScrollChoreography() {
         lightIntensity: 6,
         bgColor: '#0e0c0b',
         ease: "power2.inOut",
-      }, 10);
+      }, 11);
 
-      // === 11 → 12: FAQ → Contact ===
-      // Ring → Pulse Ring, center, bright teal, speed up
+      // === 12 → 13: FAQ → Contact ===
+      // Ring → Pulse Ring, shift left (content right), bright teal, speed up
       tl.to(scProps, {
-        formation: 12,
-        groupX: 0,
+        formation: 13,
+        groupX: -3,
         speedMul: 2.0,
         lightColor: '#5eead4',
         lightIntensity: 14,
         bgColor: '#0a0d0f',
         ease: "power2.inOut",
-      }, 11);
+      }, 12);
 
-      // === 12 → 13: Contact → Footer/Outro ===
+      // === 13 → 14: Contact → Footer/Outro ===
       // Pulse Ring → Rain, dim everything
       tl.to(scProps, {
-        formation: 13,
+        formation: 14,
+        groupX: 0,
         groupY: 0,
         speedMul: 0.5,
         lightColor: '#333333',
         lightIntensity: 4,
         bgColor: '#080808',
         ease: "power3.in",
-      }, 12);
+      }, 13);
     });
 
     return () => {

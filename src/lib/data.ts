@@ -215,7 +215,7 @@ export interface CertificateItem {
 }
 
 const DEFAULT_CERTIFICATES: CertificateItem[] = [
-  { id: "1", title: "Лицензия на медицинскую деятельность", number: "77.01.13.003.Л.000022.02.26", date: "24.02.2026", description: "Лицензия на осуществление медицинской деятельности, выданная Федеральной службой по надзору в сфере здравоохранения", preview_url: "/certificates/license-preview.png", download_url: "/certificates/license.pdf", published: true, sort_order: 0 },
+  { id: "1", title: "Лицензия на дезинфекцию, дезинсекцию и дератизацию", number: "77.01.13.003.Л.000022.02.26", date: "24.02.2026", description: "Лицензия на деятельность по оказанию услуг по дезинфекции, дезинсекции и дератизации в целях обеспечения санитарно-эпидемиологического благополучия населения", preview_url: "/certificates/license-preview.png", download_url: "/certificates/license.pdf", published: true, sort_order: 0 },
 ];
 
 export async function getCertificates(): Promise<CertificateItem[]> {
