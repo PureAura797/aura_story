@@ -53,7 +53,7 @@ export default function Equipment() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full items-start">
         {equipment.map((item, idx) => (
-          <div key={idx} className="equip-card group flex flex-col border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden hover:border-white/10 transition-all duration-500">
+          <div key={idx} className="equip-card card-lift group flex flex-col border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden hover:border-white/10 transition-all duration-500">
             <div className="flex items-center justify-between px-3 py-2.5 md:px-4 md:py-3">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${item.color}20`, border: `1px solid ${item.color}30` }}>

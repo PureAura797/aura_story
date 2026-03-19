@@ -41,16 +41,16 @@ export default function Services() {
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".service-card") as HTMLElement[];
     
-    gsap.set(cards, { y: 30, opacity: 0 });
+    gsap.set(cards, { x: -30, opacity: 0 });
     
     ScrollTrigger.batch(cards, {
       start: "top 98%",
       onEnter: (batch) =>
         gsap.to(batch, {
-          y: 0,
+          x: 0,
           opacity: 1,
-          stagger: 0.06,
-          duration: 0.4,
+          stagger: 0.08,
+          duration: 0.5,
           ease: "power3.out",
         }),
       once: true,
@@ -75,7 +75,7 @@ export default function Services() {
         {services.map((s, idx) => (
           <div
             key={s.id}
-            className="service-card group border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 overflow-hidden"
+            className="service-card card-lift accent-glow-hover group border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 overflow-hidden"
           >
             {/* Desktop: horizontal row */}
             <div className="hidden md:flex items-start gap-8 p-7">

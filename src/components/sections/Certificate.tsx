@@ -62,7 +62,7 @@ export default function Certificate() {
         {certs.map((cert) => (
           <div
             key={cert.id}
-            className="cert-card opacity-0 translate-y-10 border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/10 transition-all duration-500 overflow-hidden"
+            className="cert-card card-lift opacity-0 translate-y-10 border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/10 transition-all duration-500 overflow-hidden"
           >
             <div className="flex flex-col md:flex-row gap-6 p-7">
               {/* Preview thumbnail */}

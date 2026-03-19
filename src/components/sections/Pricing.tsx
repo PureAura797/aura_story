@@ -71,7 +71,7 @@ export default function Pricing() {
       <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
         {plans.map((plan) => (
-          <div key={plan.id} className="pricing-card opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500 flex flex-col">
+          <div key={plan.id} className="pricing-card card-lift opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500 flex flex-col">
             <div className="flex items-center gap-3 mb-2">
               <h3 className="text-sm font-bold tracking-tight group-hover:text-[var(--accent)] transition-colors duration-500">{plan.name}</h3>
             </div>

@@ -41,7 +41,7 @@ export default function Process() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {steps.map((step, idx) => (
-          <div key={idx} className="process-step opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500">
+          <div key={idx} className="process-step card-lift accent-glow-hover opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500">
             <span className="text-5xl md:text-6xl font-bold text-white/[0.06] tracking-tighter block mb-6">{step.num}</span>
             <h3 className="text-xl md:text-2xl font-bold tracking-tighter mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">{step.title}</h3>
             <p className="text-neutral-500 text-sm leading-relaxed">{step.description}</p>

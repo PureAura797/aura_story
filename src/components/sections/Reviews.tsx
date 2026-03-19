@@ -59,7 +59,7 @@ export default function Reviews() {
 
       <div className="flex flex-col w-full max-w-3xl gap-4">
         {reviews.map((review, idx) => (
-          <div key={idx} className="review-card opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
+          <div key={idx} className="review-card card-lift accent-glow-hover opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
                 <span className="text-white font-bold text-sm">{t(review.nameKey)}</span>

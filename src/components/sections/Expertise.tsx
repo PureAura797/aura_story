@@ -46,7 +46,7 @@ export default function Expertise() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
         {items.map((item, idx) => (
-          <div key={idx} className="expertise-item opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
+          <div key={idx} className="expertise-item card-lift accent-glow-hover opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
             <h3 className="text-xl md:text-2xl font-bold tracking-tighter mb-4 transition-colors duration-500" style={{ color: "var(--sand-dim)" }}>
               {item.title}
             </h3>

@@ -45,10 +45,10 @@ export default function Team() {
     if (members.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".team-card") as HTMLElement[];
-    gsap.set(cards, { y: 30, opacity: 0 });
+    gsap.set(cards, { y: 20, opacity: 0, scale: 0.92 });
     ScrollTrigger.batch(cards, {
       start: "top 98%",
-      onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: "power3.out" }),
+      onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.6, ease: "back.out(1.4)" }),
       once: true,
     });
   }, { scope: containerRef, dependencies: [members] });
@@ -68,7 +68,7 @@ export default function Team() {
       ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {members.map((member) => (
-          <div key={member.id} className="team-card border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 p-6 group">
+          <div key={member.id} className="team-card card-lift accent-glow-hover border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 p-6 group">
             <div className="flex items-center gap-4 mb-5">
               <div className="relative w-12 h-12 rounded-full p-[2px] shrink-0">
                 <div className="absolute inset-0 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(135deg, ${member.color}, ${member.color}44)` }} />
