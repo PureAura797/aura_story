@@ -243,22 +243,23 @@ function createSphere(): Formation {
   return { positions };
 }
 
-// Pre-generate all formations (14 total — one per visual section)
+// Pre-generate all formations (15 total — one per visual section)
 export const formations: Formation[] = [
   createRing(6),         // 0:  Hero
   createVortex(),        // 1:  TrustMarquee
   createVortex(),        // 2:  Stories (sustained vortex)
   createScatter(),       // 3:  Services
   createColumn(),        // 4:  Expertise
-  createCross(),         // 5:  Team (NEW)
+  createCross(),         // 5:  Team
   createGrid(),          // 6:  Process
   createHelix(),         // 7:  Portfolio
-  createSphere(),        // 8:  Equipment (NEW)
-  createPanel(),         // 9:  Pricing
-  createDome(),          // 10: Reviews
-  createRing(7),         // 11: FAQ (large ring)
-  createRing(6.5),       // 12: Contact (pulse ring)
-  createRain(),          // 13: Footer/Outro
+  createSphere(),        // 8:  Equipment
+  createDome(),          // 9:  Certificate (NEW)
+  createPanel(),         // 10: Pricing
+  createCross(),         // 11: Reviews
+  createRing(7),         // 12: FAQ (large ring)
+  createRing(6.5),       // 13: Contact (pulse ring)
+  createRain(),          // 14: Footer/Outro
 ];
 
 export const PARTICLE_COUNT = COUNT;
