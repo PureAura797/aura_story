@@ -77,17 +77,15 @@ export default function MessengerWidget() {
           <p className="text-xs text-neutral-400 font-light mb-4 leading-relaxed">
             Напишите нам — ответим за 2 минуты. Конфиденциально.
           </p>
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col divide-y divide-white/[0.06]">
             <a
               href={contacts.max}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в MAX"
-              className="flex items-center gap-3 px-4 py-3 bg-[#0077FF]/10 border border-[#0077FF]/20 hover:bg-[#0077FF]/20 transition-all duration-300 group"
+              className="flex items-center gap-3 px-1 py-3 hover:bg-white/[0.04] transition-all duration-300 group"
             >
-              <div className="w-8 h-8 rounded-full bg-[#0077FF] flex items-center justify-center shrink-0">
-                <span className="text-white text-sm font-bold">M</span>
-              </div>
+              <img src="/icons/max-mono.svg" alt="MAX" className="w-6 h-6 shrink-0" style={{ filter: "invert(1)" }} />
               <div>
                 <p className="text-sm font-semibold text-white">MAX</p>
                 <p className="text-[10px] text-neutral-500">Онлайн · ответ ~2 мин</p>
@@ -98,11 +96,9 @@ export default function MessengerWidget() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в Telegram"
-              className="flex items-center gap-3 px-4 py-3 bg-[#229ED9]/10 border border-[#229ED9]/20 hover:bg-[#229ED9]/20 transition-all duration-300 group"
+              className="flex items-center gap-3 px-1 py-3 hover:bg-white/[0.04] transition-all duration-300 group"
             >
-              <div className="w-8 h-8 rounded-full bg-[#229ED9] flex items-center justify-center shrink-0">
-                <span className="text-white text-sm font-bold">T</span>
-              </div>
+              <img src="/icons/telegram-mono.svg" alt="Telegram" className="w-6 h-6 shrink-0" style={{ filter: "invert(1)" }} />
               <div>
                 <p className="text-sm font-semibold text-white">Telegram</p>
                 <p className="text-[10px] text-neutral-500">Онлайн · ответ ~2 мин</p>

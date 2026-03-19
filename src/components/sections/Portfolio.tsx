@@ -13,10 +13,10 @@ export default function Portfolio() {
   const { t } = useTranslation();
 
   const projects = [
-    { type: t("portfolio.1.type"), area: t("portfolio.1.area"), time: t("portfolio.1.time"), description: t("portfolio.1.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
-    { type: t("portfolio.2.type"), area: t("portfolio.2.area"), time: t("portfolio.2.time"), description: t("portfolio.2.desc"), beforeImg: "/images/portfolio/hoarder_before.png", afterImg: "/images/portfolio/hoarder_after.png" },
-    { type: t("portfolio.3.type"), area: t("portfolio.3.area"), time: t("portfolio.3.time"), description: t("portfolio.3.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
-    { type: t("portfolio.4.type"), area: t("portfolio.4.area"), time: t("portfolio.4.time"), description: t("portfolio.4.desc"), beforeImg: "/images/portfolio/fire_before.png", afterImg: "/images/portfolio/fire_after.png" },
+    { type: t("portfolio.1.type"), area: t("portfolio.1.area"), time: t("portfolio.1.time"), description: t("portfolio.1.desc"), beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp" },
+    { type: t("portfolio.2.type"), area: t("portfolio.2.area"), time: t("portfolio.2.time"), description: t("portfolio.2.desc"), beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp" },
+    { type: t("portfolio.3.type"), area: t("portfolio.3.area"), time: t("portfolio.3.time"), description: t("portfolio.3.desc"), beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp" },
+    { type: t("portfolio.4.type"), area: t("portfolio.4.area"), time: t("portfolio.4.time"), description: t("portfolio.4.desc"), beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp" },
   ];
 
   useGSAP(() => {

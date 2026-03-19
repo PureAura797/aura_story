@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticatedFromRequest } from "@/lib/admin-auth";
 import { changePassword, createRecoveryCode, resetPasswordWithCode } from "@/lib/admin-password";
+import { checkRateLimit, RECOVERY_LIMIT, RECOVERY_VERIFY_LIMIT } from "@/lib/rate-limiter";
+
+function getClientIP(request: NextRequest): string {
+  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || request.headers.get("x-real-ip")
+    || "unknown";
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { action } = body;
+    const ip = getClientIP(request);
 
     // ─── Change password (requires auth) ───
     if (action === "change") {
@@ -25,15 +33,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
-    // ─── Request recovery code (no auth needed) ───
+    // ─── Request recovery code (rate limited) ───
     if (action === "request_recovery") {
+      const limit = checkRateLimit(ip, RECOVERY_LIMIT);
+      if (!limit.allowed) {
+        return NextResponse.json(
+          { error: `Слишком много запросов. Попробуйте через ${Math.ceil(limit.retryAfterSeconds / 60)} мин.` },
+          { status: 429, headers: { "Retry-After": limit.retryAfterSeconds.toString() } }
+        );
+      }
+
       const { email } = body;
       if (!email || !email.includes("@")) {
         return NextResponse.json({ error: "Введите корректный email" }, { status: 400 });
       }
 
       const result = await createRecoveryCode(email);
-      // Always return success (don't reveal if email exists)
       return NextResponse.json({
         success: true,
         emailSent: result.emailSent,
@@ -43,8 +58,16 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // ─── Reset password with code (no auth needed) ───
+    // ─── Reset password with code (rate limited) ───
     if (action === "reset") {
+      const limit = checkRateLimit(ip, RECOVERY_VERIFY_LIMIT);
+      if (!limit.allowed) {
+        return NextResponse.json(
+          { error: `Слишком много попыток. Попробуйте через ${Math.ceil(limit.retryAfterSeconds / 60)} мин.` },
+          { status: 429, headers: { "Retry-After": limit.retryAfterSeconds.toString() } }
+        );
+      }
+
       const { code, newPassword } = body;
       if (!code || !newPassword) {
         return NextResponse.json({ error: "Заполните все поля" }, { status: 400 });

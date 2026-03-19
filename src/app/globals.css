@@ -10,6 +10,10 @@
   --surface: #121418;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 /* ===== Scroll Progress Bar ===== */
 #scroll-progress {
   background: linear-gradient(90deg, var(--accent), var(--accent-deep), #0d9488);
@@ -211,7 +215,8 @@ section {
 
 /* ===== Section Card Plate Extension ===== */
 .section-card {
-  overflow: visible !important;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
 }
 
 .section-card::after {

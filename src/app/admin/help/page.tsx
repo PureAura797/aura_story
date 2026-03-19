@@ -192,7 +192,7 @@ export default function HelpPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-1 w-fit">
+      <div className="flex flex-wrap gap-1 mb-6 border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-1 w-fit sm:w-auto">
         {[
           { key: "guide" as const, label: "Разделы", icon: BookOpen },
           { key: "faq" as const, label: "FAQ", icon: HelpCircle },

@@ -11,29 +11,73 @@ function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+/** scrypt-based password hashing with random salt */
 function hashPassword(password: string): string {
-  return crypto.createHash("sha256").update(password).digest("hex");
+  const salt = crypto.randomBytes(16).toString("hex");
+  const key = crypto.scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${key}`;
+}
+
+/** Verify password against scrypt hash (salt:key format) */
+function verifyHash(password: string, stored: string): boolean {
+  // Check if it's the new scrypt format (salt:key)
+  if (stored.includes(":")) {
+    const [salt, key] = stored.split(":");
+    const derivedKey = crypto.scryptSync(password, salt, 64).toString("hex");
+    return crypto.timingSafeEqual(Buffer.from(key, "hex"), Buffer.from(derivedKey, "hex"));
+  }
+  // Legacy SHA256 format — verify and migrate silently
+  const legacyHash = crypto.createHash("sha256").update(password).digest("hex");
+  return legacyHash === stored;
 }
 
 /* ─── Password Verification ─── */
-function getSavedPasswordHash(): string | null {
+function getSavedPasswordData(): { hash: string; changedAt?: string } | null {
   try {
     if (fs.existsSync(PASSWORD_FILE)) {
       const data = JSON.parse(fs.readFileSync(PASSWORD_FILE, "utf-8"));
-      return data.hash || null;
+      return data.hash ? data : null;
     }
   } catch { /* ignore */ }
   return null;
 }
 
 export function verifyPassword(password: string): boolean {
-  const savedHash = getSavedPasswordHash();
-  if (savedHash) {
-    return hashPassword(password) === savedHash;
+  const saved = getSavedPasswordData();
+
+  if (saved) {
+    const isValid = verifyHash(password, saved.hash);
+
+    // Auto-migrate legacy SHA256 → scrypt on successful login
+    if (isValid && !saved.hash.includes(":")) {
+      ensureDataDir();
+      const migrated = {
+        hash: hashPassword(password),
+        changedAt: new Date().toISOString(),
+        migratedFrom: "sha256",
+      };
+      fs.writeFileSync(PASSWORD_FILE, JSON.stringify(migrated, null, 2));
+      console.log("🔒 Password hash migrated from SHA256 to scrypt");
+    }
+
+    return isValid;
   }
+
   // Fallback to .env.local
   const envPassword = process.env.ADMIN_PASSWORD || "pureaura2026";
-  return password === envPassword;
+  if (password === envPassword) {
+    // First login — save as scrypt hash
+    ensureDataDir();
+    const data = {
+      hash: hashPassword(password),
+      changedAt: new Date().toISOString(),
+    };
+    fs.writeFileSync(PASSWORD_FILE, JSON.stringify(data, null, 2));
+    console.log("🔒 Initial password saved with scrypt hash");
+    return true;
+  }
+
+  return false;
 }
 
 /* ─── Password Change ─── */
@@ -41,8 +85,8 @@ export function changePassword(currentPassword: string, newPassword: string): { 
   if (!verifyPassword(currentPassword)) {
     return { success: false, error: "Текущий пароль неверный" };
   }
-  if (newPassword.length < 6) {
-    return { success: false, error: "Новый пароль должен быть минимум 6 символов" };
+  if (newPassword.length < 8) {
+    return { success: false, error: "Новый пароль должен быть минимум 8 символов" };
   }
 
   ensureDataDir();
@@ -57,9 +101,10 @@ export function changePassword(currentPassword: string, newPassword: string): { 
 /* ─── Recovery ─── */
 interface RecoveryData {
   email: string;
-  code: string;
+  codeHash: string;  // Now stored as hash, not plain text
   createdAt: string;
   expiresAt: string;
+  attempts: number;
 }
 
 export async function createRecoveryCode(email: string): Promise<{ code: string; emailSent: boolean }> {
@@ -68,11 +113,13 @@ export async function createRecoveryCode(email: string): Promise<{ code: string;
   const now = new Date();
   const expires = new Date(now.getTime() + 15 * 60 * 1000); // 15 minutes
 
+  // Store hashed code — never plain text
   const data: RecoveryData = {
     email,
-    code,
+    codeHash: crypto.createHash("sha256").update(code).digest("hex"),
     createdAt: now.toISOString(),
     expiresAt: expires.toISOString(),
+    attempts: 0,
   };
   fs.writeFileSync(RECOVERY_FILE, JSON.stringify(data, null, 2));
 
@@ -132,12 +179,23 @@ export function verifyRecoveryCode(code: string): { valid: boolean; error?: stri
     }
     const data: RecoveryData = JSON.parse(fs.readFileSync(RECOVERY_FILE, "utf-8"));
 
+    // Check max attempts (brute-force protection)
+    if (data.attempts >= 5) {
+      fs.unlinkSync(RECOVERY_FILE);
+      return { valid: false, error: "Слишком много попыток. Запросите новый код." };
+    }
+
     if (new Date() > new Date(data.expiresAt)) {
       fs.unlinkSync(RECOVERY_FILE);
       return { valid: false, error: "Код истёк. Запросите новый." };
     }
 
-    if (data.code !== code) {
+    // Compare hashed code
+    const codeHash = crypto.createHash("sha256").update(code).digest("hex");
+    if (!crypto.timingSafeEqual(Buffer.from(data.codeHash, "hex"), Buffer.from(codeHash, "hex"))) {
+      // Increment attempt counter
+      data.attempts += 1;
+      fs.writeFileSync(RECOVERY_FILE, JSON.stringify(data, null, 2));
       return { valid: false, error: "Неверный код" };
     }
 
@@ -153,8 +211,8 @@ export function resetPasswordWithCode(code: string, newPassword: string): { succ
     return { success: false, error: verification.error };
   }
 
-  if (newPassword.length < 6) {
-    return { success: false, error: "Пароль должен быть минимум 6 символов" };
+  if (newPassword.length < 8) {
+    return { success: false, error: "Пароль должен быть минимум 8 символов" };
   }
 
   ensureDataDir();

@@ -13,6 +13,9 @@ const jost = Jost({ subsets: ["latin", "cyrillic"], variable: "--font-jost" });
 
 export const viewport: Viewport = {
   themeColor: "#0b0c0f",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {

@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAdminAuthenticatedFromRequest } from "@/lib/admin-auth";
 
+const COOKIE_NAME = "pa_admin_token";
+
+/**
+ * Edge-compatible middleware — checks only cookie presence.
+ * Full session validation happens server-side in API routes (Node.js runtime).
+ */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -11,7 +16,8 @@ export function middleware(request: NextRequest) {
     !pathname.startsWith("/admin/recovery") &&
     !pathname.startsWith("/api/")
   ) {
-    if (!isAdminAuthenticatedFromRequest(request)) {
+    const token = request.cookies.get(COOKIE_NAME)?.value;
+    if (!token) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
   }

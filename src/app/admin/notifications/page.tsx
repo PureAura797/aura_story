@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, MessageCircle, Send, Link, Save, Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Mail, Send, Link, Save, Loader2, CheckCircle, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 interface SmtpSettings {
   host: string;
@@ -131,7 +131,7 @@ export default function NotificationsPage() {
             onKeyDown={(e) => e.key === "Enter" && toggleSection("email")}
           >
             <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-amber-400" strokeWidth={1.5} />
+              <Mail className="w-5 h-5 text-white" strokeWidth={1.5} />
               <div className="text-left">
                 <p className="text-sm font-medium">Email</p>
                 <p className="text-xs text-neutral-500">Заявки приходят как обычные письма</p>
@@ -161,7 +161,7 @@ export default function NotificationsPage() {
                 />
                 <p className="text-[10px] text-neutral-600 mt-1">Несколько адресов через запятую</p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">SMTP-сервер</label>
                   <input
@@ -182,7 +182,7 @@ export default function NotificationsPage() {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Логин (email)</label>
                   <input
@@ -232,7 +232,7 @@ export default function NotificationsPage() {
             onKeyDown={(e) => e.key === "Enter" && toggleSection("telegram")}
           >
             <div className="flex items-center gap-3">
-              <MessageCircle className="w-5 h-5 text-sky-400" strokeWidth={1.5} />
+              <img src="/icons/telegram-mono.svg" alt="Telegram" className="w-5 h-5" style={{ filter: "invert(1)" }} />
               <div className="text-left">
                 <p className="text-sm font-medium">Telegram</p>
                 <p className="text-xs text-neutral-500">Заявки через бота @BotFather</p>
@@ -307,7 +307,7 @@ export default function NotificationsPage() {
             onKeyDown={(e) => e.key === "Enter" && toggleSection("max")}
           >
             <div className="flex items-center gap-3">
-              <MessageCircle className="w-5 h-5 text-blue-400" strokeWidth={1.5} />
+              <img src="/icons/max-mono.svg" alt="MAX" className="w-5 h-5" style={{ filter: "invert(1)" }} />
               <div className="text-left">
                 <p className="text-sm font-medium">MAX</p>
                 <p className="text-xs text-neutral-500">Заявки через MAX Bot API</p>
@@ -382,7 +382,7 @@ export default function NotificationsPage() {
             onKeyDown={(e) => e.key === "Enter" && toggleSection("webhook")}
           >
             <div className="flex items-center gap-3">
-              <Link className="w-5 h-5 text-purple-400" strokeWidth={1.5} />
+              <Link className="w-5 h-5 text-white" strokeWidth={1.5} />
               <div className="text-left">
                 <p className="text-sm font-medium">Webhook (n8n / Zapier)</p>
                 <p className="text-xs text-neutral-500">Пользовательская автоматизация</p>

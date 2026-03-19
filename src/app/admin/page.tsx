@@ -86,7 +86,7 @@ export default function AdminDashboard() {
             className="group border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl backdrop-saturate-150 p-6 hover:border-white/15 hover:bg-white/[0.06] transition-all duration-300"
           >
             <div className="flex items-center justify-between mb-5">
-              <card.icon className="w-8 h-8 opacity-60 group-hover:opacity-90 transition-opacity" strokeWidth={1} style={{ color: card.color }} />
+              <card.icon className="w-8 h-8 opacity-60 group-hover:opacity-90 transition-opacity text-white" strokeWidth={1} />
               <ArrowRight
                 className="w-4 h-4 text-neutral-700 group-hover:text-neutral-400 group-hover:translate-x-0.5 transition-all"
                 strokeWidth={1.5}

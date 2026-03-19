@@ -138,7 +138,7 @@ export default function CalculatorAdmin() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-1">Калькулятор</h1>
           <p className="text-xs text-neutral-500">Цены, коэффициенты и дополнительные услуги</p>
@@ -165,7 +165,7 @@ export default function CalculatorAdmin() {
       {/* Coefficients */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-6 mb-6">
         <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-400 mb-4">Формула расчёта</h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="text-[10px] text-neutral-500 block mb-1.5">Коэфф. площади (за м²)</label>
             <input
@@ -211,33 +211,37 @@ export default function CalculatorAdmin() {
         </div>
         <div className="space-y-3">
           {config.services.map((s, idx) => (
-            <div key={s.id} className="flex items-center gap-3 border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 px-4 py-3">
-              <input
-                type="text"
-                value={s.label_ru}
-                onChange={(e) => updateService(idx, "label_ru", e.target.value)}
-                className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
-                placeholder="Название (РУ)"
-              />
-              <input
-                type="text"
-                value={s.label_en}
-                onChange={(e) => updateService(idx, "label_en", e.target.value)}
-                className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
-                placeholder="Label (EN)"
-              />
-              <div className="flex items-center gap-1">
+            <div key={s.id} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 px-4 py-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <input
-                  type="number"
-                  value={s.base_price}
-                  onChange={(e) => updateService(idx, "base_price", parseInt(e.target.value) || 0)}
-                  className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                  type="text"
+                  value={s.label_ru}
+                  onChange={(e) => updateService(idx, "label_ru", e.target.value)}
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  placeholder="Название (РУ)"
                 />
-                <span className="text-[10px] text-neutral-600">₽</span>
+                <input
+                  type="text"
+                  value={s.label_en}
+                  onChange={(e) => updateService(idx, "label_en", e.target.value)}
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  placeholder="Label (EN)"
+                />
+                <div className="flex items-center justify-between sm:justify-start gap-2">
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      value={s.base_price}
+                      onChange={(e) => updateService(idx, "base_price", parseInt(e.target.value) || 0)}
+                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                    />
+                    <span className="text-[10px] text-neutral-600">₽</span>
+                  </div>
+                  <button onClick={() => removeService(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  </button>
+                </div>
               </div>
-              <button onClick={() => removeService(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
-                <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
-              </button>
             </div>
           ))}
         </div>
@@ -253,33 +257,37 @@ export default function CalculatorAdmin() {
         </div>
         <div className="space-y-3">
           {config.extras.map((e, idx) => (
-            <div key={e.id} className="flex items-center gap-3 border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 px-4 py-3">
-              <input
-                type="text"
-                value={e.label_ru}
-                onChange={(ev) => updateExtra(idx, "label_ru", ev.target.value)}
-                className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
-                placeholder="Название (РУ)"
-              />
-              <input
-                type="text"
-                value={e.label_en}
-                onChange={(ev) => updateExtra(idx, "label_en", ev.target.value)}
-                className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
-                placeholder="Label (EN)"
-              />
-              <div className="flex items-center gap-1">
+            <div key={e.id} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 px-4 py-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <input
-                  type="number"
-                  value={e.price}
-                  onChange={(ev) => updateExtra(idx, "price", parseInt(ev.target.value) || 0)}
-                  className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                  type="text"
+                  value={e.label_ru}
+                  onChange={(ev) => updateExtra(idx, "label_ru", ev.target.value)}
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  placeholder="Название (РУ)"
                 />
-                <span className="text-[10px] text-neutral-600">₽</span>
+                <input
+                  type="text"
+                  value={e.label_en}
+                  onChange={(ev) => updateExtra(idx, "label_en", ev.target.value)}
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  placeholder="Label (EN)"
+                />
+                <div className="flex items-center justify-between sm:justify-start gap-2">
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      value={e.price}
+                      onChange={(ev) => updateExtra(idx, "price", parseInt(ev.target.value) || 0)}
+                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                    />
+                    <span className="text-[10px] text-neutral-600">₽</span>
+                  </div>
+                  <button onClick={() => removeExtra(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  </button>
+                </div>
               </div>
-              <button onClick={() => removeExtra(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
-                <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
-              </button>
             </div>
           ))}
         </div>

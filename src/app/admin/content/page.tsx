@@ -137,7 +137,7 @@ export default function ContentEditor() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-1">Контент</h1>
           <p className="text-xs text-neutral-500">Все тексты сайта • {Object.keys(content).length} полей</p>
@@ -168,7 +168,7 @@ export default function ContentEditor() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
         {/* Locale switch */}
         <div className="flex border border-white/10">
           {(["ru", "en"] as const).map((l) => (
@@ -185,7 +185,7 @@ export default function ContentEditor() {
         </div>
 
         {/* Search */}
-        <div className="relative flex-1 max-w-sm">
+        <div className="relative flex-1 sm:max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-neutral-600" strokeWidth={1.5} />
           <input
             type="text"

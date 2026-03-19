@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Phone, Mail, Send, MessageSquare, MapPin, Clock, Link2, Check, AlertCircle, Save } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Link2, Check, AlertCircle, Save } from "lucide-react";
+import type { LucideProps } from "lucide-react";
+
+/* Real brand icons — match Lucide interface */
+const TelegramIcon = (props: LucideProps) => (
+  <img src="/icons/telegram-mono.svg" alt="" className={props.className} style={{ filter: "invert(1)", opacity: 0.5 }} />
+);
+const MaxIcon = (props: LucideProps) => (
+  <img src="/icons/max-mono.svg" alt="" className={props.className} style={{ filter: "invert(1)", opacity: 0.5 }} />
+);
 
 interface ContactsData {
   phone: string;
@@ -17,15 +26,15 @@ interface ContactsData {
 const FIELDS: {
   key: keyof ContactsData;
   label: string;
-  icon: typeof Phone;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   placeholder: string;
   hint: string;
 }[] = [
   { key: "phone", label: "Телефон (tel: формат)", icon: Phone, placeholder: "+74951203456", hint: "Для ссылок tel: — без пробелов и скобок" },
   { key: "phoneDisplay", label: "Телефон (отображение)", icon: Phone, placeholder: "8 495 120-34-56", hint: "Как телефон видит посетитель на сайте" },
   { key: "email", label: "Email", icon: Mail, placeholder: "help@auraremediation.com", hint: "Для ссылок mailto: и отображения" },
-  { key: "telegram", label: "Telegram", icon: Send, placeholder: "https://t.me/pureaura", hint: "Ссылка на Telegram аккаунт/бот" },
-  { key: "max", label: "MAX Мессенджер", icon: MessageSquare, placeholder: "https://max.ru/pureaura", hint: "Ссылка на MAX аккаунт" },
+  { key: "telegram", label: "Telegram", icon: TelegramIcon, placeholder: "https://t.me/pureaura", hint: "Ссылка на Telegram аккаунт/бот" },
+  { key: "max", label: "MAX Мессенджер", icon: MaxIcon, placeholder: "https://max.ru/pureaura", hint: "Ссылка на MAX аккаунт" },
   { key: "webhookUrl", label: "Webhook заявок (n8n)", icon: Link2, placeholder: "https://n8n.example.com/webhook/...", hint: "URL куда уходят заявки с формы обратной связи" },
   { key: "address", label: "Адрес", icon: MapPin, placeholder: "Москва, Россия", hint: "Отображается в подвале и SEO-разметке" },
   { key: "workHours", label: "Часы работы", icon: Clock, placeholder: "Круглосуточно, 24/7", hint: "Отображается в подвале" },
@@ -85,7 +94,7 @@ export default function ContactsAdmin() {
 
   return (
     <div className="max-w-2xl">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-1">Контакты</h1>
           <p className="text-xs text-neutral-500">

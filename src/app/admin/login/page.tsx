@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, ArrowLeft, AlertCircle, Eye, EyeOff } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import Link from "next/link";
 
@@ -110,6 +110,16 @@ export default function AdminLogin() {
             className="text-[10px] text-neutral-600 hover:text-neutral-400 transition-colors"
           >
             Забыли пароль?
+          </Link>
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 text-[11px] text-neutral-600 hover:text-neutral-300 transition-colors"
+          >
+            <ArrowLeft className="w-3 h-3" strokeWidth={1.5} />
+            Вернуться на сайт
           </Link>
         </div>
       </div>

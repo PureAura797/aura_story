@@ -15,12 +15,12 @@ export default function Equipment() {
   const { t } = useTranslation();
 
   const equipment = [
-    { image: "/equipment/ozone.png", color: "#5eead4" },
-    { image: "/equipment/hydroxyl.png", color: "#38bdf8" },
-    { image: "/equipment/fogger.png", color: "#d4a574" },
-    { image: "/equipment/atp.png", color: "#a78bfa" },
-    { image: "/equipment/dehumidifier.png", color: "#fb7185" },
-    { image: "/equipment/ppe.png", color: "#14b8a6" },
+    { image: "/equipment/ozone.webp", color: "#5eead4" },
+    { image: "/equipment/hydroxyl.webp", color: "#38bdf8" },
+    { image: "/equipment/fogger.webp", color: "#d4a574" },
+    { image: "/equipment/atp.webp", color: "#a78bfa" },
+    { image: "/equipment/dehumidifier.webp", color: "#fb7185" },
+    { image: "/equipment/ppe.webp", color: "#14b8a6" },
   ].map((item, i) => ({
     ...item,
     specs: t(`equipment.${i + 1}.specs`),

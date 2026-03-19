@@ -1,0 +1,67 @@
+{
+  "services": [
+    {
+      "id": "death",
+      "label_ru": "После смерти",
+      "label_en": "After death",
+      "base_price": 15000,
+      "sort_order": 0,
+      "active": true
+    },
+    {
+      "id": "smell",
+      "label_ru": "Запахи",
+      "label_en": "Odor removal",
+      "base_price": 10000,
+      "sort_order": 1,
+      "active": true
+    },
+    {
+      "id": "hoarding",
+      "label_ru": "Расхламление",
+      "label_en": "Hoarding",
+      "base_price": 25000,
+      "sort_order": 2,
+      "active": true
+    },
+    {
+      "id": "fire",
+      "label_ru": "После пожара",
+      "label_en": "After fire",
+      "base_price": 20000,
+      "sort_order": 3,
+      "active": true
+    }
+  ],
+  "extras": [
+    {
+      "id": "ozone",
+      "label_ru": "Озонация",
+      "label_en": "Ozone treatment",
+      "price": 3000,
+      "sort_order": 0,
+      "active": true
+    },
+    {
+      "id": "pest",
+      "label_ru": "Дезинсекция",
+      "label_en": "Pest control",
+      "price": 5000,
+      "sort_order": 1,
+      "active": true
+    },
+    {
+      "id": "trash",
+      "label_ru": "Вывоз мусора",
+      "label_en": "Trash removal",
+      "price": 8000,
+      "sort_order": 2,
+      "active": true
+    }
+  ],
+  "coefficients": {
+    "area_coeff": 0.015,
+    "area_threshold": 30,
+    "urgent_mult": 1.5
+  }
+}

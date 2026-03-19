@@ -12,12 +12,12 @@ export default function Team() {
   const { t } = useTranslation();
 
   const team = [
-    { name: t("team.1.name"), role: t("team.1.role"), status: t("team.1.status"), experience: t("team.1.exp_value"), objects: "2 400+", specialization: t("team.1.spec"), avatar: "/team/alexey.png", color: "#5eead4" },
-    { name: t("team.2.name"), role: t("team.2.role"), status: t("team.2.status"), experience: t("team.2.exp_value"), objects: "1 800+", specialization: t("team.2.spec"), avatar: "/team/marina.png", color: "#d4a574" },
-    { name: t("team.3.name"), role: t("team.3.role"), status: t("team.3.status"), experience: t("team.3.exp_value"), objects: "900+", specialization: t("team.3.spec"), avatar: "/team/dmitry.png", color: "#a78bfa" },
-    { name: t("team.4.name"), role: t("team.4.role"), status: t("team.4.status"), experience: t("team.4.exp_value"), objects: "3 000+", specialization: t("team.4.spec"), avatar: "/team/elena.png", color: "#fb7185" },
-    { name: t("team.5.name"), role: t("team.5.role"), status: t("team.5.status"), experience: t("team.5.exp_value"), objects: "2 100+", specialization: t("team.5.spec"), avatar: "/team/igor.png", color: "#14b8a6" },
-    { name: t("team.6.name"), role: t("team.6.role"), status: t("team.6.status"), experience: t("team.6.exp_value"), objects: "1 500+", specialization: t("team.6.spec"), avatar: "/team/anna.png", color: "#38bdf8" },
+    { name: t("team.1.name"), role: t("team.1.role"), status: t("team.1.status"), experience: t("team.1.exp_value"), objects: "2 400+", specialization: t("team.1.spec"), avatar: "/team/alexey.webp", color: "#5eead4" },
+    { name: t("team.2.name"), role: t("team.2.role"), status: t("team.2.status"), experience: t("team.2.exp_value"), objects: "1 800+", specialization: t("team.2.spec"), avatar: "/team/marina.webp", color: "#d4a574" },
+    { name: t("team.3.name"), role: t("team.3.role"), status: t("team.3.status"), experience: t("team.3.exp_value"), objects: "900+", specialization: t("team.3.spec"), avatar: "/team/dmitry.webp", color: "#a78bfa" },
+    { name: t("team.4.name"), role: t("team.4.role"), status: t("team.4.status"), experience: t("team.4.exp_value"), objects: "3 000+", specialization: t("team.4.spec"), avatar: "/team/elena.webp", color: "#fb7185" },
+    { name: t("team.5.name"), role: t("team.5.role"), status: t("team.5.status"), experience: t("team.5.exp_value"), objects: "2 100+", specialization: t("team.5.spec"), avatar: "/team/igor.webp", color: "#14b8a6" },
+    { name: t("team.6.name"), role: t("team.6.role"), status: t("team.6.status"), experience: t("team.6.exp_value"), objects: "1 500+", specialization: t("team.6.spec"), avatar: "/team/anna.webp", color: "#38bdf8" },
   ];
 
   useGSAP(() => {

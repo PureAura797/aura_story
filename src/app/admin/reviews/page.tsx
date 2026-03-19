@@ -93,7 +93,7 @@ export default function ReviewsAdmin() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-1">Отзывы</h1>
           <p className="text-xs text-neutral-500">{reviews.length} отзывов • {reviews.filter((r) => r.published).length} опубликовано</p>
@@ -140,7 +140,7 @@ export default function ReviewsAdmin() {
               {isEditing ? (
                 /* Edit mode */
                 <div className="space-y-3">
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                       <label className="text-[10px] text-neutral-500 block mb-1">Автор</label>
                       <input
@@ -209,7 +209,7 @@ export default function ReviewsAdmin() {
                 /* View mode */
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0 cursor-pointer" onClick={() => setEditingId(review.id)}>
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                       <span className="text-sm font-bold text-white">{review.author || "Без имени"}</span>
                       <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--accent, #5eead4)" }}>
                         {review.service}
