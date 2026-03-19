@@ -79,7 +79,7 @@ export default function Home() {
         </section>
 
         {/* Sec 3.5: Team — Команда специалистов */}
-        <section id="team" aria-label="Команда сертифицированных специалистов PureAura" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="team" aria-label="Команда сертифицированных специалистов АураЧистоты" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-5xl pointer-events-auto">
               <Team />
             </div>

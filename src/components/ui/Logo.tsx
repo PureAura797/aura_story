@@ -59,7 +59,7 @@ export default function Logo({ size = "md", ghost = false, className }: LogoProp
         )}
         style={{ fontFamily: "var(--font-unbounded), sans-serif" }}
       >
-        PUREAURA
+        АУРАЧИСТОТЫ
         <span style={{ color: accentColor }}>.</span>
       </span>
     </div>

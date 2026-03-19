@@ -74,7 +74,7 @@ async function sendEmail(settings: NotificationSettings["email"], data: Record<s
   await transporter.sendMail({
     from: settings.smtp.user,
     to: recipients.join(", "),
-    subject: `PureAura — ${type}`,
+    subject: `АураЧистоты — ${type}`,
     html: formatEmailHtml(data),
   });
 }

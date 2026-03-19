@@ -11,7 +11,7 @@ const PATH_RIGHT =
 const PATH_LEAF =
   "M362.48 255.12C395.84 238.04 413.65 220.51 421.66 196.88 424.1 189.68 424.5 186.95 424.5 177.5 424.5 162.99 423.26 158.87 410.96 132.5 408.65 127.55 403.51 115.85 399.53 106.5 379.34 59.06 380.82 62.13 378.57 62.94 376.68 63.62 367.3 75.74 364.98 80.5 364.44 81.6 363.44 83.38 362.75 84.46 356.27 94.63 347.77 111.61 340.6 128.73 338.03 134.87 334.79 142.22 330.8 151 327.23 158.85 322.31 175.21 320.95 183.75 318.92 196.5 321.6 208.81 330.8 229 333.51 234.96 338.17 246.07 341.07 253.5 343.96 260.9 344.74 262 347.14 262 348.18 262 355.09 258.9 362.48 255.12Z";
 
-const LETTERS = ["P", "U", "R", "E", "A", "U", "R", "A", "."];
+const LETTERS = ["А", "У", "Р", "А", "Ч", "И", "С", "Т", "О", "Т", "Ы", "."];
 
 export default function Preloader() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -171,13 +171,13 @@ export default function Preloader() {
           </g>
         </svg>
 
-        {/* Text: PUREAURA. */}
+        {/* Text: АУРАЧИСТОТЫ. */}
         <div className="flex gap-[1px]" style={{ fontFamily: "var(--font-unbounded), sans-serif" }}>
           {LETTERS.map((char, i) => (
             <span
               key={i}
               ref={setLetterRef(i)}
-              className="inline-block text-[22px] md:text-[26px] font-light tracking-[3px] uppercase"
+              className="inline-block text-[18px] md:text-[22px] font-light tracking-[2px] uppercase"
               style={{
                 color: char === "." ? "var(--accent)" : "white",
                 willChange: "transform, opacity, filter",

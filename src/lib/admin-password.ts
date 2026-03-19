@@ -125,9 +125,9 @@ export async function createRecoveryCode(
         auth: { user: smtpUser, pass: smtpPass },
       });
       await transporter.sendMail({
-        from: `"PureAura Admin" <${smtpUser}>`,
+        from: `"АураЧистоты Admin" <${smtpUser}>`,
         to: email,
-        subject: "Код восстановления пароля — PureAura",
+        subject: "Код восстановления пароля — АураЧистоты",
         html: `
           <div style="font-family:system-ui;max-width:400px;margin:0 auto;padding:32px;background:#0a0a0c;color:#fff;border:1px solid rgba(255,255,255,0.08)">
             <h2 style="margin:0 0 16px;font-size:18px;font-weight:700">Восстановление пароля</h2>

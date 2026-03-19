@@ -43,7 +43,7 @@ export default function NotFound() {
         className="mt-20 text-[10px] uppercase tracking-[0.25em] text-neutral-800"
         style={{ fontFamily: "var(--font-unbounded), sans-serif" }}
       >
-        PUREAURA.
+        АУРАЧИСТОТЫ.
       </p>
     </div>
   );

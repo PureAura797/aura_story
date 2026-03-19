@@ -332,7 +332,7 @@ const en: Record<string, string> = {
   "reviews.1.text": "Called after father's death. The apartment had been in severe condition for 3 weeks. The crew arrived within 40 minutes, worked 10 hours. Received a protocol with ATP tests. No odor.",
   "reviews.2.name": "Olga K.",
   "reviews.2.date": "January 2026",
-  "reviews.2.text": "Bought an apartment where the previous owner had passed away. Three cleaning services couldn't help. PureAura found the source in the screed, dismantled it, treated it. 30-day guarantee — the odor never returned.",
+  "reviews.2.text": "Bought an apartment where the previous owner had passed away. Three cleaning services couldn't help. АураЧистоты found the source in the screed, dismantled it, treated it. 30-day guarantee — the odor never returned.",
   "reviews.3.name": "MC «DomService»",
   "reviews.3.date": "December 2025",
   "reviews.3.text": "Sewage rupture on the first floor. Flooded the basement and two rooms. Completed the full protocol in 12 hours. Insurance documents provided the same day.",
@@ -347,7 +347,7 @@ const en: Record<string, string> = {
   "reviews.6.text": "Ordered sanitary treatment of an 800 m² warehouse. Everything done quickly, per regulatory standards, provided contract and completion reports. Will continue cooperation.",
   "reviews.7.name": "Elena D.",
   "reviews.7.date": "June 2025",
-  "reviews.7.text": "Unsuccessfully fought bedbugs for 3 months on our own. Called PureAura — they came at night (!), set up a barrier, everything done confidentially. Haven't had an issue for half a year.",
+  "reviews.7.text": "Unsuccessfully fought bedbugs for 3 months on our own. Called АураЧистоты — they came at night (!), set up a barrier, everything done confidentially. Haven't had an issue for half a year.",
 
   // ═══ Footer ═══
   "footer.about_label": "About",
@@ -364,7 +364,7 @@ const en: Record<string, string> = {
   "footer.company.4": "FAQ",
   "footer.contact_label": "Emergency Line",
   "footer.contact_schedule": "24/7. 365 days. Moscow & Region.",
-  "footer.copyright": "© 2026 PureAura Remediation Inc.",
+  "footer.copyright": "© 2026 АураЧистоты",
   "footer.location": "Moscow & Moscow Region",
 
   // ═══ Emergency Button ═══
