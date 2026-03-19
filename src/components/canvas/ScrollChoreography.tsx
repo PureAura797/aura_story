@@ -192,7 +192,7 @@ const STEPS: ChoreographyStep[] = [
 
   // Scatter/Fall — blocks fall like leaves below the footer
   {
-    trigger: '#end-spacer',
+    trigger: '#site-footer',
     props: {
       formation: 14,
       groupX: 0,
