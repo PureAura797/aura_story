@@ -102,9 +102,8 @@ export default function AdminDashboard() {
       {/* Info */}
       <div className="mt-8 border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-5">
         <p className="text-[11px] text-neutral-500 leading-relaxed">
-          <span className="text-neutral-400 font-medium">Оффлайн-режим.</span>{" "}
-          Данные сохраняются в JSON-файлах на сервере. Изменения вступают в силу мгновенно.
-          Для продакшена рекомендуется подключить Supabase.
+          <span className="text-emerald-400 font-medium">Supabase подключён.</span>{" "}
+          Данные сохраняются в PostgreSQL. Изменения синхронизируются между всеми устройствами.
         </p>
       </div>
     </div>
