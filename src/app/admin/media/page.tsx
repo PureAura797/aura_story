@@ -119,7 +119,7 @@ function SlotCard({
         ) : (
           <div className="flex flex-col items-center gap-1.5 text-neutral-700">
             <ImageIcon className="w-6 h-6" strokeWidth={1} />
-            <span className="text-[9px]">нет файла</span>
+            <span className="text-[11px]">нет файла</span>
           </div>
         )}
 
@@ -140,12 +140,12 @@ function SlotCard({
 
       {/* Info */}
       <div className="flex items-center justify-between">
-        <span className="text-[10px] text-neutral-400 font-mono truncate">{file.name}</span>
-        <span className="text-[9px] text-neutral-600">{formatSize(file.size)}</span>
+        <span className="text-[11px] text-neutral-400 font-mono truncate">{file.name}</span>
+        <span className="text-[11px] text-neutral-600">{formatSize(file.size)}</span>
       </div>
 
       {error && (
-        <div className="flex items-center gap-1 mt-1.5 text-red-400 text-[10px]">
+        <div className="flex items-center gap-1 mt-1.5 text-red-400 text-[11px]">
           <AlertCircle className="w-3 h-3" strokeWidth={1.5} />
           {error}
         </div>
@@ -241,13 +241,13 @@ export default function MediaManager() {
                 <div className="flex items-center gap-2.5">
                   <meta.icon className="w-4 h-4 text-neutral-500" strokeWidth={1.5} />
                   <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-300">{meta.label}</h2>
-                  <span className="text-[10px] text-neutral-600">
+                  <span className="text-[11px] text-neutral-600">
                     {category.files.length}
                   </span>
                 </div>
                 <button
                   onClick={() => addInputRefs.current[key]?.click()}
-                  className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider border border-white/10 px-3 py-1.5 hover:bg-white/5 transition-colors cursor-pointer"
+                  className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider border border-white/10 px-3 py-1.5 hover:bg-white/5 transition-colors cursor-pointer"
                 >
                   <Plus className="w-3 h-3" strokeWidth={1.5} /> Добавить
                 </button>
@@ -265,7 +265,7 @@ export default function MediaManager() {
                   }}
                 />
               </div>
-              <p className="text-[10px] text-neutral-600 mb-3">{meta.description}</p>
+              <p className="text-[11px] text-neutral-600 mb-3">{meta.description}</p>
 
               {category.files.length === 0 ? (
                 <div className="border border-dashed border-white/[0.06] p-8 text-center">

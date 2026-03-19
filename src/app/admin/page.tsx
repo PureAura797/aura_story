@@ -153,7 +153,7 @@ export default function AdminDashboard() {
             </div>
             <h2 className="text-sm font-bold mb-1 group-hover:text-white transition-colors">{card.title}</h2>
             <p className="text-[11px] text-neutral-500 leading-relaxed mb-3">{card.desc}</p>
-            <span className="text-[9px] text-neutral-600 uppercase tracking-[0.15em] font-medium">{card.count}</span>
+            <span className="text-[11px] text-neutral-600 uppercase tracking-[0.15em] font-medium">{card.count}</span>
           </Link>
         ))}
       </div>

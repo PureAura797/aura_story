@@ -92,17 +92,17 @@ export default function FaqAdmin() {
           <div key={item.id} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-5">
             <div className="flex items-center gap-2 mb-4">
               <div className="flex flex-col gap-0.5">
-                <button onClick={() => moveItem(idx, -1)} className="text-neutral-600 hover:text-white text-[10px] cursor-pointer">▲</button>
-                <button onClick={() => moveItem(idx, 1)} className="text-neutral-600 hover:text-white text-[10px] cursor-pointer">▼</button>
+                <button onClick={() => moveItem(idx, -1)} className="text-neutral-600 hover:text-white text-[11px] cursor-pointer">▲</button>
+                <button onClick={() => moveItem(idx, 1)} className="text-neutral-600 hover:text-white text-[11px] cursor-pointer">▼</button>
               </div>
-              <span className="text-[10px] font-mono text-neutral-600 w-6">{String(idx + 1).padStart(2, "0")}</span>
+              <span className="text-[11px] font-mono text-neutral-600 w-6">{String(idx + 1).padStart(2, "0")}</span>
               <div className="flex-1" />
               <button onClick={() => updateItem(item.id, "published", !item.published)} className="cursor-pointer p-1">
                 {item.published
                   ? <Eye className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
                   : <EyeOff className="w-4 h-4 text-neutral-600" strokeWidth={1.5} />}
               </button>
-              <button onClick={() => deleteItem(item.id)} className="cursor-pointer p-1">
+              <button onClick={() => { if (confirm("Удалить?")) deleteItem(item.id); }} className="cursor-pointer p-1">
                 <Trash2 className="w-4 h-4 text-neutral-600 hover:text-red-400 transition-colors" strokeWidth={1.5} />
               </button>
             </div>
@@ -112,7 +112,7 @@ export default function FaqAdmin() {
               value={item.question}
               onChange={(e) => updateItem(item.id, "question", e.target.value)}
               placeholder="Вопрос"
-              className="w-full bg-transparent border-b border-white/10 text-sm font-medium focus:border-white/30 outline-none pb-2 mb-3 transition-colors"
+              className="w-full bg-transparent border-b border-white/10 text-sm font-medium focus:border-white/30 focus-visible:outline-none pb-2 mb-3 transition-colors"
             />
 
             <textarea
@@ -120,7 +120,7 @@ export default function FaqAdmin() {
               onChange={(e) => updateItem(item.id, "answer", e.target.value)}
               placeholder="Ответ"
               rows={3}
-              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 focus:border-white/20 outline-none resize-none transition-colors"
+              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 focus:border-white/20 focus-visible:outline-none resize-none transition-colors"
             />
           </div>
         ))}

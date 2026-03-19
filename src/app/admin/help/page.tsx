@@ -291,7 +291,7 @@ export default function HelpPage() {
                 <ol className="space-y-2">
                   {section.steps.map((step, i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <span className="w-5 h-5 shrink-0 flex items-center justify-center text-[10px] font-bold border border-white/10 text-neutral-400 mt-0.5">
+                      <span className="w-5 h-5 shrink-0 flex items-center justify-center text-[11px] font-bold border border-white/10 text-neutral-400 mt-0.5">
                         {i + 1}
                       </span>
                       <span className="text-xs text-neutral-400 leading-relaxed">{step}</span>

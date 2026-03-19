@@ -142,44 +142,44 @@ export default function ReviewsAdmin() {
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <label className="text-[10px] text-neutral-500 block mb-1">Автор</label>
+                      <label className="text-[11px] text-neutral-500 block mb-1">Автор</label>
                       <input
                         type="text"
                         value={review.author}
                         onChange={(e) => updateReview(review.id, "author", e.target.value)}
                         placeholder="Имя или организация"
-                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] text-neutral-500 block mb-1">Услуга</label>
+                      <label className="text-[11px] text-neutral-500 block mb-1">Услуга</label>
                       <input
                         type="text"
                         value={review.service}
                         onChange={(e) => updateReview(review.id, "service", e.target.value)}
                         placeholder="Название услуги"
-                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
                       />
                     </div>
                     <div>
-                      <label className="text-[10px] text-neutral-500 block mb-1">Дата</label>
+                      <label className="text-[11px] text-neutral-500 block mb-1">Дата</label>
                       <input
                         type="text"
                         value={review.date_label}
                         onChange={(e) => updateReview(review.id, "date_label", e.target.value)}
                         placeholder="Февраль 2026"
-                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+                        className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="text-[10px] text-neutral-500 block mb-1">Текст отзыва</label>
+                    <label className="text-[11px] text-neutral-500 block mb-1">Текст отзыва</label>
                     <textarea
                       value={review.text}
                       onChange={(e) => updateReview(review.id, "text", e.target.value)}
                       rows={3}
                       placeholder="Текст отзыва клиента..."
-                      className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25 resize-y"
+                      className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25 resize-y"
                     />
                   </div>
                   <div className="flex items-center justify-between">
@@ -199,7 +199,7 @@ export default function ReviewsAdmin() {
                     </div>
                     <button
                       onClick={() => setEditingId(null)}
-                      className="text-[10px] text-neutral-500 hover:text-white transition-colors cursor-pointer"
+                      className="text-[11px] text-neutral-500 hover:text-white transition-colors cursor-pointer"
                     >
                       Готово
                     </button>
@@ -211,10 +211,10 @@ export default function ReviewsAdmin() {
                   <div className="flex-1 min-w-0 cursor-pointer" onClick={() => setEditingId(review.id)}>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                       <span className="text-sm font-bold text-white">{review.author || "Без имени"}</span>
-                      <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--accent, #5eead4)" }}>
+                      <span className="text-[11px] uppercase tracking-wider" style={{ color: "var(--accent, #5eead4)" }}>
                         {review.service}
                       </span>
-                      <span className="text-[10px] text-neutral-600">{review.date_label}</span>
+                      <span className="text-[11px] text-neutral-600">{review.date_label}</span>
                     </div>
                     <p className="text-xs text-neutral-400 leading-relaxed line-clamp-2">
                       {review.text || "Нажмите для редактирования..."}
@@ -231,7 +231,7 @@ export default function ReviewsAdmin() {
                       {review.published ? <Eye className="w-3.5 h-3.5" strokeWidth={1.5} /> : <EyeOff className="w-3.5 h-3.5" strokeWidth={1.5} />}
                     </button>
                     <button
-                      onClick={() => removeReview(review.id)}
+                      onClick={() => { if (confirm("Удалить отзыв?")) removeReview(review.id); }}
                       className="p-1.5 text-neutral-700 hover:text-red-400 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />

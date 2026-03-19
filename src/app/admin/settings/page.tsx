@@ -17,13 +17,13 @@ function PasswordInput({
   const [show, setShow] = useState(false);
   return (
     <div>
-      <label className="block text-[10px] text-neutral-500 uppercase tracking-wider mb-1.5">{label}</label>
+      <label className="block text-[11px] text-neutral-500 uppercase tracking-wider mb-1.5">{label}</label>
       <div className="relative">
         <input
           type={show ? "text" : "password"}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 pr-10 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+          className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 pr-10 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
           placeholder={placeholder}
           required
         />
@@ -136,7 +136,7 @@ export default function AdminSettings() {
 
         <div className="space-y-4">
           <div>
-            <label className="flex items-center gap-1.5 text-[10px] text-neutral-500 uppercase tracking-wider mb-1.5">
+            <label className="flex items-center gap-1.5 text-[11px] text-neutral-500 uppercase tracking-wider mb-1.5">
               <Mail className="w-3 h-3" strokeWidth={1.5} />
               Email для восстановления пароля
             </label>
@@ -144,14 +144,14 @@ export default function AdminSettings() {
               type="email"
               value={recoveryEmail}
               onChange={(e) => setRecoveryEmail(e.target.value)}
-              className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+              className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
               placeholder="admin@pureaura.ru"
             />
-            <p className="text-[10px] text-neutral-600 mt-1">На этот адрес придёт код для восстановления пароля</p>
+            <p className="text-[11px] text-neutral-600 mt-1">На этот адрес придёт код для восстановления пароля</p>
           </div>
 
           <div>
-            <label className="flex items-center gap-1.5 text-[10px] text-neutral-500 uppercase tracking-wider mb-1.5">
+            <label className="flex items-center gap-1.5 text-[11px] text-neutral-500 uppercase tracking-wider mb-1.5">
               <Phone className="w-3 h-3" strokeWidth={1.5} />
               Телефон администратора
             </label>
@@ -159,10 +159,10 @@ export default function AdminSettings() {
               type="tel"
               value={adminPhone}
               onChange={(e) => setAdminPhone(e.target.value)}
-              className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+              className="w-full bg-white/[0.04] border border-white/[0.08] px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
               placeholder="+7 (900) 000-00-00"
             />
-            <p className="text-[10px] text-neutral-600 mt-1">Личный телефон владельца/админа (не отображается на сайте)</p>
+            <p className="text-[11px] text-neutral-600 mt-1">Личный телефон владельца/админа (не отображается на сайте)</p>
           </div>
 
           {profileChanged && (

@@ -102,7 +102,7 @@ export default function AdminRecovery() {
           {(["email", "code", "newpass"] as Step[]).map((s, i) => (
             <div key={s} className="flex items-center gap-2">
               <div
-                className={`w-6 h-6 flex items-center justify-center text-[10px] font-bold border transition-all ${
+                className={`w-6 h-6 flex items-center justify-center text-[11px] font-bold border transition-all ${
                   step === s
                     ? "border-white text-white"
                     : step === "done" || (["email", "code", "newpass"].indexOf(step) > i)
@@ -121,7 +121,7 @@ export default function AdminRecovery() {
         {step === "email" && (
           <form onSubmit={handleRequestCode} className="space-y-4">
             <div>
-              <label className="flex items-center gap-2 text-[10px] text-neutral-500 uppercase tracking-wider mb-2">
+              <label className="flex items-center gap-2 text-[11px] text-neutral-500 uppercase tracking-wider mb-2">
                 <Mail className="w-3 h-3" strokeWidth={1.5} />
                 Email администратора
               </label>
@@ -129,7 +129,7 @@ export default function AdminRecovery() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
                 placeholder="admin@pureaura.ru"
                 required
                 autoFocus
@@ -161,13 +161,13 @@ export default function AdminRecovery() {
               <p className="text-[11px] text-neutral-400 leading-relaxed">
                 Код отправлен на <span className="text-white">{email}</span>
               </p>
-              <p className="text-[10px] text-neutral-600 mt-1">
+              <p className="text-[11px] text-neutral-600 mt-1">
                 Не получили? Проверьте спам или консоль сервера
               </p>
             </div>
 
             <div>
-              <label className="flex items-center gap-2 text-[10px] text-neutral-500 uppercase tracking-wider mb-2">
+              <label className="flex items-center gap-2 text-[11px] text-neutral-500 uppercase tracking-wider mb-2">
                 <KeyRound className="w-3 h-3" strokeWidth={1.5} />
                 6-значный код
               </label>
@@ -175,7 +175,7 @@ export default function AdminRecovery() {
                 type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-2xl text-white text-center tracking-[0.5em] font-mono placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 text-2xl text-white text-center tracking-[0.5em] font-mono placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
                 placeholder="000000"
                 maxLength={6}
                 autoFocus
@@ -204,7 +204,7 @@ export default function AdminRecovery() {
         {step === "newpass" && (
           <form onSubmit={handleVerifyAndReset} className="space-y-4">
             <div>
-              <label className="flex items-center gap-2 text-[10px] text-neutral-500 uppercase tracking-wider mb-2">
+              <label className="flex items-center gap-2 text-[11px] text-neutral-500 uppercase tracking-wider mb-2">
                 <Lock className="w-3 h-3" strokeWidth={1.5} />
                 Новый пароль
               </label>
@@ -213,7 +213,7 @@ export default function AdminRecovery() {
                   type={showPass ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+                  className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
                   placeholder="Минимум 6 символов"
                   required
                   minLength={6}
@@ -226,7 +226,7 @@ export default function AdminRecovery() {
             </div>
 
             <div>
-              <label className="flex items-center gap-2 text-[10px] text-neutral-500 uppercase tracking-wider mb-2">
+              <label className="flex items-center gap-2 text-[11px] text-neutral-500 uppercase tracking-wider mb-2">
                 <Lock className="w-3 h-3" strokeWidth={1.5} />
                 Подтверждение
               </label>
@@ -235,7 +235,7 @@ export default function AdminRecovery() {
                   type={showConfirm ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 transition-colors"
+                  className="w-full bg-white/[0.03] border border-white/[0.08] px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 focus:focus-visible:outline-none focus:border-white/20 transition-colors"
                   placeholder="Повторите пароль"
                   required
                 />
@@ -295,7 +295,7 @@ export default function AdminRecovery() {
         )}
 
         {/* Offline note */}
-        <p className="text-center text-[10px] text-neutral-700 mt-8">
+        <p className="text-center text-[11px] text-neutral-700 mt-8">
           Оффлайн-режим: код отображается в консоли сервера
         </p>
       </div>

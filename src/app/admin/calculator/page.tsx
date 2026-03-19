@@ -167,36 +167,36 @@ export default function CalculatorAdmin() {
         <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-400 mb-4">Формула расчёта</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="text-[10px] text-neutral-500 block mb-1.5">Коэфф. площади (за м²)</label>
+            <label className="text-[11px] text-neutral-500 block mb-1.5">Коэфф. площади (за м²)</label>
             <input
               type="number"
               step="0.001"
               value={config.coefficients.area_coeff}
               onChange={(e) => updateCoeff("area_coeff", parseFloat(e.target.value) || 0)}
-              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
             />
           </div>
           <div>
-            <label className="text-[10px] text-neutral-500 block mb-1.5">Порог (м²)</label>
+            <label className="text-[11px] text-neutral-500 block mb-1.5">Порог (м²)</label>
             <input
               type="number"
               value={config.coefficients.area_threshold}
               onChange={(e) => updateCoeff("area_threshold", parseInt(e.target.value) || 0)}
-              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
             />
           </div>
           <div>
-            <label className="text-[10px] text-neutral-500 block mb-1.5">Множитель срочности</label>
+            <label className="text-[11px] text-neutral-500 block mb-1.5">Множитель срочности</label>
             <input
               type="number"
               step="0.1"
               value={config.coefficients.urgent_mult}
               onChange={(e) => updateCoeff("urgent_mult", parseFloat(e.target.value) || 1)}
-              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white outline-none focus:border-white/25"
+              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white focus-visible:outline-none focus:border-white/25"
             />
           </div>
         </div>
-        <p className="text-[10px] text-neutral-600 mt-3">
+        <p className="text-[11px] text-neutral-600 mt-3">
           Итого = базовая_цена × (1 + (площадь − порог) × коэфф) × множитель_срочности + допуслуги
         </p>
       </div>
@@ -205,7 +205,7 @@ export default function CalculatorAdmin() {
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-400">Основные услуги</h2>
-          <button onClick={addService} className="flex items-center gap-1.5 text-[10px] text-neutral-400 hover:text-white transition-colors cursor-pointer">
+          <button onClick={addService} className="flex items-center gap-1.5 text-[11px] text-neutral-400 hover:text-white transition-colors cursor-pointer">
             <Plus className="w-3.5 h-3.5" strokeWidth={1.5} /> Добавить
           </button>
         </div>
@@ -217,14 +217,14 @@ export default function CalculatorAdmin() {
                   type="text"
                   value={s.label_ru}
                   onChange={(e) => updateService(idx, "label_ru", e.target.value)}
-                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white focus-visible:outline-none focus:border-white/30 py-1"
                   placeholder="Название (РУ)"
                 />
                 <input
                   type="text"
                   value={s.label_en}
                   onChange={(e) => updateService(idx, "label_en", e.target.value)}
-                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white focus-visible:outline-none focus:border-white/30 py-1"
                   placeholder="Label (EN)"
                 />
                 <div className="flex items-center justify-between sm:justify-start gap-2">
@@ -233,9 +233,9 @@ export default function CalculatorAdmin() {
                       type="number"
                       value={s.base_price}
                       onChange={(e) => updateService(idx, "base_price", parseInt(e.target.value) || 0)}
-                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right focus-visible:outline-none focus:border-white/25"
                     />
-                    <span className="text-[10px] text-neutral-600">₽</span>
+                    <span className="text-[11px] text-neutral-600">₽</span>
                   </div>
                   <button onClick={() => removeService(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
                     <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -251,7 +251,7 @@ export default function CalculatorAdmin() {
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-400">Дополнительные услуги</h2>
-          <button onClick={addExtra} className="flex items-center gap-1.5 text-[10px] text-neutral-400 hover:text-white transition-colors cursor-pointer">
+          <button onClick={addExtra} className="flex items-center gap-1.5 text-[11px] text-neutral-400 hover:text-white transition-colors cursor-pointer">
             <Plus className="w-3.5 h-3.5" strokeWidth={1.5} /> Добавить
           </button>
         </div>
@@ -263,14 +263,14 @@ export default function CalculatorAdmin() {
                   type="text"
                   value={e.label_ru}
                   onChange={(ev) => updateExtra(idx, "label_ru", ev.target.value)}
-                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white focus-visible:outline-none focus:border-white/30 py-1"
                   placeholder="Название (РУ)"
                 />
                 <input
                   type="text"
                   value={e.label_en}
                   onChange={(ev) => updateExtra(idx, "label_en", ev.target.value)}
-                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white outline-none focus:border-white/30 py-1"
+                  className="flex-1 bg-transparent border-b border-white/10 text-sm text-white focus-visible:outline-none focus:border-white/30 py-1"
                   placeholder="Label (EN)"
                 />
                 <div className="flex items-center justify-between sm:justify-start gap-2">
@@ -279,9 +279,9 @@ export default function CalculatorAdmin() {
                       type="number"
                       value={e.price}
                       onChange={(ev) => updateExtra(idx, "price", parseInt(ev.target.value) || 0)}
-                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right outline-none focus:border-white/25"
+                      className="w-24 bg-white/[0.04] border border-white/10 px-2 py-1.5 text-sm text-white text-right focus-visible:outline-none focus:border-white/25"
                     />
-                    <span className="text-[10px] text-neutral-600">₽</span>
+                    <span className="text-[11px] text-neutral-600">₽</span>
                   </div>
                   <button onClick={() => removeExtra(idx)} className="text-neutral-700 hover:text-red-400 transition-colors cursor-pointer p-1">
                     <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />

@@ -75,8 +75,8 @@ export default function SeoAdmin() {
       {/* Title */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
         <div className="flex items-center justify-between mb-2">
-          <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold">Title</label>
-          <span className={`text-[10px] font-mono ${titleLen > 70 ? "text-red-400" : titleLen > 60 ? "text-yellow-400" : "text-neutral-600"}`}>
+          <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold">Title</label>
+          <span className={`text-[11px] font-mono ${titleLen > 70 ? "text-red-400" : titleLen > 60 ? "text-yellow-400" : "text-neutral-600"}`}>
             {titleLen}/70
           </span>
         </div>
@@ -84,23 +84,23 @@ export default function SeoAdmin() {
           type="text"
           value={seo.title}
           onChange={(e) => setSeo({ ...seo, title: e.target.value })}
-          className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-3 text-sm text-white focus:border-white/20 focus:outline-none transition-colors"
+          className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-3 text-sm text-white focus:border-white/20 focus-visible:outline-none transition-colors"
           placeholder="Не более 70 символов, без бренда"
         />
         {titleLen > 70 && (
-          <div className="flex items-center gap-1 mt-2 text-red-400 text-[10px]">
+          <div className="flex items-center gap-1 mt-2 text-red-400 text-[11px]">
             <AlertCircle className="w-3 h-3" strokeWidth={1.5} />
             Превышен лимит символов — поисковик обрежет
           </div>
         )}
-        <p className="text-[10px] text-neutral-600 mt-2">Заголовок страницы в поисковой выдаче. Без бренда, максимум ключевых слов.</p>
+        <p className="text-[11px] text-neutral-600 mt-2">Заголовок страницы в поисковой выдаче. Без бренда, максимум ключевых слов.</p>
       </div>
 
       {/* Description */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
         <div className="flex items-center justify-between mb-2">
-          <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold">Description</label>
-          <span className={`text-[10px] font-mono ${descLen > 320 ? "text-red-400" : descLen > 280 ? "text-yellow-400" : "text-neutral-600"}`}>
+          <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold">Description</label>
+          <span className={`text-[11px] font-mono ${descLen > 320 ? "text-red-400" : descLen > 280 ? "text-yellow-400" : "text-neutral-600"}`}>
             {descLen}/320
           </span>
         </div>
@@ -108,22 +108,22 @@ export default function SeoAdmin() {
           value={seo.description}
           onChange={(e) => setSeo({ ...seo, description: e.target.value })}
           rows={4}
-          className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-3 text-sm text-white focus:border-white/20 focus:outline-none transition-colors resize-none"
+          className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-3 text-sm text-white focus:border-white/20 focus-visible:outline-none transition-colors resize-none"
           placeholder="Не более 320 символов, без бренда"
         />
         {descLen > 320 && (
-          <div className="flex items-center gap-1 mt-2 text-red-400 text-[10px]">
+          <div className="flex items-center gap-1 mt-2 text-red-400 text-[11px]">
             <AlertCircle className="w-3 h-3" strokeWidth={1.5} />
             Превышен лимит символов
           </div>
         )}
-        <p className="text-[10px] text-neutral-600 mt-2">Описание страницы в поисковой выдаче. Без бренда, максимум ключевых слов.</p>
+        <p className="text-[11px] text-neutral-600 mt-2">Описание страницы в поисковой выдаче. Без бренда, максимум ключевых слов.</p>
       </div>
 
       {/* OG Image */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
-        <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">OG Image</label>
-        <p className="text-[10px] text-neutral-600 mb-3">Превью при шаринге ссылки в соцсетях и мессенджерах. Рекомендуемый размер: 1200×630 px.</p>
+        <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">OG Image</label>
+        <p className="text-[11px] text-neutral-600 mb-3">Превью при шаринге ссылки в соцсетях и мессенджерах. Рекомендуемый размер: 1200×630 px.</p>
         <div className="flex flex-col sm:flex-row items-start gap-4">
           <div
             className="relative w-48 h-24 bg-white/[0.04] border border-white/[0.08] overflow-hidden cursor-pointer group shrink-0"
@@ -142,7 +142,7 @@ export default function SeoAdmin() {
             type="text"
             value={seo.ogImage}
             onChange={(e) => setSeo({ ...seo, ogImage: e.target.value })}
-            className="flex-1 bg-white/[0.04] border border-white/[0.08] px-3 py-2 text-xs text-neutral-400 font-mono focus:border-white/20 focus:outline-none"
+            className="flex-1 bg-white/[0.04] border border-white/[0.08] px-3 py-2 text-xs text-neutral-400 font-mono focus:border-white/20 focus-visible:outline-none"
             placeholder="/og-image.png"
           />
         </div>
@@ -154,8 +154,8 @@ export default function SeoAdmin() {
 
       {/* Favicon */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
-        <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Фавикон</label>
-        <p className="text-[10px] text-neutral-600 mb-3">Иконка во вкладке браузера. Рекомендуемый формат: .ico или .png 32×32.</p>
+        <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Фавикон</label>
+        <p className="text-[11px] text-neutral-600 mb-3">Иконка во вкладке браузера. Рекомендуемый формат: .ico или .png 32×32.</p>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div
             className="relative w-12 h-12 bg-white/[0.04] border border-white/[0.08] overflow-hidden cursor-pointer group shrink-0"
@@ -174,7 +174,7 @@ export default function SeoAdmin() {
             type="text"
             value={seo.favicon}
             onChange={(e) => setSeo({ ...seo, favicon: e.target.value })}
-            className="flex-1 bg-white/[0.04] border border-white/[0.08] px-3 py-2 text-xs text-neutral-400 font-mono focus:border-white/20 focus:outline-none"
+            className="flex-1 bg-white/[0.04] border border-white/[0.08] px-3 py-2 text-xs text-neutral-400 font-mono focus:border-white/20 focus-visible:outline-none"
             placeholder="/favicon.ico"
           />
         </div>
@@ -186,7 +186,7 @@ export default function SeoAdmin() {
 
       {/* Preview */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5">
-        <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Превью в поисковой выдаче</label>
+        <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Превью в поисковой выдаче</label>
         <div className="bg-white/[0.04] border border-white/[0.06] p-4">
           <p className="text-[13px] text-[#8ab4f8] truncate mb-0.5">{seo.title || "Заголовок не указан"}</p>
           <p className="text-[11px] text-green-400/70 mb-1 font-mono">pureaura.ru</p>

@@ -98,44 +98,44 @@ export default function PricingAdmin() {
           <div key={item.id} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-5">
             <div className="flex items-center gap-2 mb-4">
               <div className="flex flex-col gap-0.5">
-                <button onClick={() => moveItem(idx, -1)} className="text-neutral-600 hover:text-white text-[10px] cursor-pointer">▲</button>
-                <button onClick={() => moveItem(idx, 1)} className="text-neutral-600 hover:text-white text-[10px] cursor-pointer">▼</button>
+                <button onClick={() => moveItem(idx, -1)} className="text-neutral-600 hover:text-white text-[11px] cursor-pointer p-2 min-w-[36px] min-h-[36px] flex items-center justify-center">▲</button>
+                <button onClick={() => moveItem(idx, 1)} className="text-neutral-600 hover:text-white text-[11px] cursor-pointer p-2 min-w-[36px] min-h-[36px] flex items-center justify-center">▼</button>
               </div>
               <input
                 type="text"
                 value={item.name}
                 onChange={(e) => updateItem(item.id, "name", e.target.value)}
                 placeholder="Название тарифа"
-                className="flex-1 bg-transparent border-b border-white/10 text-sm font-bold focus:border-white/30 outline-none pb-1 transition-colors"
+                className="flex-1 bg-transparent border-b border-white/10 text-sm font-bold focus:border-white/30 focus-visible:outline-none pb-1 transition-colors"
               />
               <button onClick={() => updateItem(item.id, "published", !item.published)} className="cursor-pointer p-1">
                 {item.published
                   ? <Eye className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
                   : <EyeOff className="w-4 h-4 text-neutral-600" strokeWidth={1.5} />}
               </button>
-              <button onClick={() => deleteItem(item.id)} className="cursor-pointer p-1">
+              <button onClick={() => { if (confirm("Удалить?")) deleteItem(item.id); }} className="cursor-pointer p-1">
                 <Trash2 className="w-4 h-4 text-neutral-600 hover:text-red-400 transition-colors" strokeWidth={1.5} />
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Цена (₽)</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Цена (₽)</label>
                 <input
                   type="number"
                   value={item.price}
                   onChange={(e) => updateItem(item.id, "price", parseInt(e.target.value) || 0)}
-                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 outline-none transition-colors"
+                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                 />
               </div>
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Площадь</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Площадь</label>
                 <input
                   type="text"
                   value={item.area}
                   onChange={(e) => updateItem(item.id, "area", e.target.value)}
                   placeholder="до 120 кв.м"
-                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 outline-none transition-colors"
+                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function PricingAdmin() {
               onChange={(e) => updateItem(item.id, "description", e.target.value)}
               placeholder="Описание"
               rows={2}
-              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 mb-3 focus:border-white/20 outline-none resize-none transition-colors"
+              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 mb-3 focus:border-white/20 focus-visible:outline-none resize-none transition-colors"
             />
 
             <input
@@ -153,7 +153,7 @@ export default function PricingAdmin() {
               value={item.features}
               onChange={(e) => updateItem(item.id, "features", e.target.value)}
               placeholder="Фичи через · (Выезд 60 мин · Хим. дезинфекция · Озонация)"
-              className="w-full bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 outline-none transition-colors"
+              className="w-full bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
             />
           </div>
         ))}

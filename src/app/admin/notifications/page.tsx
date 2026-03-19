@@ -151,56 +151,56 @@ export default function NotificationsPage() {
           {expandedSections.email && (
             <div className="px-5 pb-5 border-t border-white/5 pt-4 flex flex-col gap-4">
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Email-адреса получателей</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Email-адреса получателей</label>
                 <input
                   type="text"
                   value={settings.email.recipients}
                   onChange={(e) => setSettings({ ...settings, email: { ...settings.email, recipients: e.target.value } })}
                   placeholder="user1@mail.ru, user2@mail.ru"
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
                 />
-                <p className="text-[10px] text-neutral-600 mt-1">Несколько адресов через запятую</p>
+                <p className="text-[11px] text-neutral-600 mt-1">Несколько адресов через запятую</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">SMTP-сервер</label>
+                  <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">SMTP-сервер</label>
                   <input
                     type="text"
                     value={settings.email.smtp.host}
                     onChange={(e) => setSettings({ ...settings, email: { ...settings.email, smtp: { ...settings.email.smtp, host: e.target.value } } })}
                     placeholder="smtp.yandex.ru"
-                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Порт</label>
+                  <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Порт</label>
                   <input
                     type="number"
                     value={settings.email.smtp.port}
                     onChange={(e) => setSettings({ ...settings, email: { ...settings.email, smtp: { ...settings.email.smtp, port: parseInt(e.target.value) || 587 } } })}
-                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Логин (email)</label>
+                  <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Логин (email)</label>
                   <input
                     type="text"
                     value={settings.email.smtp.user}
                     onChange={(e) => setSettings({ ...settings, email: { ...settings.email, smtp: { ...settings.email.smtp, user: e.target.value } } })}
                     placeholder="noreply@pureaura.ru"
-                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Пароль</label>
+                  <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Пароль</label>
                   <input
                     type="password"
                     value={settings.email.smtp.pass}
                     onChange={(e) => setSettings({ ...settings, email: { ...settings.email, smtp: { ...settings.email.smtp, pass: e.target.value } } })}
                     placeholder="••••••••"
-                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                    className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -259,25 +259,25 @@ export default function NotificationsPage() {
                 </p>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Токен бота</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Токен бота</label>
                 <input
                   type="text"
                   value={settings.telegram.botToken}
                   onChange={(e) => setSettings({ ...settings, telegram: { ...settings.telegram, botToken: e.target.value } })}
                   placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Chat ID сотрудников</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Chat ID сотрудников</label>
                 <input
                   type="text"
                   value={settings.telegram.chatIds}
                   onChange={(e) => setSettings({ ...settings, telegram: { ...settings.telegram, chatIds: e.target.value } })}
                   placeholder="123456789, 987654321"
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
                 />
-                <p className="text-[10px] text-neutral-600 mt-1">Несколько ID через запятую — каждый получит заявку</p>
+                <p className="text-[11px] text-neutral-600 mt-1">Несколько ID через запятую — каждый получит заявку</p>
               </div>
               <button
                 onClick={() => handleTest("telegram")}
@@ -334,25 +334,25 @@ export default function NotificationsPage() {
                 </p>
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Токен бота</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Токен бота</label>
                 <input
                   type="text"
                   value={settings.max.botToken}
                   onChange={(e) => setSettings({ ...settings, max: { ...settings.max, botToken: e.target.value } })}
                   placeholder="bot_token_from_masterbot"
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Chat ID сотрудников</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Chat ID сотрудников</label>
                 <input
                   type="text"
                   value={settings.max.chatIds}
                   onChange={(e) => setSettings({ ...settings, max: { ...settings.max, chatIds: e.target.value } })}
                   placeholder="123456789, 987654321"
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
                 />
-                <p className="text-[10px] text-neutral-600 mt-1">Несколько ID через запятую</p>
+                <p className="text-[11px] text-neutral-600 mt-1">Несколько ID через запятую</p>
               </div>
               <button
                 onClick={() => handleTest("max")}
@@ -402,13 +402,13 @@ export default function NotificationsPage() {
           {expandedSections.webhook && (
             <div className="px-5 pb-5 border-t border-white/5 pt-4 flex flex-col gap-4">
               <div>
-                <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">URL вебхука</label>
+                <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">URL вебхука</label>
                 <input
                   type="url"
                   value={settings.webhook.url}
                   onChange={(e) => setSettings({ ...settings, webhook: { ...settings.webhook, url: e.target.value } })}
                   placeholder="https://n8n.example.com/webhook/..."
-                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+                  className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
                 />
               </div>
               <button

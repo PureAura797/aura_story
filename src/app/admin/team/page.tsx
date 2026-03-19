@@ -163,10 +163,10 @@ function MemberCard({ member, idx, total, update, move, remove }: {
           <Field label="Специализация" value={member.specialization} onChange={(v) => update(member.id, "specialization", v)} />
           <div className="flex items-end gap-2">
             <div className="flex-1">
-              <label className="text-[9px] uppercase tracking-wider text-neutral-600 block mb-1">Акцент</label>
+              <label className="text-[11px] uppercase tracking-wider text-neutral-600 block mb-1">Акцент</label>
               <div className="flex items-center gap-2">
                 <input type="color" value={member.color} onChange={(e) => update(member.id, "color", e.target.value)} className="w-8 h-8 bg-transparent border border-white/10 cursor-pointer" />
-                <span className="text-[10px] text-neutral-500 font-mono">{member.color}</span>
+                <span className="text-[11px] text-neutral-500 font-mono">{member.color}</span>
               </div>
             </div>
           </div>
@@ -195,12 +195,12 @@ function MemberCard({ member, idx, total, update, move, remove }: {
 function Field({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
     <div>
-      <label className="text-[9px] uppercase tracking-wider text-neutral-600 block mb-1">{label}</label>
+      <label className="text-[11px] uppercase tracking-wider text-neutral-600 block mb-1">{label}</label>
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white focus:border-white/20 focus:outline-none transition-colors"
+        className="w-full bg-white/[0.04] border border-white/[0.06] px-3 py-2 text-sm text-white focus:border-white/20 focus-visible:outline-none transition-colors"
       />
     </div>
   );

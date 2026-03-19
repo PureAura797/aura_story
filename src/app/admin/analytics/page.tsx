@@ -139,9 +139,9 @@ export default function AnalyticsPage() {
               value={settings[t.key]}
               onChange={(e) => setSettings({ ...settings, [t.key]: e.target.value })}
               placeholder={t.placeholder}
-              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
+              className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono text-xs"
             />
-            <p className="text-[10px] text-neutral-600 mt-1">{t.hint}</p>
+            <p className="text-[11px] text-neutral-600 mt-1">{t.hint}</p>
           </div>
         ))}
       </div>
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
           <div className="border border-dashed border-white/10 p-8 text-center">
             <Code className="w-6 h-6 text-neutral-700 mx-auto mb-2" strokeWidth={1} />
             <p className="text-xs text-neutral-600">Нет добавленных скриптов</p>
-            <p className="text-[10px] text-neutral-700 mt-1">Добавьте скрипт для аналитики, рекламы или трекинга</p>
+            <p className="text-[11px] text-neutral-700 mt-1">Добавьте скрипт для аналитики, рекламы или трекинга</p>
           </div>
         )}
 
@@ -181,26 +181,26 @@ export default function AnalyticsPage() {
                   <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform ${script.enabled ? "left-4.5" : "left-0.5"}`} />
                 </button>
                 <span className="text-sm font-medium">{script.name || "Без названия"}</span>
-                <span className={`text-[9px] uppercase tracking-wider px-1.5 py-0.5 ${script.position === "head" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" : "bg-amber-500/10 text-amber-400 border border-amber-500/20"}`}>
+                <span className={`text-[11px] uppercase tracking-wider px-1.5 py-0.5 ${script.position === "head" ? "bg-blue-500/10 text-blue-400 border border-blue-500/20" : "bg-amber-500/10 text-amber-400 border border-amber-500/20"}`}>
                   {"<" + script.position + ">"}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setEditingScript({ ...script })}
-                  className="text-[10px] text-neutral-500 hover:text-white transition-colors cursor-pointer"
+                  className="text-[11px] text-neutral-500 hover:text-white transition-colors cursor-pointer"
                 >
                   Изменить
                 </button>
                 <button
-                  onClick={() => deleteScript(script.id)}
+                  onClick={() => { if (confirm("Удалить скрипт?")) deleteScript(script.id); }}
                   className="text-neutral-600 hover:text-red-400 transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
                 </button>
               </div>
             </div>
-            <pre className="text-[10px] text-neutral-600 font-mono bg-black/30 p-2 max-h-16 overflow-hidden">
+            <pre className="text-[11px] text-neutral-600 font-mono bg-black/30 p-2 max-h-16 overflow-hidden">
               {script.code.substring(0, 200)}{script.code.length > 200 ? "…" : ""}
             </pre>
           </div>
@@ -213,17 +213,17 @@ export default function AnalyticsPage() {
               {settings.customScripts.find((s) => s.id === editingScript.id) ? "Редактировать скрипт" : "Новый скрипт"}
             </h3>
             <div>
-              <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Название</label>
+              <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Название</label>
               <input
                 type="text"
                 value={editingScript.name}
                 onChange={(e) => setEditingScript({ ...editingScript, name: e.target.value })}
                 placeholder="Roistat / Calltouch / Custom Pixel"
-                className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors"
+                className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-sm text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors"
               />
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Позиция</label>
+              <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Позиция</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setEditingScript({ ...editingScript, position: "head" })}
@@ -240,13 +240,13 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div>
-              <label className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Код</label>
+              <label className="text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium block mb-1.5">Код</label>
               <textarea
                 value={editingScript.code}
                 onChange={(e) => setEditingScript({ ...editingScript, code: e.target.value })}
                 placeholder={"<script>\n  // Ваш код\n</script>"}
                 rows={6}
-                className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-xs text-white placeholder-neutral-600 outline-none focus:border-teal-500/50 transition-colors font-mono resize-y"
+                className="w-full bg-white/[0.04] border border-white/10 px-3 py-2 text-xs text-white placeholder-neutral-600 focus-visible:outline-none focus:border-teal-500/50 transition-colors font-mono resize-y"
               />
             </div>
             <div className="flex items-center gap-3">

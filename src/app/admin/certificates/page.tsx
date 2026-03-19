@@ -114,37 +114,37 @@ export default function CertificatesAdmin() {
                 value={item.title}
                 onChange={(e) => updateItem(item.id, "title", e.target.value)}
                 placeholder="Название (Лицензия на мед. деятельность)"
-                className="flex-1 bg-transparent border-b border-white/10 text-sm font-bold focus:border-white/30 outline-none pb-1 transition-colors"
+                className="flex-1 bg-transparent border-b border-white/10 text-sm font-bold focus:border-white/30 focus-visible:outline-none pb-1 transition-colors"
               />
               <button onClick={() => updateItem(item.id, "published", !item.published)} className="cursor-pointer p-1">
                 {item.published
                   ? <Eye className="w-4 h-4 text-emerald-400" strokeWidth={1.5} />
                   : <EyeOff className="w-4 h-4 text-neutral-600" strokeWidth={1.5} />}
               </button>
-              <button onClick={() => deleteItem(item.id)} className="cursor-pointer p-1">
+              <button onClick={() => { if (confirm("Удалить?")) deleteItem(item.id); }} className="cursor-pointer p-1">
                 <Trash2 className="w-4 h-4 text-neutral-600 hover:text-red-400 transition-colors" strokeWidth={1.5} />
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Номер</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Номер</label>
                 <input
                   type="text"
                   value={item.number}
                   onChange={(e) => updateItem(item.id, "number", e.target.value)}
                   placeholder="77.01.13.003.Л.000022.02.26"
-                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 outline-none transition-colors"
+                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                 />
               </div>
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Дата выдачи</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Дата выдачи</label>
                 <input
                   type="text"
                   value={item.date}
                   onChange={(e) => updateItem(item.id, "date", e.target.value)}
                   placeholder="24.02.2026"
-                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 outline-none transition-colors"
+                  className="w-full bg-transparent border border-white/[0.06] text-sm p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -154,20 +154,20 @@ export default function CertificatesAdmin() {
               onChange={(e) => updateItem(item.id, "description", e.target.value)}
               placeholder="Описание"
               rows={2}
-              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 mb-3 focus:border-white/20 outline-none resize-none transition-colors"
+              className="w-full bg-transparent border border-white/[0.06] text-xs text-neutral-400 p-3 mb-3 focus:border-white/20 focus-visible:outline-none resize-none transition-colors"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Preview PNG */}
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Превью (PNG)</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Превью (PNG)</label>
                 <div className="flex gap-1.5">
                   <input
                     type="text"
                     value={item.preview_url}
                     onChange={(e) => updateItem(item.id, "preview_url", e.target.value)}
                     placeholder="/certificates/preview.png"
-                    className="flex-1 min-w-0 bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 outline-none transition-colors"
+                    className="flex-1 min-w-0 bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                   />
                   <input
                     ref={(el) => { fileInputRefs.current[`${item.id}-preview`] = el; }}
@@ -192,14 +192,14 @@ export default function CertificatesAdmin() {
 
               {/* Download PDF */}
               <div>
-                <label className="text-[10px] text-neutral-600 uppercase tracking-wider mb-1 block">Скачивание (PDF)</label>
+                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Скачивание (PDF)</label>
                 <div className="flex gap-1.5">
                   <input
                     type="text"
                     value={item.download_url}
                     onChange={(e) => updateItem(item.id, "download_url", e.target.value)}
                     placeholder="/certificates/file.pdf"
-                    className="flex-1 min-w-0 bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 outline-none transition-colors"
+                    className="flex-1 min-w-0 bg-transparent border border-white/[0.06] text-[11px] text-neutral-500 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors"
                   />
                   <input
                     ref={(el) => { fileInputRefs.current[`${item.id}-pdf`] = el; }}

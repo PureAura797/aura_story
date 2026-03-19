@@ -145,16 +145,16 @@ export default function ContactsAdmin() {
           <div key={key} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 px-5 py-4 hover:bg-white/[0.03] transition-colors">
             <div className="flex items-center gap-2 mb-2">
               <Icon className="w-3.5 h-3.5 text-neutral-500" strokeWidth={1.5} />
-              <label className="text-[10px] text-neutral-400 uppercase tracking-[0.15em] font-medium">{label}</label>
+              <label className="text-[11px] text-neutral-400 uppercase tracking-[0.15em] font-medium">{label}</label>
             </div>
             <input
               type="text"
               value={data[key]}
               onChange={(e) => setData({ ...data, [key]: e.target.value })}
               placeholder={placeholder}
-              className="w-full bg-transparent text-sm text-white placeholder-neutral-700 focus:outline-none py-1"
+              className="w-full bg-transparent text-sm text-white placeholder-neutral-700 focus-visible:outline-none py-1"
             />
-            <p className="text-[9px] text-neutral-700 mt-1">{hint}</p>
+            <p className="text-[11px] text-neutral-700 mt-1">{hint}</p>
           </div>
         ))}
       </div>

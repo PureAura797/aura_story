@@ -51,23 +51,25 @@ export default function AdminLogin() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="text-[10px] text-neutral-500 uppercase tracking-[0.15em] font-medium block mb-2">
+            <label htmlFor="admin-password" className="text-[11px] text-neutral-500 uppercase tracking-[0.15em] font-medium block mb-2">
               Пароль
             </label>
             <div className="relative">
               <input
+                id="admin-password"
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Введите пароль"
                 autoFocus
-                className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-white/30"
+                className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 pr-11 text-sm text-white placeholder-neutral-600 focus-visible:outline-none transition-colors focus:border-white/30"
               />
               <button
                 type="button"
                 onClick={() => setShowPass(!showPass)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-400 transition-colors"
                 tabIndex={-1}
+                aria-label={showPass ? "Скрыть пароль" : "Показать пароль"}
               >
                 {showPass ? (
                   <EyeOff className="w-4 h-4" strokeWidth={1.5} />
@@ -102,12 +104,12 @@ export default function AdminLogin() {
         </form>
 
         <div className="flex items-center justify-between mt-6">
-          <p className="text-[10px] text-neutral-700">
+          <p className="text-[11px] text-neutral-700">
             Доступ только для администратора
           </p>
           <Link
             href="/admin/recovery"
-            className="text-[10px] text-neutral-600 hover:text-neutral-400 transition-colors"
+            className="text-[11px] text-neutral-600 hover:text-neutral-400 transition-colors"
           >
             Забыли пароль?
           </Link>

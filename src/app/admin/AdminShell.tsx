@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FileText, Calculator, Star, LayoutDashboard, LogOut, ExternalLink, Image, Settings, Phone, Bell, BarChart3, Menu, X, HelpCircle, Briefcase, CreditCard, MessageCircle, Award, Users, Search } from "lucide-react";
@@ -41,6 +41,34 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   };
 
   const closeSidebar = () => setSidebarOpen(false);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // P0: Focus trap + Escape for mobile sidebar
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeSidebar();
+        triggerRef.current?.focus();
+      }
+      if (e.key === 'Tab' && sidebarRef.current) {
+        const focusable = sidebarRef.current.querySelectorAll<HTMLElement>('a[href], button');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [sidebarOpen]);
 
   return (
     <div className="min-h-screen bg-[#0a0a0c] text-white relative">
@@ -63,8 +91,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <header className="fixed top-0 left-0 right-0 z-50 flex md:hidden items-center justify-between px-4 py-3 border-b border-white/[0.06] bg-[#0a0a0c]/95 backdrop-blur-xl">
         <Logo size="sm" />
         <button
+          ref={triggerRef}
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 text-neutral-400 hover:text-white transition-colors"
+          className="p-3 -mr-2 text-neutral-400 hover:text-white transition-colors"
+          aria-label={sidebarOpen ? "Закрыть меню" : "Открыть меню"}
+          aria-expanded={sidebarOpen}
         >
           {sidebarOpen ? <X className="w-5 h-5" strokeWidth={1.5} /> : <Menu className="w-5 h-5" strokeWidth={1.5} />}
         </button>
@@ -75,28 +106,33 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
           onClick={closeSidebar}
+          role="presentation"
         />
       )}
 
       {/* Sidebar — fixed on all screen sizes */}
       <aside
+        ref={sidebarRef}
         className={`
           fixed top-0 left-0 z-50 h-screen w-56 border-r border-white/[0.06] flex flex-col shrink-0 bg-[#0a0a0c]
           transition-transform duration-300 ease-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
         `}
+        role={sidebarOpen ? "dialog" : undefined}
+        aria-modal={sidebarOpen ? "true" : undefined}
+        aria-label="Админ-навигация"
       >
         {/* Logo — hidden on mobile (already in header) */}
         <div className="px-5 py-4 border-b border-white/[0.06] hidden md:block">
           <Logo size="sm" />
-          <p className="text-[9px] text-neutral-600 uppercase tracking-[0.2em] mt-1.5">Админ-панель</p>
+          <p className="text-[11px] text-neutral-600 uppercase tracking-[0.2em] mt-1.5">Админ-панель</p>
         </div>
 
         {/* Mobile logo spacer */}
         <div className="h-[52px] md:hidden" />
 
         {/* Navigation */}
-        <nav className="flex-1 py-3 px-2 overflow-y-auto">
+        <nav className="flex-1 py-3 px-2 overflow-y-auto" aria-label="Админ-навигация">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -129,7 +165,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             Открыть сайт
           </a>
           <button
-            onClick={handleLogout}
+            onClick={() => { if (confirm('Выйти из админки?')) handleLogout(); }}
             className="flex items-center gap-2.5 px-3 py-2.5 text-xs text-neutral-600 hover:text-red-400 transition-colors w-full cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" strokeWidth={1.5} />
