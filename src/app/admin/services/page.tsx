@@ -70,7 +70,7 @@ export default function ServicesAdmin() {
     setItems(copy);
   };
 
-  if (loading) return <AdminLoader label="Загрузка услуг" />;
+  if (loading) return <AdminLoader />;
 
   return (
     <div className="max-w-2xl">

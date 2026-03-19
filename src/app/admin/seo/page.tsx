@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Upload, Check, AlertCircle, Save } from "lucide-react";
 import Image from "next/image";
+import AdminLoader from "../AdminLoader";
 
 interface SeoSettings {
   title: string;
@@ -49,18 +50,7 @@ export default function SeoAdmin() {
     setUploading(false);
   };
 
-  if (loading || !seo) return (
-    <div className="flex flex-col items-center justify-center h-[60vh] gap-6">
-      <div className="relative w-12 h-12">
-        <div className="absolute inset-0 border border-white/[0.08]" />
-        <div className="absolute inset-0 border border-white/[0.08] animate-ping" style={{ animationDuration: "1.5s" }} />
-        <div className="absolute inset-[6px] border border-white/[0.12]" />
-        <div className="absolute inset-[6px] border border-white/[0.12] animate-ping" style={{ animationDuration: "1.5s", animationDelay: "0.3s" }} />
-        <div className="absolute inset-[12px] bg-[var(--accent)] opacity-40 animate-pulse" />
-      </div>
-      <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-600 font-medium animate-pulse">Загрузка</p>
-    </div>
-  );
+  if (loading || !seo) return <AdminLoader />;
 
   const titleLen = seo.title.length;
   const descLen = seo.description.length;
@@ -134,7 +124,7 @@ export default function SeoAdmin() {
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
         <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">OG Image</label>
         <p className="text-[10px] text-neutral-600 mb-3">Превью при шаринге ссылки в соцсетях и мессенджерах. Рекомендуемый размер: 1200×630 px.</p>
-        <div className="flex items-start gap-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
           <div
             className="relative w-48 h-24 bg-white/[0.04] border border-white/[0.08] overflow-hidden cursor-pointer group shrink-0"
             onClick={() => ogRef.current?.click()}
@@ -166,7 +156,7 @@ export default function SeoAdmin() {
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
         <label className="text-[10px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Фавикон</label>
         <p className="text-[10px] text-neutral-600 mb-3">Иконка во вкладке браузера. Рекомендуемый формат: .ico или .png 32×32.</p>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div
             className="relative w-12 h-12 bg-white/[0.04] border border-white/[0.08] overflow-hidden cursor-pointer group shrink-0"
             onClick={() => favRef.current?.click()}

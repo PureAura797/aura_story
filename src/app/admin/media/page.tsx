@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Upload, Check, AlertCircle, Film, ImageIcon, Briefcase, Wrench, Plus, Trash2 } from "lucide-react";
-import Image from "next/image";
+import AdminLoader from "../AdminLoader";
 
 interface MediaFile {
   name: string;
@@ -101,19 +101,19 @@ function SlotCard({
               src={file.url}
               className="w-full h-full object-cover"
               muted
-              preload="metadata"
-              onLoadedMetadata={(e) => {
-                const video = e.currentTarget;
-                video.currentTime = 0.5;
+              preload="none"
+              onMouseEnter={(e) => {
+                const v = e.currentTarget;
+                v.preload = "metadata";
+                v.currentTime = 0.5;
               }}
             />
           ) : (
-            <Image
+            <img
               src={`${file.url}?t=${Date.now()}`}
               alt={file.name}
-              fill
-              className="object-cover"
-              unoptimized
+              loading="lazy"
+              className="w-full h-full object-cover"
             />
           )
         ) : (
@@ -206,20 +206,7 @@ export default function MediaManager() {
     }
   };
 
-  if (loading || !data) {
-    return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-6">
-        <div className="relative w-12 h-12">
-          <div className="absolute inset-0 border border-white/[0.08]" />
-          <div className="absolute inset-0 border border-white/[0.08] animate-ping" style={{ animationDuration: "1.5s" }} />
-          <div className="absolute inset-[6px] border border-white/[0.12]" />
-          <div className="absolute inset-[6px] border border-white/[0.12] animate-ping" style={{ animationDuration: "1.5s", animationDelay: "0.3s" }} />
-          <div className="absolute inset-[12px] bg-[var(--accent)] opacity-40 animate-pulse" />
-        </div>
-        <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-600 font-medium animate-pulse">Загрузка медиа</p>
-      </div>
-    );
-  }
+  if (loading || !data) return <AdminLoader />;
 
   const totalFiles = Object.values(data).reduce((acc, cat) => acc + cat.files.length, 0);
 

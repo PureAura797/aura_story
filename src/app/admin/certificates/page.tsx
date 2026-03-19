@@ -68,7 +68,7 @@ export default function CertificatesAdmin() {
     if (confirm("Удалить?")) setItems(items.filter((item) => item.id !== id));
   };
 
-  if (loading) return <AdminLoader label="Загрузка сертификатов" />;
+  if (loading) return <AdminLoader />;
 
   return (
     <div className="max-w-2xl">
