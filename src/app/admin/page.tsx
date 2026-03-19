@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { FileText, Calculator, Star, ArrowRight, Image, Phone, Bell, BarChart3, HelpCircle } from "lucide-react";
+import {
+  FileText, Calculator, Star, ArrowRight, Image, Phone, Bell, BarChart3,
+  HelpCircle, Briefcase, Users, CreditCard, MessageCircle, Award, Search, Settings
+} from "lucide-react";
 
 const cards = [
   {
@@ -13,12 +16,36 @@ const cards = [
     color: "#5eead4",
   },
   {
+    href: "/admin/services",
+    icon: Briefcase,
+    title: "Услуги",
+    desc: "Направления компании — добавление, удаление, редактирование.",
+    count: "6 услуг",
+    color: "#14b8a6",
+  },
+  {
+    href: "/admin/team",
+    icon: Users,
+    title: "Команда",
+    desc: "Сотрудники — фото, должности, статусы, специализация.",
+    count: "6 сотрудников",
+    color: "#60a5fa",
+  },
+  {
+    href: "/admin/pricing",
+    icon: CreditCard,
+    title: "Тарифы",
+    desc: "Прайс-лист — цены, площади, описания услуг.",
+    count: "8 тарифов",
+    color: "#d4a574",
+  },
+  {
     href: "/admin/calculator",
     icon: Calculator,
     title: "Калькулятор",
     desc: "Базовые цены, коэффициенты площади, доп. услуги.",
     count: "7 услуг",
-    color: "#d4a574",
+    color: "#fbbf24",
   },
   {
     href: "/admin/reviews",
@@ -29,11 +56,35 @@ const cards = [
     color: "#a78bfa",
   },
   {
+    href: "/admin/faq",
+    icon: MessageCircle,
+    title: "FAQ",
+    desc: "Часто задаваемые вопросы — вопрос и ответ.",
+    count: "14 вопросов",
+    color: "#fb923c",
+  },
+  {
+    href: "/admin/certificates",
+    icon: Award,
+    title: "Сертификаты",
+    desc: "Лицензии и разрешительные документы компании.",
+    count: "1 документ",
+    color: "#34d399",
+  },
+  {
+    href: "/admin/seo",
+    icon: Search,
+    title: "SEO",
+    desc: "Title, description, OG-тег, фавикон для поисковиков.",
+    count: "4 параметра",
+    color: "#38bdf8",
+  },
+  {
     href: "/admin/media",
     icon: Image,
     title: "Медиа",
-    desc: "Фото команды, обложки сторис, видео, портфолио, оборудование.",
-    count: "46 файлов",
+    desc: "Обложки сторис, видео, портфолио, оборудование.",
+    count: "динамично",
     color: "#f472b6",
   },
   {
@@ -42,7 +93,7 @@ const cards = [
     title: "Контакты",
     desc: "Телефон, мессенджеры, email, webhook заявок.",
     count: "8 полей",
-    color: "#38bdf8",
+    color: "#c084fc",
   },
   {
     href: "/admin/notifications",
@@ -50,15 +101,23 @@ const cards = [
     title: "Уведомления",
     desc: "Email, Telegram, MAX — каналы доставки заявок.",
     count: "4 канала",
-    color: "#fbbf24",
+    color: "#fb7185",
   },
   {
     href: "/admin/analytics",
     icon: BarChart3,
     title: "Аналитика",
-    desc: "Метрика, GA4, GTM, VK Pixel, произвольные скрипты.",
+    desc: "Метрика, GA4, GTM, VK Pixel, скрипты.",
     count: "4 счётчика",
-    color: "#34d399",
+    color: "#4ade80",
+  },
+  {
+    href: "/admin/settings",
+    icon: Settings,
+    title: "Настройки",
+    desc: "Безопасность, профиль, смена пароля.",
+    count: "3 параметра",
+    color: "#94a3b8",
   },
   {
     href: "/admin/help",

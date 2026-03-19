@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Upload, Check, AlertCircle, Film, ImageIcon, Users, Briefcase, Wrench, Play } from "lucide-react";
+import { Upload, Check, AlertCircle, Film, ImageIcon, Briefcase, Wrench, Play, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 
 interface MediaFile {
@@ -18,8 +18,7 @@ interface MediaCategory {
 
 type MediaData = Record<string, MediaCategory>;
 
-const CATEGORY_META: Record<string, { label: string; icon: typeof Users; description: string }> = {
-  team: { label: "Команда", icon: Users, description: "Аватары сотрудников (PNG, 800×800 рек.)" },
+const CATEGORY_META: Record<string, { label: string; icon: typeof ImageIcon; description: string }> = {
   stories_covers: { label: "Сторис — обложки", icon: ImageIcon, description: "Обложки сторис (PNG, 1080×1920 рек.)" },
   stories_videos: { label: "Сторис — видео", icon: Film, description: "Видео сторис (MP4, до 15 сек каждое)" },
   portfolio: { label: "Портфолио", icon: Briefcase, description: "До/После фото (PNG, 1200×800 рек.)" },
@@ -37,11 +36,13 @@ function SlotCard({
   file,
   dir,
   onUploadDone,
+  onDelete,
   isVideo,
 }: {
   file: MediaFile;
   dir: string;
   onUploadDone: () => void;
+  onDelete: (dir: string, name: string) => void;
   isVideo: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
@@ -83,7 +84,15 @@ function SlotCard({
   };
 
   return (
-    <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-3 hover:border-white/10 transition-all group">
+    <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-3 hover:border-white/10 transition-all group relative">
+      {/* Delete button */}
+      <button
+        onClick={() => { if (confirm(`Удалить ${file.name}?`)) onDelete(dir, file.name); }}
+        className="absolute top-1.5 right-1.5 p-1 bg-black/60 border border-white/[0.06] opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer hover:border-red-500/30"
+      >
+        <Trash2 className="w-3 h-3 text-red-400" strokeWidth={1.5} />
+      </button>
+
       {/* Preview */}
       <div className="relative w-full aspect-square bg-white/[0.02] mb-3 overflow-hidden flex items-center justify-center">
         {file.exists ? (
@@ -150,6 +159,7 @@ function SlotCard({
 export default function MediaManager() {
   const [data, setData] = useState<MediaData | null>(null);
   const [loading, setLoading] = useState(true);
+  const addInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const loadMedia = async () => {
     try {
@@ -165,6 +175,31 @@ export default function MediaManager() {
     loadMedia();
   }, []);
 
+  const handleDelete = async (dir: string, name: string) => {
+    try {
+      const res = await fetch("/api/admin/media", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: `${dir}/${name}` }),
+      });
+      if (res.ok) loadMedia();
+    } catch {
+      console.error("Failed to delete");
+    }
+  };
+
+  const handleAddFile = async (category: string, dir: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("path", `${dir}/${file.name}`);
+    try {
+      const res = await fetch("/api/admin/media", { method: "POST", body: formData });
+      if (res.ok) loadMedia();
+    } catch {
+      console.error("Failed to upload");
+    }
+  };
+
   if (loading || !data) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -174,10 +209,6 @@ export default function MediaManager() {
   }
 
   const totalFiles = Object.values(data).reduce((acc, cat) => acc + cat.files.length, 0);
-  const existingFiles = Object.values(data).reduce(
-    (acc, cat) => acc + cat.files.filter((f) => f.exists).length,
-    0
-  );
 
   return (
     <div>
@@ -185,15 +216,15 @@ export default function MediaManager() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight mb-1">Медиа</h1>
         <p className="text-xs text-neutral-500">
-          Фото и видео контент сайта • {existingFiles}/{totalFiles} файлов загружено
+          Фото и видео контент сайта • {totalFiles} файлов
         </p>
       </div>
 
       {/* Info */}
       <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-4 mb-6">
         <p className="text-[11px] text-neutral-400 leading-relaxed">
-          Наведите на карточку и нажмите для загрузки нового файла. Файл заменит текущий.
-          Изменение вступит в силу мгновенно — перезагрузите страницу сайта для проверки.
+          Наведите на карточку для замены файла. Используйте «+» для добавления и 🗑 для удаления.
+          Фото команды управляются в разделе «Команда».
         </p>
       </div>
 
@@ -206,30 +237,58 @@ export default function MediaManager() {
 
           return (
             <div key={key}>
-              <div className="flex items-center gap-2.5 mb-4">
-                <meta.icon className="w-4 h-4 text-neutral-500" strokeWidth={1.5} />
-                <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-300">{meta.label}</h2>
-                <span className="text-[10px] text-neutral-600">
-                  {category.files.filter((f) => f.exists).length}/{category.files.length}
-                </span>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2.5">
+                  <meta.icon className="w-4 h-4 text-neutral-500" strokeWidth={1.5} />
+                  <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-300">{meta.label}</h2>
+                  <span className="text-[10px] text-neutral-600">
+                    {category.files.length}
+                  </span>
+                </div>
+                <button
+                  onClick={() => addInputRefs.current[key]?.click()}
+                  className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider border border-white/10 px-3 py-1.5 hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  <Plus className="w-3 h-3" strokeWidth={1.5} /> Добавить
+                </button>
+                <input
+                  ref={(el) => { addInputRefs.current[key] = el; }}
+                  type="file"
+                  accept={isVideo ? "video/mp4,video/*" : "image/png,image/jpeg,image/webp,image/*"}
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    const files = e.target.files;
+                    if (!files) return;
+                    Array.from(files).forEach((f) => handleAddFile(key, category.dir, f));
+                    e.target.value = "";
+                  }}
+                />
               </div>
               <p className="text-[10px] text-neutral-600 mb-3">{meta.description}</p>
 
-              <div
-                className={`grid gap-3 ${
-                  isVideo ? "grid-cols-4 sm:grid-cols-6 md:grid-cols-8" : "grid-cols-3 sm:grid-cols-4 md:grid-cols-6"
-                }`}
-              >
-                {category.files.map((file) => (
-                  <SlotCard
-                    key={file.name}
-                    file={file}
-                    dir={category.dir}
-                    onUploadDone={loadMedia}
-                    isVideo={isVideo}
-                  />
-                ))}
-              </div>
+              {category.files.length === 0 ? (
+                <div className="border border-dashed border-white/[0.06] p-8 text-center">
+                  <p className="text-[11px] text-neutral-600">Нет файлов — нажмите «+ Добавить»</p>
+                </div>
+              ) : (
+                <div
+                  className={`grid gap-3 ${
+                    isVideo ? "grid-cols-4 sm:grid-cols-6 md:grid-cols-8" : "grid-cols-3 sm:grid-cols-4 md:grid-cols-6"
+                  }`}
+                >
+                  {category.files.map((file) => (
+                    <SlotCard
+                      key={file.name}
+                      file={file}
+                      dir={category.dir}
+                      onUploadDone={loadMedia}
+                      onDelete={handleDelete}
+                      isVideo={isVideo}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           );
         })}
