@@ -87,10 +87,10 @@ export default function Certificate() {
                     {cert.title}
                   </h3>
                   <div className="flex flex-wrap gap-3 mb-4">
-                    <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
+                    <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
                       № {cert.number}
                     </span>
-                    <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
+                    <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
                       от {cert.date}
                     </span>
                   </div>

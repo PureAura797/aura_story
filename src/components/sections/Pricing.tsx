@@ -59,11 +59,11 @@ export default function Pricing() {
             <div className="flex items-center gap-3 mb-2">
               <h3 className="text-sm font-bold tracking-tight group-hover:text-[var(--accent)] transition-colors duration-500">{plan.name}</h3>
             </div>
-            <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1 w-fit mb-3">{plan.area}</span>
+            <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1 w-fit mb-3">{plan.area}</span>
             <p className="text-neutral-500 text-xs leading-relaxed mb-4 flex-1">{plan.description}</p>
-            <p className="text-[9px] uppercase tracking-[0.15em] font-medium mb-4" style={{ color: "var(--sand-dim)" }}>{plan.features}</p>
+            <p className="text-[11px] uppercase tracking-[0.15em] font-medium mb-4" style={{ color: "var(--sand-dim)" }}>{plan.features}</p>
             <div className="mt-auto pt-3 border-t border-white/5">
-              <span className="text-[10px] text-neutral-500 uppercase tracking-widest block mb-1">{t("pricing.from")}</span>
+              <span className="text-[11px] text-neutral-500 uppercase tracking-widest block mb-1">{t("pricing.from")}</span>
               <div className="text-2xl md:text-3xl font-bold tracking-tighter text-white">{formatPrice(plan.price)}</div>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default function Pricing() {
       <div className="w-full max-w-5xl mt-4"><CostCalculator /></div>
 
       <div className="pricing-card opacity-0 translate-y-10 mt-4 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 w-full max-w-5xl">
-        <div className="flex flex-wrap gap-x-8 gap-y-2 text-[10px] uppercase tracking-[0.15em] text-neutral-500 font-medium justify-center">
+        <div className="flex flex-wrap gap-x-8 gap-y-2 text-[11px] uppercase tracking-[0.15em] text-neutral-500 font-medium justify-center">
           <span>{t("pricing.guarantee1")}</span>
           <span>{t("pricing.guarantee2")}</span>
           <span>{t("pricing.guarantee3")}</span>

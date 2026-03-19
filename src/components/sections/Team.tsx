@@ -47,7 +47,7 @@ export default function Team() {
 
   return (
     <section ref={containerRef}>
-      <p className="text-[10px] tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("team.label")}</p>
+      <p className="text-[11px] tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("team.label")}</p>
       <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("team.heading")}</h2>
       <p className="text-neutral-500 text-sm font-light mt-4 mb-12 max-w-md">{t("team.desc")}</p>
 
@@ -77,21 +77,21 @@ export default function Team() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ backgroundColor: "var(--accent)" }} />
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ backgroundColor: "var(--accent)" }} />
               </span>
-              <span className="text-[10px] text-neutral-400 tracking-wide">{member.status}</span>
+              <span className="text-[11px] text-neutral-400 tracking-wide">{member.status}</span>
             </div>
             <div className="w-full h-px bg-white/5 mb-5" />
             <div className="flex items-center gap-6 mb-4">
               <div>
                 <p className="text-lg font-bold text-white tracking-tight">{member.experience}</p>
-                <p className="text-[9px] text-neutral-600 uppercase tracking-wider">{t("team.exp")}</p>
+                <p className="text-[11px] text-neutral-600 uppercase tracking-wider">{t("team.exp")}</p>
               </div>
               <div className="w-px h-8 bg-white/5" />
               <div>
                 <p className="text-lg font-bold text-white tracking-tight">{member.objects}</p>
-                <p className="text-[9px] text-neutral-600 uppercase tracking-wider">{t("team.objects")}</p>
+                <p className="text-[11px] text-neutral-600 uppercase tracking-wider">{t("team.objects")}</p>
               </div>
             </div>
-            <p className="text-[10px] text-neutral-500 tracking-wide">{member.specialization}</p>
+            <p className="text-[11px] text-neutral-500 tracking-wide">{member.specialization}</p>
           </div>
         ))}
       </div>

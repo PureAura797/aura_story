@@ -59,7 +59,7 @@ export default function Expertise() {
         <div className="flex flex-wrap gap-2 px-8 pt-8 pb-4">
           {steps.map((step, i) => (
             <span key={i} className="flex items-center gap-2">
-              <span className="px-3 py-1.5 text-[10px] tracking-[0.1em] font-medium border border-white/10 bg-white/[0.03]"
+              <span className="px-3 py-1.5 text-[11px] tracking-[0.1em] font-medium border border-white/10 bg-white/[0.03]"
                 style={{ color: i === steps.length - 1 ? "var(--accent)" : "var(--sand-dim)" }}>
                 {step}
               </span>

@@ -42,19 +42,19 @@ export default function Portfolio() {
           <div key={idx} className="portfolio-card opacity-0 translate-y-10 relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-white/20 transition-all duration-500">
             <div className="flex gap-2 mb-6">
               <div className="flex-1 h-40 bg-white/[0.04] border border-white/5 relative overflow-hidden group/img">
-                {project.beforeImg && <Image src={project.beforeImg} alt={`${project.type} - ${t("portfolio.before")}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover opacity-60 mix-blend-luminosity group-hover/img:opacity-100 group-hover/img:mix-blend-normal transition-all duration-700" />}
-                <span className="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] uppercase tracking-widest text-neutral-300 z-10">{t("portfolio.before")}</span>
+                {project.beforeImg && <Image src={project.beforeImg} alt={`${project.type} - ${t("portfolio.before")}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover opacity-60 mix-blend-luminosity group-hover/img:opacity-100 group-hover/img:mix-blend-normal transition-all duration-700" loading="lazy" />}
+                <span className="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[11px] uppercase tracking-widest text-neutral-300 z-10">{t("portfolio.before")}</span>
               </div>
               <div className="flex-1 h-40 bg-white/[0.04] border border-white/5 relative overflow-hidden group/img">
-                {project.afterImg && <Image src={project.afterImg} alt={`${project.type} - ${t("portfolio.after")}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover opacity-60 mix-blend-luminosity group-hover/img:opacity-100 group-hover/img:mix-blend-normal transition-all duration-700" />}
-                <span className="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[9px] uppercase tracking-widest text-neutral-300 z-10">{t("portfolio.after")}</span>
+                {project.afterImg && <Image src={project.afterImg} alt={`${project.type} - ${t("portfolio.after")}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover opacity-60 mix-blend-luminosity group-hover/img:opacity-100 group-hover/img:mix-blend-normal transition-all duration-700" loading="lazy" />}
+                <span className="absolute bottom-2 left-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded text-[11px] uppercase tracking-widest text-neutral-300 z-10">{t("portfolio.after")}</span>
               </div>
             </div>
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{project.type}</span>
+              <span className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{project.type}</span>
             </div>
             <p className="text-neutral-500 text-sm leading-relaxed mb-4">{project.description}</p>
-            <div className="flex gap-4 text-[10px] uppercase tracking-[0.15em] text-neutral-600 font-medium">
+            <div className="flex gap-4 text-[11px] uppercase tracking-[0.15em] text-neutral-600 font-medium">
               <span>{project.area}</span>
               <span>·</span>
               <span>{project.time}</span>

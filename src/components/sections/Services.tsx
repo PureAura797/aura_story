@@ -79,7 +79,7 @@ export default function Services() {
           >
             {/* Desktop: horizontal row */}
             <div className="hidden md:flex items-start gap-8 p-7">
-              <span className="text-[10px] tracking-[0.2em] text-neutral-700 font-mono pt-2 shrink-0">
+              <span className="text-[11px] tracking-[0.2em] text-neutral-700 font-mono pt-2 shrink-0">
                 {String(idx + 1).padStart(2, "0")}
               </span>
               <div className="flex-1 min-w-0">
@@ -90,7 +90,7 @@ export default function Services() {
                   {s.description}
                 </p>
               </div>
-              <span className="text-[10px] uppercase tracking-[0.15em] font-medium text-neutral-600 shrink-0 pt-2 whitespace-nowrap">
+              <span className="text-[11px] uppercase tracking-[0.15em] font-medium text-neutral-600 shrink-0 pt-2 whitespace-nowrap">
                 {s.meta}
               </span>
             </div>
@@ -98,7 +98,7 @@ export default function Services() {
             {/* Mobile: stacked */}
             <div className="md:hidden p-5">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[10px] tracking-[0.2em] text-neutral-700 font-mono">
+                <span className="text-[11px] tracking-[0.2em] text-neutral-700 font-mono">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-lg font-bold tracking-tighter group-hover:text-white transition-colors">
@@ -108,7 +108,7 @@ export default function Services() {
               <p className="text-neutral-500 text-sm leading-relaxed mb-3">
                 {s.description}
               </p>
-              <p className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--sand-dim)" }}>
+              <p className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--sand-dim)" }}>
                 {s.meta}
               </p>
             </div>

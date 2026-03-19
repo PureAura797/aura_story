@@ -46,7 +46,7 @@ export default function Equipment() {
   return (
     <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
       <div className="mb-4">
-        <p className="text-[10px] tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("equipment.label")}</p>
+        <p className="text-[11px] tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("equipment.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("equipment.heading")}</h2>
       </div>
       <p className="text-sm text-neutral-500 font-light mb-12 max-w-lg">{t("equipment.desc")}</p>
@@ -57,33 +57,33 @@ export default function Equipment() {
             <div className="flex items-center justify-between px-3 py-2.5 md:px-4 md:py-3">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${item.color}20`, border: `1px solid ${item.color}30` }}>
-                  <span className="text-[8px] md:text-[9px] font-bold" style={{ color: item.color }}>{String(idx + 1).padStart(2, "0")}</span>
+                  <span className="text-[11px] font-bold" style={{ color: item.color }}>{String(idx + 1).padStart(2, "0")}</span>
                 </div>
-                <span className="text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-wider truncate">{item.tag}</span>
+                <span className="text-[11px] text-neutral-500 uppercase tracking-wider truncate">{item.tag}</span>
               </div>
               <MoreHorizontal className="w-4 h-4 text-neutral-700 group-hover:text-neutral-500 transition-colors shrink-0" strokeWidth={1.5} />
             </div>
             <div className="relative aspect-square bg-black/40 overflow-hidden">
-              <Image src={item.image} alt={`${item.name} — ${item.purpose}`} fill className="object-contain p-4 md:p-6 transition-transform duration-700 ease-out group-hover:scale-110" sizes="(max-width: 768px) 50vw, 33vw" />
+              <Image src={item.image} alt={`${item.name} — ${item.purpose}`} fill className="object-contain p-4 md:p-6 transition-transform duration-700 ease-out group-hover:scale-110" sizes="(max-width: 768px) 50vw, 33vw" loading="lazy" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `radial-gradient(circle at center, ${item.color}08 0%, transparent 70%)` }} />
               <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3">
-                <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-sm backdrop-blur-md" style={{ color: item.color, backgroundColor: `${item.color}12`, border: `1px solid ${item.color}20` }}>{item.specs}</span>
+                <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-1 rounded-sm backdrop-blur-md" style={{ color: item.color, backgroundColor: `${item.color}12`, border: `1px solid ${item.color}20` }}>{item.specs}</span>
               </div>
             </div>
             <div className="px-3 pt-3 md:px-4 md:pt-3">
               <h3 className="text-xs md:text-sm font-bold text-white tracking-tight mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{item.name}</h3>
-              <p className="text-[10px] md:text-[11px] text-neutral-500 leading-relaxed line-clamp-2">{item.purpose}</p>
+              <p className="text-[11px] md:text-xs text-neutral-500 leading-relaxed line-clamp-2">{item.purpose}</p>
             </div>
             <div className="px-3 pb-3 md:px-4 md:pb-4 pt-2">
               <button onClick={() => toggleExpand(idx)} className="mag-btn w-full flex items-center justify-center gap-1.5 py-2 rounded-sm border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 cursor-pointer group/btn">
-                <span className="text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-wider group-hover/btn:text-neutral-300 transition-colors">{expanded === idx ? t("equipment.less") : t("equipment.more")}</span>
+                <span className="text-[11px] text-neutral-500 uppercase tracking-wider group-hover/btn:text-neutral-300 transition-colors">{expanded === idx ? t("equipment.less") : t("equipment.more")}</span>
                 <ChevronDown className={`w-3 h-3 text-neutral-600 group-hover/btn:text-neutral-400 transition-all duration-300 ${expanded === idx ? "rotate-180" : ""}`} strokeWidth={1.5} />
               </button>
               <AnimatePresence>
                 {expanded === idx && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} className="overflow-hidden">
                     <div className="pt-3 border-t border-white/5 mt-3">
-                      <p className="text-[10px] md:text-[11px] text-neutral-400 leading-relaxed">{item.details}</p>
+                      <p className="text-[11px] md:text-xs text-neutral-400 leading-relaxed">{item.details}</p>
                     </div>
                   </motion.div>
                 )}

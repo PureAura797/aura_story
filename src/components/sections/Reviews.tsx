@@ -45,14 +45,14 @@ export default function Reviews() {
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">4.9</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_yandex")}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_yandex")}</span>
           </div>
         </div>
         <div className="border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex items-center gap-4">
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">5.0</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_avito")}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_avito")}</span>
           </div>
         </div>
       </div>
@@ -63,9 +63,9 @@ export default function Reviews() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
                 <span className="text-white font-bold text-sm">{t(review.nameKey)}</span>
-                <span className="text-[10px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{t(review.serviceKey)}</span>
+                <span className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{t(review.serviceKey)}</span>
               </div>
-              <span className="text-[10px] uppercase tracking-[0.15em] text-neutral-600">{t(review.dateKey)}</span>
+              <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600">{t(review.dateKey)}</span>
             </div>
             <p className="text-neutral-400 text-sm leading-relaxed">«{t(review.textKey)}»</p>
           </div>

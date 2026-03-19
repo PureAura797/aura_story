@@ -80,7 +80,7 @@ export default function StoriesSection() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 md:px-[10vw] mb-5">
           <p
-            className="text-[10px] tracking-[0.2em] uppercase font-medium"
+            className="text-[11px] tracking-[0.2em] uppercase font-medium"
             style={{ color: "var(--accent)" }}
           >
             {t("stories.label")}
@@ -180,10 +180,10 @@ export default function StoriesSection() {
                 </div>
                 {/* Label */}
                 <div className="text-center min-w-[70px]">
-                  <p className="text-[10px] md:text-[11px] text-white/80 font-medium tracking-wide uppercase group-hover:text-white transition-colors leading-tight">
+                  <p className="text-[11px] text-white/80 font-medium tracking-wide uppercase group-hover:text-white transition-colors leading-tight">
                     {story.title}
                   </p>
-                  <p className="text-[8px] md:text-[9px] text-neutral-600 tracking-wider uppercase mt-0.5 leading-tight">
+                  <p className="text-[11px] md:text-xs text-neutral-600 tracking-wider uppercase mt-0.5 leading-tight">
                     {story.subtitle}
                   </p>
                 </div>

@@ -96,10 +96,10 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 py-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-[10px] text-neutral-600 uppercase tracking-[0.15em]">
+        <p className="text-[11px] text-neutral-600 uppercase tracking-[0.15em]">
           {t("footer.copyright")}
         </p>
-        <p className="text-[10px] text-neutral-700 uppercase tracking-[0.15em]">
+        <p className="text-[11px] text-neutral-700 uppercase tracking-[0.15em]">
           {t("footer.location")}
         </p>
       </div>
