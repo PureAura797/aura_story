@@ -12,7 +12,6 @@ const sections = [
   {
     icon: FileText,
     title: "Контент",
-    color: "#5eead4",
     description: "Все тексты, которые видят посетители на сайте.",
     steps: [
       "Откройте раздел «Контент» в меню слева",
@@ -24,7 +23,6 @@ const sections = [
   {
     icon: Calculator,
     title: "Калькулятор",
-    color: "#d4a574",
     description: "Управление ценами и услугами в онлайн-калькуляторе.",
     steps: [
       "Откройте раздел «Калькулятор»",
@@ -35,7 +33,6 @@ const sections = [
   {
     icon: Star,
     title: "Отзывы",
-    color: "#a78bfa",
     description: "Модерация и управление отзывами клиентов.",
     steps: [
       "Откройте раздел «Отзывы»",
@@ -47,7 +44,6 @@ const sections = [
   {
     icon: Image,
     title: "Медиа",
-    color: "#f472b6",
     description: "Фотографии команды, портфолио, обложки сторис.",
     steps: [
       "Откройте раздел «Медиа»",
@@ -59,7 +55,6 @@ const sections = [
   {
     icon: Phone,
     title: "Контакты",
-    color: "#38bdf8",
     description: "Контактные данные компании, отображаемые на сайте.",
     steps: [
       "Откройте раздел «Контакты»",
@@ -70,7 +65,6 @@ const sections = [
   {
     icon: Bell,
     title: "Уведомления",
-    color: "#fbbf24",
     description: "Настройка каналов доставки заявок с сайта.",
     steps: [
       "Откройте раздел «Уведомления»",
@@ -83,7 +77,6 @@ const sections = [
   {
     icon: BarChart3,
     title: "Аналитика",
-    color: "#34d399",
     description: "Счётчики, пиксели и произвольные скрипты для рекламы.",
     steps: [
       "Откройте раздел «Аналитика»",
@@ -95,7 +88,6 @@ const sections = [
   {
     icon: Settings,
     title: "Настройки",
-    color: "#94a3b8",
     description: "Безопасность и профиль администратора.",
     steps: [
       "Email для восстановления — куда придёт код при сбросе пароля",
@@ -219,12 +211,7 @@ export default function HelpPage() {
           {sections.map((section) => (
             <details key={section.title} className="group border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150">
               <summary className="flex items-center gap-3 p-4 cursor-pointer list-none hover:bg-white/[0.02] transition-colors">
-                <div
-                  className="w-8 h-8 flex items-center justify-center border border-white/10"
-                  style={{ backgroundColor: section.color + "10", borderColor: section.color + "20" }}
-                >
-                  <section.icon className="w-4 h-4" style={{ color: section.color }} strokeWidth={1.5} />
-                </div>
+                <section.icon className="w-4 h-4 text-neutral-500" strokeWidth={1.5} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">{section.title}</p>
                   <p className="text-[11px] text-neutral-500 truncate">{section.description}</p>
@@ -262,9 +249,7 @@ export default function HelpPage() {
         <div className="space-y-2">
           {glossary.map((item) => (
             <div key={item.term} className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-4 flex items-start gap-3">
-              <div className="w-8 h-8 flex items-center justify-center border border-white/10 bg-white/[0.03] shrink-0">
-                <item.icon className="w-4 h-4 text-teal-400" strokeWidth={1.5} />
-              </div>
+              <item.icon className="w-4 h-4 text-neutral-500 shrink-0 mt-0.5" strokeWidth={1.5} />
               <div>
                 <p className="text-sm font-bold text-white mb-1">{item.term}</p>
                 <p className="text-xs text-neutral-400 leading-relaxed">{item.description}</p>
