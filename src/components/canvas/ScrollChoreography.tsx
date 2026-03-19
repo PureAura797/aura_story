@@ -222,7 +222,7 @@ export default function ScrollChoreography() {
       if (totalScroll <= 0) return;
 
       // Collect valid sections with their DOM positions
-      const sections: { progress: number; props: Partial<typeof scProps> }[] = [];
+      const sections: { progress: number; props: Partial<typeof scProps>; trigger: string }[] = [];
 
       STEPS.forEach((step) => {
         const el = document.querySelector(step.trigger) as HTMLElement | null;
@@ -232,13 +232,19 @@ export default function ScrollChoreography() {
         // Normalize position to 0–1 range (fraction of total scroll)
         const progress = Math.min(top / totalScroll, 1);
 
-        sections.push({ progress, props: step.props });
+        sections.push({ progress, props: step.props, trigger: step.trigger });
       });
 
       if (sections.length === 0) return;
 
       // Sort by progress (should already be sorted, but safety)
       sections.sort((a, b) => a.progress - b.progress);
+
+      // Debug: log section positions
+      console.log('[Choreography] Total scroll:', totalScroll, 'Page height:', document.documentElement.scrollHeight);
+      sections.forEach((s) => {
+        console.log(`  ${s.trigger}: progress=${(s.progress * 100).toFixed(1)}%`);
+      });
 
       // Build master timeline using normalized time scale (0–100)
       const SCALE = 100;
@@ -259,6 +265,8 @@ export default function ScrollChoreography() {
         }, section.progress * SCALE);
       });
 
+      console.log('[Choreography] Timeline duration:', masterTl.duration());
+
       // Single ScrollTrigger for the ENTIRE page
       scrollTrigger = ScrollTrigger.create({
         trigger: document.documentElement,
@@ -277,10 +285,10 @@ export default function ScrollChoreography() {
       });
 
       // Build timeline after preloader (layout is stable)
-      // Small delay ensures all lazy components have rendered
+      // Increased delay to allow API-fetched sections to load
       setTimeout(() => {
         buildMasterTimeline();
-      }, 200);
+      }, 600);
     };
 
     window.addEventListener('preloaderComplete', handlePreloaderComplete);
