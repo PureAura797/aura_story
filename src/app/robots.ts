@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://pureaura.ru'
  
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/'],
       },
     ],
-    sitemap: 'https://pureaura.ru/sitemap.xml',
-    host: 'https://pureaura.ru',
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   }
 }

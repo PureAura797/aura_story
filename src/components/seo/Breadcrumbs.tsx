@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://pureaura.ru";
+
 export interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -19,13 +21,13 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
         "@type": "ListItem",
         "position": 1,
         "name": "Главная",
-        "item": "https://pureaura.ru/"
+        "item": `${SITE_URL}/`
       },
       ...items.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 2,
         "name": item.label,
-        ...(item.href ? { "item": `https://pureaura.ru${item.href}` } : {})
+        ...(item.href ? { "item": `${SITE_URL}${item.href}` } : {})
       }))
     ]
   };

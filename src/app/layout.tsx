@@ -11,6 +11,9 @@ const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--f
 const unbounded = Unbounded({ subsets: ["latin", "cyrillic"], variable: "--font-unbounded", weight: ["200","300","400","500","600","700"] });
 const jost = Jost({ subsets: ["latin", "cyrillic"], variable: "--font-jost" });
 
+// Site URL from env — change in Vercel dashboard when domain changes
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://pureaura.ru";
+
 export const viewport: Viewport = {
   themeColor: "#0b0c0f",
   width: "device-width",
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
     "max-video-preview": -1,
   },
   alternates: {
-    canonical: "https://pureaura.ru/",
+    canonical: `${SITE_URL}/`,
   },
   openGraph: {
     type: "website",
@@ -38,10 +41,10 @@ export const metadata: Metadata = {
     siteName: "PureAura",
     title: "Уборка после смерти, пожара, канализации Москва — 24/7",
     description: "Профессиональная биологическая очистка и дезинфекция помещений. Уборка после смерти, пожара, канализации, устранение запахов, расхламление. Выезд за 60 минут, АТФ-протокол.",
-    url: "https://pureaura.ru/",
+    url: `${SITE_URL}/`,
     images: [
       {
-        url: "https://pureaura.ru/og-image.png",
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "PureAura — Профессиональная дезинфекция и биологическая очистка помещений в Москве",
@@ -53,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Уборка после смерти, пожара, канализации Москва 24/7",
     description: "Профессиональная биологическая очистка: уборка после смерти, пожара, канализации, накопительства. Выезд за 60 минут.",
-    images: ["https://pureaura.ru/og-image.png"],
+    images: [`${SITE_URL}/og-image.png`],
   },
   // TODO: Replace with real verification codes from Yandex Webmaster & Google Search Console
   // verification: {
@@ -77,15 +80,15 @@ export const metadata: Metadata = {
 const jsonLdOrganization = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://pureaura.ru/#organization",
+  "@id": `${SITE_URL}/#organization`,
   "name": "PureAura",
   "alternateName": "ПьюрАура",
   "description": "Профессиональная биологическая очистка и дезинфекция помещений в Москве и Московской области. Уборка после смерти, пожара, прорыва канализации, накопительства. Устранение запахов, инфекционный контроль.",
-  "url": "https://pureaura.ru",
+  "url": SITE_URL,
   "telephone": "+7-495-120-34-56",
   "email": "help@auraremediation.com",
-  "image": "https://pureaura.ru/og-image.png",
-  "logo": "https://pureaura.ru/logo.svg",
+  "image": `${SITE_URL}/og-image.png`,
+  "logo": `${SITE_URL}/logo.svg`,
   "priceRange": "от 3 000 ₽",
   "currenciesAccepted": "RUB",
   "paymentAccepted": "Наличные, Безналичный расчёт, Карта",
@@ -288,9 +291,9 @@ const jsonLdWebSite = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "PureAura",
-  "url": "https://pureaura.ru",
+  "url": SITE_URL,
   "description": "Профессиональная уборка после смерти, дезинфекция и биологическая очистка помещений в Москве 24/7",
-  "publisher": { "@id": "https://pureaura.ru/#organization" },
+  "publisher": { "@id": `${SITE_URL}/#organization` },
 };
 
 // ─── JSON-LD: BreadcrumbList ─────────────────────────────────────
@@ -302,7 +305,7 @@ const jsonLdBreadcrumb = {
       "@type": "ListItem",
       "position": 1,
       "name": "Главная",
-      "item": "https://pureaura.ru",
+      "item": SITE_URL,
     },
   ],
 };
@@ -311,7 +314,7 @@ const jsonLdBreadcrumb = {
 const jsonLdReviews = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://pureaura.ru/#organization",
+  "@id": `${SITE_URL}/#organization`,
   "review": [
     {
       "@type": "Review",
