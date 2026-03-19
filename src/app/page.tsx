@@ -141,8 +141,8 @@ export default function Home() {
             </div>
         </section>
 
-        {/* Sec 11: Outro — spacing only */}
-        <section className="h-[20vh] w-full" aria-hidden="true" />
+        {/* End spacer */}
+        <section className="h-[2vh] w-full" aria-hidden="true" />
       </main>
 
       <EmergencyButton />

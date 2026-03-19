@@ -257,3 +257,26 @@ export async function getTeam(): Promise<TeamMember[]> {
 export async function saveTeam(team: TeamMember[]): Promise<void> {
   await writeJSON("team", team);
 }
+
+// ─── SEO Settings ────────────────────────────────────
+export interface SeoSettings {
+  title: string;
+  description: string;
+  ogImage: string;
+  favicon: string;
+}
+
+const DEFAULT_SEO: SeoSettings = {
+  title: "Уборка после смерти, пожара, канализации Москва — 24/7 круглосуточно",
+  description: "Профессиональная уборка после смерти, пожара, прорыва канализации и накопительства в Москве и МО. Устранение запаха, копоти, сажи. Дезинфекция по СанПиН. Выезд 60 минут, лицензия СЭС, АТФ-протокол. Фиксированная цена, NDA, гарантия 30 дней.",
+  ogImage: "/og-image.png",
+  favicon: "/favicon.ico",
+};
+
+export async function getSeo(): Promise<SeoSettings> {
+  return readJSON<SeoSettings>("seo", DEFAULT_SEO);
+}
+
+export async function saveSeo(seo: SeoSettings): Promise<void> {
+  await writeJSON("seo", seo);
+}
