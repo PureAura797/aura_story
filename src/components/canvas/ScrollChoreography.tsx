@@ -190,6 +190,21 @@ const STEPS: ChoreographyStep[] = [
     },
   },
 
+  // Scatter/Fall — blocks fall like leaves below the footer
+  {
+    trigger: '#end-spacer',
+    props: {
+      formation: 14,
+      groupX: 0,
+      groupY: -12,
+      speedMul: 0.3,
+      radiusScale: 2.5,
+      lightColor: '#5eead4',
+      lightIntensity: 3,
+      bgColor: '#0a0a0c',
+    },
+  },
+
 ];
 
 /** Get element's absolute top position */

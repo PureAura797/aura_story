@@ -139,7 +139,7 @@ export default function Home() {
         </section>
 
         {/* End spacer */}
-        <section className="h-[2vh] w-full" aria-hidden="true" />
+        <section id="end-spacer" className="h-[2vh] w-full" aria-hidden="true" />
       </main>
 
       <EmergencyButton />
