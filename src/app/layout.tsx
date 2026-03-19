@@ -55,6 +55,16 @@ export const metadata: Metadata = {
     description: "Профессиональная биологическая очистка: уборка после смерти, пожара, канализации, накопительства. Выезд за 60 минут.",
     images: ["https://pureaura.ru/og-image.png"],
   },
+  // TODO: Replace with real verification codes from Yandex Webmaster & Google Search Console
+  // verification: {
+  //   google: "YOUR_GOOGLE_VERIFICATION_CODE",
+  //   yandex: "YOUR_YANDEX_VERIFICATION_CODE",
+  // },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+  },
   other: {
     "geo.region": "RU-MOW",
     "geo.placename": "Москва",
@@ -297,6 +307,36 @@ const jsonLdBreadcrumb = {
   ],
 };
 
+// ─── JSON-LD: Reviews (for rich snippets stars) ─────────────────
+const jsonLdReviews = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://pureaura.ru/#organization",
+  "review": [
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Анна М." },
+      "datePublished": "2026-02-15",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Приехали через 40 минут после звонка. Работали аккуратно, тихо, без лишних вопросов. После обработки запах полностью исчез. Спасибо за деликатность.",
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Дмитрий К." },
+      "datePublished": "2026-01-28",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Управляющая компания обратилась после прорыва канализации на первом этаже. PureAura откачали, продезинфицировали и просушили за один день. Рекомендуем.",
+    },
+    {
+      "@type": "Review",
+      "author": { "@type": "Person", "name": "Елена С." },
+      "datePublished": "2026-03-02",
+      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+      "reviewBody": "Уборка после пожара в квартире. Полностью удалили копоть и запах гари. Предоставили протокол АТФ-тестирования. Очень профессионально.",
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -307,11 +347,7 @@ export default function RootLayout({
       <head>
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
         <style dangerouslySetInnerHTML={{ __html: `html{background:#0b0c0f!important}body{background:transparent!important}` }} />
-        <link
-          rel="icon"
-          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%230b0c0f'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%232dd4bf' stroke-width='2'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232dd4bf'/%3E%3Cpath d='M44 48 Q50 65 56 48' fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"
-          type="image/svg+xml"
-        />
+        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
@@ -327,6 +363,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdReviews) }}
         />
       </head>
       <body className="text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
