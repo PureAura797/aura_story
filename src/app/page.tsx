@@ -136,6 +136,7 @@ export default function Home() {
             <div className="w-full max-w-2xl pointer-events-auto">
               <ContactForm />
             </div>
+            <div id="scatter-point" aria-hidden="true" />
         </section>
 
         {/* End spacer */}
