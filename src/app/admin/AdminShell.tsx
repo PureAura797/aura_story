@@ -165,7 +165,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             Открыть сайт
           </a>
           <button
-            onClick={() => { if (confirm('Выйти из админки?')) handleLogout(); }}
+            onClick={handleLogout}
             className="flex items-center gap-2.5 px-3 py-2.5 text-xs text-neutral-600 hover:text-red-400 transition-colors w-full cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" strokeWidth={1.5} />

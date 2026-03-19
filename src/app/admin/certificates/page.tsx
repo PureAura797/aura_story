@@ -54,10 +54,13 @@ export default function CertificatesAdmin() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("path", `certificates/${file.name}`);
+    formData.append("category", "certificates");
     try {
       const res = await fetch("/api/admin/media", { method: "POST", body: formData });
       if (res.ok) {
-        const url = `/certificates/${file.name}`;
+        const data = await res.json();
+        // Use Supabase CDN URL if available, fallback to relative path
+        const url = data.url || `/certificates/${file.name}`;
         updateItem(itemId, field, url);
       }
     } catch { console.error("Upload failed"); }

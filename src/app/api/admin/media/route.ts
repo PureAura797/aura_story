@@ -13,10 +13,10 @@ import path from "path";
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
-// Media categories — folders in Supabase Storage bucket
+// Media categories — folders matching actual public/ structure
 const MEDIA_CATEGORIES: Record<string, { dir: string; category: string }> = {
   stories_covers: { dir: "stories/covers", category: "stories_covers" },
-  stories_videos: { dir: "stories/videos", category: "stories_videos" },
+  stories_videos: { dir: "stories", category: "stories_videos" },
   portfolio: { dir: "images/portfolio", category: "portfolio" },
   equipment: { dir: "equipment", category: "equipment" },
 };
