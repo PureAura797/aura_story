@@ -114,28 +114,28 @@ export default function Home() {
         </section>
 
         {/* Sec 7: Pricing — Цены на уборку и дезинфекцию */}
-        <section id="pricing" aria-label="Стоимость услуг — фиксированные цены на уборку и дезинфекцию" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
-            <div className="max-w-4xl pointer-events-auto">
+        <section id="pricing" aria-label="Стоимость услуг — фиксированные цены на уборку и дезинфекцию" className={`min-h-screen w-full flex flex-col justify-center items-start ${SP} py-24`}>
+            <div className="w-full max-w-4xl pointer-events-auto">
               <Pricing />
             </div>
         </section>
 
         {/* Sec 8: Reviews — Отзывы клиентов */}
-        <section id="reviews" aria-label="Отзывы клиентов о профессиональной уборке и дезинфекции" className={`min-h-screen w-full flex flex-col justify-center items-start ${SP} py-24`}>
+        <section id="reviews" aria-label="Отзывы клиентов о профессиональной уборке и дезинфекции" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-3xl pointer-events-auto">
               <Reviews />
             </div>
         </section>
 
         {/* Sec 9: FAQ — Частые вопросы */}
-        <section id="faq" aria-label="Частые вопросы об уборке после смерти и дезинфекции" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
+        <section id="faq" aria-label="Частые вопросы об уборке после смерти и дезинфекции" className={`min-h-screen w-full flex flex-col justify-center items-start ${SP} py-24`}>
             <div className="w-full max-w-3xl pointer-events-auto">
               <FAQ />
             </div>
         </section>
 
         {/* Sec 10: Contact — Заказать уборку */}
-        <section id="contact" aria-label="Форма заявки — заказать профессиональную уборку и дезинфекцию" className={`min-h-screen w-full flex flex-col justify-center items-start ${SP} py-24`}>
+        <section id="contact" aria-label="Форма заявки — заказать профессиональную уборку и дезинфекцию" className={`section-grain min-h-screen w-full flex flex-col justify-center items-end ${SP} py-24`}>
             <div className="w-full max-w-2xl pointer-events-auto">
               <ContactForm />
             </div>

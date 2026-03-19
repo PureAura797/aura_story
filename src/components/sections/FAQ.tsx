@@ -60,12 +60,12 @@ export default function FAQ() {
   };
 
   return (
-    <section ref={containerRef} className="w-full flex flex-col items-end z-10 relative">
-      <div className="text-right mb-4">
+    <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
+      <div className="mb-4">
         <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase font-medium mb-4">{t("faq.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("faq.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light text-right mb-16 max-w-md">
+      <p className="text-sm text-neutral-500 font-light mb-16 max-w-md">
         {t("faq.desc")}
       </p>
 

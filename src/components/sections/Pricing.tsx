@@ -46,12 +46,12 @@ export default function Pricing() {
   };
 
   return (
-    <section ref={containerRef} className="w-full flex flex-col items-end z-10 relative">
-      <div className="text-right mb-4">
+    <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
+      <div className="mb-4">
         <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--sand)" }}>{t("pricing.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("pricing.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light text-right mb-12 max-w-md">{t("pricing.desc")}</p>
+      <p className="text-sm text-neutral-500 font-light mb-12 max-w-md">{t("pricing.desc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
         {plans.map((plan) => (
