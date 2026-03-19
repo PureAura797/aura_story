@@ -270,9 +270,6 @@ export default function ScrollChoreography() {
     };
 
     const handlePreloaderComplete = () => {
-      // Mark global flag so late-mounting components know preloader is done
-      (window as any).__preloaderDone = true;
-
       gsap.to(scProps, {
         entranceProgress: 1,
         duration: 2.0,
@@ -288,12 +285,6 @@ export default function ScrollChoreography() {
 
     window.addEventListener('preloaderComplete', handlePreloaderComplete);
 
-    // Dynamic import fallback: if preloader already finished before
-    // this component mounted (due to ssr:false async loading), fire immediately
-    if ((window as any).__preloaderDone) {
-      handlePreloaderComplete();
-    }
-
     // Rebuild on resize (section heights change on responsive)
     let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
@@ -305,10 +296,29 @@ export default function ScrollChoreography() {
     };
     window.addEventListener('resize', handleResize);
 
+    // Rebuild when API sections finish loading (skeleton → content changes page height)
+    let mutationTimer: ReturnType<typeof setTimeout>;
+    const observer = new MutationObserver(() => {
+      clearTimeout(mutationTimer);
+      mutationTimer = setTimeout(() => {
+        buildMasterTimeline();
+        ScrollTrigger.refresh();
+      }, 500);
+    });
+
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      observer.observe(mainContent, { childList: true, subtree: true });
+      // Auto-disconnect after 10s (all API data should be loaded by then)
+      setTimeout(() => observer.disconnect(), 10000);
+    }
+
     return () => {
       window.removeEventListener('preloaderComplete', handlePreloaderComplete);
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
+      clearTimeout(mutationTimer);
+      observer.disconnect();
       scrollTrigger?.kill();
       masterTl?.kill();
     };

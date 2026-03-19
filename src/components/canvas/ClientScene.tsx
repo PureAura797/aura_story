@@ -1,10 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import ScrollChoreography from "@/components/canvas/ScrollChoreography";
 
-// Dynamic imports: Three.js scene (~500KB) loads async, not blocking FCP/LCP
+// Only Scene uses Three.js (~500KB) — dynamic to not block FCP/LCP
+// ScrollChoreography is lightweight (just GSAP + ScrollTrigger) — keep static
+// so it registers the preloaderComplete listener BEFORE the event fires
 const Scene = dynamic(() => import("@/components/canvas/Scene"), { ssr: false });
-const ScrollChoreography = dynamic(() => import("@/components/canvas/ScrollChoreography"), { ssr: false });
 
 export default function ClientScene() {
   return (
