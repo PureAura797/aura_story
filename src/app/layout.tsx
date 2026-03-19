@@ -350,6 +350,9 @@ export default function RootLayout({
       <head>
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
         <style dangerouslySetInnerHTML={{ __html: `html{background:#0b0c0f!important}body{background:transparent!important}` }} />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <script
           type="application/ld+json"

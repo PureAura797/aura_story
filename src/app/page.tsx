@@ -13,15 +13,13 @@ import Reviews from "@/components/sections/Reviews";
 import FAQ from "@/components/sections/FAQ";
 import ContactForm from "@/components/sections/ContactForm";
 import Footer from "@/components/layout/Footer";
-import Scene from "@/components/canvas/Scene";
-import ScrollChoreography from "@/components/canvas/ScrollChoreography";
+import ClientScene from "@/components/canvas/ClientScene";
 import Preloader from "@/components/effects/Preloader";
 import ScrollProgress from "@/components/effects/ScrollProgress";
 import EmergencyButton from "@/components/ui/EmergencyButton";
 import TrustMarquee from "@/components/ui/TrustMarquee";
-import MessengerWidget from "@/components/ui/MessengerWidget";
 import LiveClock from "@/components/ui/LiveClock";
-import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
+import ClientWidgets from "@/components/ui/ClientWidgets";
 
 {/* 
   Spacing system:
@@ -39,8 +37,7 @@ export default function Home() {
       {/* Swiss grid line */}
       <div className="fixed top-0 left-1/2 w-px h-screen bg-white/5 z-0 pointer-events-none transform -translate-x-1/2" aria-hidden="true" />
       
-      <Scene />
-      <ScrollChoreography />
+      <ClientScene />
 
       <Navbar />
 
@@ -147,8 +144,7 @@ export default function Home() {
 
       <EmergencyButton />
       <LiveClock />
-      <MessengerWidget />
-      <ExitIntentPopup />
+      <ClientWidgets />
       <Footer />
     </>
   );
