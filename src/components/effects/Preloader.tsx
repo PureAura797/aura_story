@@ -53,6 +53,7 @@ export default function Preloader() {
       onComplete: () => {
         setIsComplete(true);
         document.body.style.overflow = "";
+        (window as any).__preloaderDone = true;
         window.dispatchEvent(new Event("preloaderComplete"));
       },
     });
