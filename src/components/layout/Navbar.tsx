@@ -200,14 +200,13 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile burger — clean instant swap */}
           <button 
             onClick={toggleMenu} 
-            className="lg:hidden text-white cursor-pointer p-1 -mr-1 relative z-[70]" 
+            className="lg:hidden text-white cursor-pointer p-3 -mr-3 relative z-[70]" 
             aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={menuOpen}
           >
-            {menuOpen ? <X className="w-5 h-5" strokeWidth={1.5} /> : <Menu className="w-5 h-5" strokeWidth={1.5} />}
+            {menuOpen ? <X className="w-6 h-6" strokeWidth={1.5} /> : <Menu className="w-6 h-6" strokeWidth={1.5} />}
           </button>
         </div>
       </nav>

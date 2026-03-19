@@ -14,6 +14,27 @@ html {
   overflow-x: hidden;
 }
 
+/* P0: Respect prefers-reduced-motion (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* P1: Global focus-visible for keyboard navigation (WCAG 2.4.7) */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Hide focus ring for mouse/touch users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* ===== Scroll Progress Bar ===== */
 #scroll-progress {
   background: linear-gradient(90deg, var(--accent), var(--accent-deep), #0d9488);

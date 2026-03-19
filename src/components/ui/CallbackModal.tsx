@@ -111,28 +111,30 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div>
-                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
+                <label htmlFor="cb-name" className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
                   Имя
                 </label>
                 <input
+                  id="cb-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Как вас зовут"
-                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
+                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
+                <label htmlFor="cb-phone" className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
                   Телефон
                 </label>
                 <input
+                  id="cb-phone"
                   type="tel"
                   value={phone}
                   onChange={handlePhoneChange}
                   placeholder="+7 (___) ___-__-__"
                   required
-                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
+                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
                 />
               </div>
 

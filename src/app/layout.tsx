@@ -373,6 +373,13 @@ export default function RootLayout({
         />
       </head>
       <body className="text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
+        {/* P0: Skip to content for keyboard/screen-reader users (WCAG 2.4.1) */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-black focus:px-6 focus:py-3 focus:text-sm focus:font-bold focus:uppercase focus:tracking-wider"
+        >
+          Перейти к содержимому
+        </a>
         <Providers>
           <SmoothScroller />
           <CustomCursor />
