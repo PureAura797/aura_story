@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { FileText, Calculator, Star, LayoutDashboard, LogOut, ExternalLink, Image, Settings, Phone, Bell, BarChart3, Menu, X, HelpCircle, Briefcase, CreditCard, MessageCircle, Award } from "lucide-react";
+import { FileText, Calculator, Star, LayoutDashboard, LogOut, ExternalLink, Image, Settings, Phone, Bell, BarChart3, Menu, X, HelpCircle, Briefcase, CreditCard, MessageCircle, Award, Users } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import AdminBgLogo from "./AdminBgLogo";
 
@@ -11,6 +11,7 @@ const navItems = [
   { href: "/admin", label: "Дашборд", icon: LayoutDashboard },
   { href: "/admin/content", label: "Контент", icon: FileText },
   { href: "/admin/services", label: "Услуги", icon: Briefcase },
+  { href: "/admin/team", label: "Команда", icon: Users },
   { href: "/admin/pricing", label: "Тарифы", icon: CreditCard },
   { href: "/admin/calculator", label: "Калькулятор", icon: Calculator },
   { href: "/admin/reviews", label: "Отзывы", icon: Star },

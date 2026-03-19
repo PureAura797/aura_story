@@ -1,26 +1,40 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  status: string;
+  experience: string;
+  objects: string;
+  specialization: string;
+  avatar: string;
+  color: string;
+  published: boolean;
+  sort_order: number;
+}
+
 export default function Team() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const [members, setMembers] = useState<TeamMember[]>([]);
 
-  const team = [
-    { name: t("team.1.name"), role: t("team.1.role"), status: t("team.1.status"), experience: t("team.1.exp_value"), objects: "2 400+", specialization: t("team.1.spec"), avatar: "/team/alexey.webp", color: "#5eead4" },
-    { name: t("team.2.name"), role: t("team.2.role"), status: t("team.2.status"), experience: t("team.2.exp_value"), objects: "1 800+", specialization: t("team.2.spec"), avatar: "/team/marina.webp", color: "#d4a574" },
-    { name: t("team.3.name"), role: t("team.3.role"), status: t("team.3.status"), experience: t("team.3.exp_value"), objects: "900+", specialization: t("team.3.spec"), avatar: "/team/dmitry.webp", color: "#a78bfa" },
-    { name: t("team.4.name"), role: t("team.4.role"), status: t("team.4.status"), experience: t("team.4.exp_value"), objects: "3 000+", specialization: t("team.4.spec"), avatar: "/team/elena.webp", color: "#fb7185" },
-    { name: t("team.5.name"), role: t("team.5.role"), status: t("team.5.status"), experience: t("team.5.exp_value"), objects: "2 100+", specialization: t("team.5.spec"), avatar: "/team/igor.webp", color: "#14b8a6" },
-    { name: t("team.6.name"), role: t("team.6.role"), status: t("team.6.status"), experience: t("team.6.exp_value"), objects: "1 500+", specialization: t("team.6.spec"), avatar: "/team/anna.webp", color: "#38bdf8" },
-  ];
+  useEffect(() => {
+    fetch("/api/team")
+      .then((res) => res.json())
+      .then((data) => setMembers(data))
+      .catch(() => setMembers([]));
+  }, []);
 
   useGSAP(() => {
+    if (members.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".team-card") as HTMLElement[];
     gsap.set(cards, { y: 30, opacity: 0 });
@@ -29,7 +43,7 @@ export default function Team() {
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: "power3.out" }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [members] });
 
   return (
     <section ref={containerRef}>
@@ -38,13 +52,19 @@ export default function Team() {
       <p className="text-neutral-500 text-sm font-light mt-4 mb-12 max-w-md">{t("team.desc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {team.map((member, idx) => (
-          <div key={idx} className="team-card border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 p-6 group">
+        {members.map((member) => (
+          <div key={member.id} className="team-card border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 p-6 group">
             <div className="flex items-center gap-4 mb-5">
               <div className="relative w-12 h-12 rounded-full p-[2px] shrink-0">
                 <div className="absolute inset-0 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(135deg, ${member.color}, ${member.color}44)` }} />
                 <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[var(--bg-deep)]">
-                  <Image src={member.avatar} alt={member.name} width={48} height={48} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105" />
+                  {member.avatar ? (
+                    <Image src={member.avatar} alt={member.name} width={48} height={48} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105" unoptimized />
+                  ) : (
+                    <div className="w-full h-full bg-white/[0.06] flex items-center justify-center text-neutral-600 text-xs font-bold">
+                      {member.name.charAt(0)}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="min-w-0">

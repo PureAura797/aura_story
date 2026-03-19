@@ -225,3 +225,35 @@ export async function getCertificates(): Promise<CertificateItem[]> {
 export async function saveCertificates(certificates: CertificateItem[]): Promise<void> {
   await writeJSON("certificates", certificates);
 }
+
+// ─── Team ────────────────────────────────────────────
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  status: string;
+  experience: string;
+  objects: string;
+  specialization: string;
+  avatar: string;
+  color: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_TEAM: TeamMember[] = [
+  { id: "1", name: "Алексей Кравцов", role: "Руководитель бригады", status: "На выезде", experience: "12 лет", objects: "2 400+", specialization: "Биоочистка, дезинфекция", avatar: "/team/alexey.webp", color: "#5eead4", published: true, sort_order: 0 },
+  { id: "2", name: "Марина Волкова", role: "Санитарный инженер", status: "Доступна", experience: "8 лет", objects: "1 800+", specialization: "АТФ-контроль, протоколы", avatar: "/team/marina.webp", color: "#d4a574", published: true, sort_order: 1 },
+  { id: "3", name: "Дмитрий Орлов", role: "Техник-дезинфектор", status: "На объекте", experience: "6 лет", objects: "900+", specialization: "Озонирование, ULV", avatar: "/team/dmitry.webp", color: "#a78bfa", published: true, sort_order: 2 },
+  { id: "4", name: "Елена Сотникова", role: "Логист-координатор", status: "В офисе", experience: "5 лет", objects: "3 000+", specialization: "Координация, документооборот", avatar: "/team/elena.webp", color: "#fb7185", published: true, sort_order: 3 },
+  { id: "5", name: "Игорь Белов", role: "Старший дезинфектор", status: "На выезде", experience: "10 лет", objects: "2 100+", specialization: "Биожидкости, утилизация", avatar: "/team/igor.webp", color: "#14b8a6", published: true, sort_order: 4 },
+  { id: "6", name: "Анна Климова", role: "Контроль качества", status: "Доступна", experience: "7 лет", objects: "1 500+", specialization: "Финальная приёмка, АТФ", avatar: "/team/anna.webp", color: "#38bdf8", published: true, sort_order: 5 },
+];
+
+export async function getTeam(): Promise<TeamMember[]> {
+  return readJSON<TeamMember[]>("team", DEFAULT_TEAM);
+}
+
+export async function saveTeam(team: TeamMember[]): Promise<void> {
+  await writeJSON("team", team);
+}
