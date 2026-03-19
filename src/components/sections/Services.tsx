@@ -1,24 +1,43 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SectionCTA from "@/components/ui/SectionCTA";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  meta: string;
+  published: boolean;
+  sort_order: number;
+}
+
 export default function Services() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const [services, setServices] = useState<ServiceItem[]>([]);
 
-  const services = [
-    { num: "01", title: t("services.1.title"), description: t("services.1.desc"), meta: t("services.1.meta") },
-    { num: "02", title: t("services.2.title"), description: t("services.2.desc"), meta: t("services.2.meta") },
-    { num: "03", title: t("services.3.title"), description: t("services.3.desc"), meta: t("services.3.meta") },
-    { num: "04", title: t("services.4.title"), description: t("services.4.desc"), meta: t("services.4.meta") },
-  ];
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => setServices(data))
+      .catch(() => {
+        // Fallback
+        setServices([
+          { id: "1", title: "После Смерти", description: "Полный демонтаж загрязнённых материалов, STP-обработка, озонация.", meta: "от 60 мин · до 120 кв.м · от 15 000 ₽", published: true, sort_order: 0 },
+          { id: "2", title: "После Пожара", description: "Удаление копоти, сажи, запаха гари. Демонтаж и химическая нейтрализация.", meta: "от 60 мин · до 200 кв.м · от 20 000 ₽", published: true, sort_order: 1 },
+          { id: "3", title: "После Канализации", description: "Откачка, дезинфекция, обработка антисептиком по СанПиН.", meta: "от 60 мин · до 300 кв.м · от 15 000 ₽", published: true, sort_order: 2 },
+          { id: "4", title: "Накопительство", description: "Сортировка, вывоз до 200 м³, дезинсекция, дезинфекция.", meta: "от 4 ч · без ограничений · от 25 000 ₽", published: true, sort_order: 3 },
+        ]);
+      });
+  }, []);
 
   useGSAP(() => {
+    if (services.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".service-card") as HTMLElement[];
     
@@ -36,7 +55,7 @@ export default function Services() {
         }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [services] });
 
   return (
     <section ref={containerRef} className="w-full z-10 relative">
@@ -51,17 +70,17 @@ export default function Services() {
         </p>
       </div>
 
-      {/* Stacked cards — clean vertical layout */}
+      {/* Stacked cards — dynamic */}
       <div className="flex flex-col gap-3">
         {services.map((s, idx) => (
           <div
-            key={idx}
+            key={s.id}
             className="service-card group border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 overflow-hidden"
           >
             {/* Desktop: horizontal row */}
             <div className="hidden md:flex items-start gap-8 p-7">
               <span className="text-[10px] tracking-[0.2em] text-neutral-700 font-mono pt-2 shrink-0">
-                {s.num}
+                {String(idx + 1).padStart(2, "0")}
               </span>
               <div className="flex-1 min-w-0">
                 <h3 className="text-xl font-bold tracking-tighter group-hover:text-white transition-colors mb-2">
@@ -80,7 +99,7 @@ export default function Services() {
             <div className="md:hidden p-5">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-[10px] tracking-[0.2em] text-neutral-700 font-mono">
-                  {s.num}
+                  {String(idx + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-lg font-bold tracking-tighter group-hover:text-white transition-colors">
                   {s.title}

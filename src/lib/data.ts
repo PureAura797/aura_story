@@ -108,3 +108,120 @@ export async function getReviews(): Promise<Review[]> {
 export async function saveReviews(reviews: Review[]): Promise<void> {
   await writeJSON("reviews", reviews);
 }
+
+// ─── Services ────────────────────────────────────────
+export interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  meta: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_SERVICES: ServiceItem[] = [
+  { id: "1", title: "После Смерти", description: "Полный демонтаж загрязнённых материалов, STP-обработка, озонация. Объект сдаётся с протоколом АТФ-тестирования.", meta: "от 60 мин · до 120 кв.м · от 15 000 ₽", published: true, sort_order: 0 },
+  { id: "2", title: "После Пожара", description: "Удаление копоти, сажи, запаха гари. Демонтаж обгоревших покрытий, вывоз сгоревшей мебели и стройматериалов. Химическая нейтрализация, озонация.", meta: "от 60 мин · до 200 кв.м · от 20 000 ₽", published: true, sort_order: 1 },
+  { id: "3", title: "После Канализации", description: "Откачка, дезинфекция стен и полов, обработка антисептиком по СанПиН 3.3686-21. Сушка промышленными осушителями.", meta: "от 60 мин · до 300 кв.м · от 15 000 ₽", published: true, sort_order: 2 },
+  { id: "4", title: "Накопительство", description: "Сортировка, вывоз до 200 м³, дезинсекция, дезинфекция. Поиск ценных вещей и документов по согласованию.", meta: "от 4 ч · без ограничений · от 25 000 ₽", published: true, sort_order: 3 },
+  { id: "5", title: "Устранение Запахов", description: "Диагностика источника, механическая зачистка, обработка активным гидроксилом. Гарантия: запах вернётся — повторная обработка бесплатно.", meta: "от 40 мин · до 200 кв.м · от 10 000 ₽", published: true, sort_order: 4 },
+  { id: "6", title: "Инфекционный Контроль", description: "Протокол после затопления, вирусных вспышек, биологических инцидентов. Обработка по стандартам СанПиН 3.3686-21.", meta: "от 60 мин · до 300 кв.м · от 12 000 ₽", published: true, sort_order: 5 },
+];
+
+export async function getServices(): Promise<ServiceItem[]> {
+  return readJSON<ServiceItem[]>("services", DEFAULT_SERVICES);
+}
+
+export async function saveServices(services: ServiceItem[]): Promise<void> {
+  await writeJSON("services", services);
+}
+
+// ─── Pricing ─────────────────────────────────────────
+export interface PricingItem {
+  id: string;
+  name: string;
+  area: string;
+  price: number;
+  description: string;
+  features: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_PRICING: PricingItem[] = [
+  { id: "1", name: "Уборка после смерти", area: "до 120 кв.м", price: 15000, description: "Полный демонтаж загрязнённых материалов, STP-обработка, озонация. Протокол АТФ-тестирования.", features: "Выезд 60 мин · Хим. дезинфекция · Озонация · Протокол", published: true, sort_order: 0 },
+  { id: "2", name: "Устранение запахов", area: "до 200 кв.м", price: 10000, description: "Диагностика источника, механическая зачистка, обработка активным гидроксилом. Гарантия 30 дней.", features: "Поиск источника · Зачистка · Активный гидроксил", published: true, sort_order: 1 },
+  { id: "3", name: "Расхламление", area: "без ограничений", price: 25000, description: "Сортировка, вывоз до 200 м³, дезинсекция, дезинфекция. Поиск ценных вещей и документов.", features: "Сортировка · Вывоз · Дезинсекция · Документы", published: true, sort_order: 2 },
+  { id: "4", name: "Инфекционный контроль", area: "до 300 кв.м", price: 12000, description: "Протокол после затопления, канализационного прорыва. Стандарты СанПиН 3.3686-21.", features: "Герметизация · Обработка · АТФ-контроль · Акты", published: true, sort_order: 3 },
+  { id: "5", name: "Дезинсекция", area: "до 100 кв.м", price: 5000, description: "Уничтожение тараканов, клопов, блох, кожеедов. Барьерная обработка с гарантией результата.", features: "Диагностика · Обработка · Барьер · Гарантия", published: true, sort_order: 4 },
+  { id: "6", name: "Озонация воздуха", area: "до 150 кв.м", price: 3000, description: "Глубокое обеззараживание воздуха и поверхностей промышленным озонатором.", features: "Промышленный озонатор · Проветривание · Замер", published: true, sort_order: 5 },
+  { id: "7", name: "Уборка после пожара", area: "до 200 кв.м", price: 20000, description: "Удаление копоти, сажи, запаха гари. Демонтаж повреждённых покрытий, химическая нейтрализация.", features: "Демонтаж · Хим. нейтрализация · Озонация", published: true, sort_order: 6 },
+  { id: "8", name: "Вывоз мусора", area: "до 50 м³", price: 8000, description: "Крупногабаритный мусор, строительные отходы, старая мебель. Погрузка и утилизация.", features: "Погрузка · Транспортировка · Утилизация", published: true, sort_order: 7 },
+];
+
+export async function getPricing(): Promise<PricingItem[]> {
+  return readJSON<PricingItem[]>("pricing", DEFAULT_PRICING);
+}
+
+export async function savePricing(pricing: PricingItem[]): Promise<void> {
+  await writeJSON("pricing", pricing);
+}
+
+// ─── FAQ ─────────────────────────────────────────────
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_FAQ: FaqItem[] = [
+  { id: "1", question: "Сколько длится обработка?", answer: "Зависит от площади и типа загрязнения. Очаговая обработка (до 5 кв.м) — 2–4 часа. Полный протокол (квартира) — 6–12 часов. Сложные случаи (накопительство, длительное разложение) — до 2 дней.", published: true, sort_order: 0 },
+  { id: "2", question: "Безопасно ли находиться в квартире после обработки?", answer: "Да. После завершения протокола помещение проходит АТФ-тестирование. Объект не сдаётся до достижения безопасных показателей. Протокол чистоты предоставляется в письменном виде.", published: true, sort_order: 1 },
+  { id: "3", question: "Работаете ли вы с юридическими лицами?", answer: "Да. Управляющие компании, страховые компании, риелторские агентства — работаем по договору с полным комплектом актов и протоколов.", published: true, sort_order: 2 },
+  { id: "4", question: "Что делать с вещами умершего?", answer: "Сортируем вещи на безопасные и контаминированные. Безопасные передаём вам или по доверенности. Контаминированные утилизируем по классу «Б» с документальным оформлением.", published: true, sort_order: 3 },
+  { id: "5", question: "Выезжаете за МКАД?", answer: "Да. Москва и Московская область. Выезд за МКАД — +500 ₽/км от МКАД.", published: true, sort_order: 4 },
+  { id: "6", question: "Нужно ли мне присутствовать?", answer: "Нет. Работаем по доверенности или с представителем (управляющая компания, риелтор, сосед). Фотоотчёт и протокол отправляем дистанционно.", published: true, sort_order: 5 },
+  { id: "7", question: "Мне стыдно вызывать — вы не будете осуждать?", answer: "Нет. Наша бригада — сертифицированные специалисты, а не случайные люди. Мы работали на сотнях объектов и относимся к каждой ситуации как к медицинскому случаю: без оценок, без лишних вопросов. Конфиденциальность — часть протокола.", published: true, sort_order: 6 },
+  { id: "8", question: "Соседи узнают, что произошло?", answer: "Нет. Бригада приезжает в гражданской одежде, без маркировки на транспорте. Оборудование переносится в нейтральных кейсах. Мы не общаемся с соседями и не раскрываем характер работ.", published: true, sort_order: 7 },
+  { id: "9", question: "Запах исчезнет полностью или только замаскируется?", answer: "Полностью. Мы не используем ароматизаторы и «сухой туман» — они только маскируют. Наш протокол разрушает органику на молекулярном уровне: озонирование, ферментная обработка, замена заражённых материалов. Если АТФ-тест показывает превышение — работа продолжается.", published: true, sort_order: 8 },
+  { id: "10", question: "Что остаётся после полиции и следственных действий?", answer: "Следственная группа не занимается уборкой. После их работы остаются: порошок для снятия отпечатков, маркировочная лента, биологические следы. Полиция фиксирует улики — мы устраняем последствия. Приступаем сразу после разрешения следователя.", published: true, sort_order: 9 },
+  { id: "11", question: "Можно ли потом продать или сдать эту квартиру?", answer: "Да. После полного протокола квартира безопасна для проживания. Мы выдаём акт выполненных работ и протокол биологической чистоты — эти документы снимают вопросы у покупателей, арендаторов и управляющих компаний.", published: true, sort_order: 10 },
+  { id: "12", question: "Я живу в другом городе — как организовать всё дистанционно?", answer: "Полностью берём на себя. Доступ через управляющую компанию или по доверенности. Весь процесс документируем: фото до/после, протоколы, акты. Согласование и оплата — онлайн. 40% клиентов находятся в другом городе.", published: true, sort_order: 11 },
+  { id: "13", question: "Что включает уборка после пожара?", answer: "Полный комплекс: демонтаж обгоревших конструкций и покрытий, удаление копоти и сажи со стен, потолков и полов, химическая нейтрализация запаха гари, вывоз сгоревшей мебели и стройматериалов, промышленная озонация. По окончании — протокол чистоты воздуха.", published: true, sort_order: 12 },
+  { id: "14", question: "Что делать при прорыве канализации?", answer: "Звоните сразу — выезжаем за 60 минут. Выполняем экстренную откачку, полную дезинфекцию стен и полов, обработку антисептиком по СанПиН 3.3686-21, промышленную сушку осушителями. Предоставляем акты для страховой компании.", published: true, sort_order: 13 },
+];
+
+export async function getFaq(): Promise<FaqItem[]> {
+  return readJSON<FaqItem[]>("faq", DEFAULT_FAQ);
+}
+
+export async function saveFaq(faq: FaqItem[]): Promise<void> {
+  await writeJSON("faq", faq);
+}
+
+// ─── Certificates ────────────────────────────────────
+export interface CertificateItem {
+  id: string;
+  title: string;
+  number: string;
+  date: string;
+  description: string;
+  preview_url: string;
+  download_url: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_CERTIFICATES: CertificateItem[] = [
+  { id: "1", title: "Лицензия на медицинскую деятельность", number: "77.01.13.003.Л.000022.02.26", date: "24.02.2026", description: "Лицензия на осуществление медицинской деятельности, выданная Федеральной службой по надзору в сфере здравоохранения", preview_url: "/certificates/license-preview.png", download_url: "/certificates/license.pdf", published: true, sort_order: 0 },
+];
+
+export async function getCertificates(): Promise<CertificateItem[]> {
+  return readJSON<CertificateItem[]>("certificates", DEFAULT_CERTIFICATES);
+}
+
+export async function saveCertificates(certificates: CertificateItem[]): Promise<void> {
+  await writeJSON("certificates", certificates);
+}

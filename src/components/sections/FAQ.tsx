@@ -1,23 +1,35 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+  published: boolean;
+  sort_order: number;
+}
+
 export default function FAQ() {
   const containerRef = useRef<HTMLElement>(null);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const { t } = useTranslation();
+  const [faqItems, setFaqItems] = useState<FaqItem[]>([]);
 
-  const faqItems = Array.from({ length: 12 }, (_, i) => ({
-    question: t(`faq.${i + 1}.q`),
-    answer: t(`faq.${i + 1}.a`),
-  }));
+  useEffect(() => {
+    fetch("/api/faq")
+      .then((res) => res.json())
+      .then((data) => setFaqItems(data))
+      .catch(() => setFaqItems([]));
+  }, []);
 
   useGSAP(() => {
+    if (faqItems.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const items = gsap.utils.toArray(".faq-card") as HTMLElement[];
 
@@ -27,7 +39,7 @@ export default function FAQ() {
         gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.5, ease: "power3.out" }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [faqItems] });
 
   const toggleItem = (idx: number) => {
     const answerId = `faq-answer-${idx}`;
@@ -60,7 +72,7 @@ export default function FAQ() {
       <div className="flex flex-col w-full max-w-3xl gap-3">
         {faqItems.map((item, idx) => (
           <div
-            key={idx}
+            key={item.id}
             className={`faq-card opacity-0 translate-y-10 border bg-white/[0.03] backdrop-blur-sm transition-all duration-500 ${
               openIdx === idx ? "border-[rgba(94,234,212,0.2)]" : "border-white/10 hover:border-white/20"
             }`}

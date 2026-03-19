@@ -8,6 +8,7 @@ import Process from "@/components/sections/Process";
 import Portfolio from "@/components/sections/Portfolio";
 import Equipment from "@/components/sections/Equipment";
 import Pricing from "@/components/sections/Pricing";
+import Certificate from "@/components/sections/Certificate";
 import Reviews from "@/components/sections/Reviews";
 import FAQ from "@/components/sections/FAQ";
 import ContactForm from "@/components/sections/ContactForm";
@@ -102,6 +103,13 @@ export default function Home() {
         <section id="equipment" aria-label="Профессиональное оборудование для дезинфекции и озонирования" className={`min-h-screen w-full flex flex-col justify-center items-start ${SP} py-24`}>
             <div className="w-full max-w-4xl pointer-events-auto">
               <Equipment />
+            </div>
+        </section>
+
+        {/* Sec 6.5: Certificate — Лицензии и сертификаты */}
+        <section id="certificate" aria-label="Лицензии и сертификаты компании" className={`section-grain min-h-[60vh] w-full flex flex-col justify-center items-end ${SP} py-24`}>
+            <div className="w-full max-w-4xl pointer-events-auto">
+              <Certificate />
             </div>
         </section>
 
