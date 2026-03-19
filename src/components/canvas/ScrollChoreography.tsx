@@ -6,27 +6,25 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scProps } from '@/lib/scrollProps';
 
 /*
-  Section-based scroll choreography.
-  Each section triggers its own formation + visual state.
-  This adapts automatically to page length changes (admin edits, device).
+  Master-timeline scroll choreography.
+  
+  One GSAP timeline scrubbed by one ScrollTrigger spanning the whole page.
+  Each section's formation occupies its proportional slice based on
+  actual DOM position — automatically adapts to ANY page length,
+  device, or admin config.
+  
+  No overlapping triggers, no jerking, no early-finish problem.
 */
 
 interface ChoreographyStep {
   trigger: string;           // CSS selector for the section
-  start?: string;            // ScrollTrigger start (default: "top 80%")
-  end?: string;              // ScrollTrigger end (default: "top 20%")
   props: Partial<typeof scProps>;
 }
 
 const STEPS: ChoreographyStep[] = [
-  // Hero → initial state is set in scProps defaults (formation 0)
-
-  // TrustMarquee / Stories zone — use #services as next anchor
-  // The marquee + stories sit between hero and services
+  // Hero exit — first transition
   {
     trigger: '#hero',
-    start: 'bottom 80%',
-    end: 'bottom 20%',
     props: {
       formation: 1,
       groupX: 3,
@@ -207,6 +205,17 @@ const STEPS: ChoreographyStep[] = [
   },
 ];
 
+/** Get element's absolute top position */
+function getAbsoluteTop(el: HTMLElement): number {
+  let top = 0;
+  let current: HTMLElement | null = el;
+  while (current) {
+    top += current.offsetTop;
+    current = current.offsetParent as HTMLElement | null;
+  }
+  return top;
+}
+
 export default function ScrollChoreography() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -214,47 +223,98 @@ export default function ScrollChoreography() {
     // Initial state: particles hidden until preloader finishes
     scProps.entranceProgress = 0;
 
+    let masterTl: gsap.core.Timeline | null = null;
+    let scrollTrigger: ScrollTrigger | null = null;
+
+    const buildMasterTimeline = () => {
+      // Clean up previous if rebuilding
+      scrollTrigger?.kill();
+      masterTl?.kill();
+
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll <= 0) return;
+
+      // Collect valid sections with their DOM positions
+      const sections: { progress: number; props: Partial<typeof scProps> }[] = [];
+
+      STEPS.forEach((step) => {
+        const el = document.querySelector(step.trigger) as HTMLElement | null;
+        if (!el || el.offsetHeight === 0) return;
+
+        const top = getAbsoluteTop(el);
+        // Normalize position to 0–1 range (fraction of total scroll)
+        const progress = Math.min(top / totalScroll, 1);
+
+        sections.push({ progress, props: step.props });
+      });
+
+      if (sections.length === 0) return;
+
+      // Sort by progress (should already be sorted, but safety)
+      sections.sort((a, b) => a.progress - b.progress);
+
+      // Build master timeline using normalized time scale (0–100)
+      const SCALE = 100;
+      masterTl = gsap.timeline({ paused: true });
+
+      sections.forEach((section, i) => {
+        // Duration = gap to NEXT section. Last section gets 5% of total.
+        const nextProgress = i < sections.length - 1
+          ? sections[i + 1].progress
+          : Math.min(section.progress + 0.05, 1);
+
+        const duration = Math.max((nextProgress - section.progress) * SCALE, 0.5);
+
+        masterTl!.to(scProps, {
+          ...section.props,
+          ease: 'power2.inOut',
+          duration,
+        }, section.progress * SCALE);
+      });
+
+      // Single ScrollTrigger for the ENTIRE page
+      scrollTrigger = ScrollTrigger.create({
+        trigger: document.documentElement,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.5,  // smoothing factor
+        animation: masterTl,
+      });
+    };
+
     const handlePreloaderComplete = () => {
       gsap.to(scProps, {
         entranceProgress: 1,
         duration: 2.0,
-        ease: "power3.out",
+        ease: 'power3.out',
       });
+
+      // Build timeline after preloader (layout is stable)
+      // Small delay ensures all lazy components have rendered
+      setTimeout(() => {
+        buildMasterTimeline();
+      }, 200);
     };
 
-    window.addEventListener("preloaderComplete", handlePreloaderComplete);
+    window.addEventListener('preloaderComplete', handlePreloaderComplete);
 
-    // Create per-section ScrollTriggers
-    const triggers: ScrollTrigger[] = [];
-
-    STEPS.forEach((step) => {
-      const el = document.querySelector(step.trigger);
-      if (!el) return;
-
-      // Each section scrubs its own mini-timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: step.trigger,
-          start: step.start || 'top 80%',
-          end: step.end || 'bottom 20%',
-          scrub: 0.8,
-        },
-      });
-
-      tl.to(scProps, {
-        ...step.props,
-        ease: 'power2.inOut',
-      });
-
-      if (tl.scrollTrigger) {
-        triggers.push(tl.scrollTrigger);
-      }
-    });
+    // Rebuild on resize (section heights change on responsive)
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        buildMasterTimeline();
+        ScrollTrigger.refresh();
+      }, 300);
+    };
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("preloaderComplete", handlePreloaderComplete);
-      triggers.forEach(t => t.kill());
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      window.removeEventListener('preloaderComplete', handlePreloaderComplete);
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+      scrollTrigger?.kill();
+      masterTl?.kill();
     };
   }, []);
 
