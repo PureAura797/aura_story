@@ -236,7 +236,7 @@ export default function ScrollChoreography() {
         scrollTrigger: {
           trigger: step.trigger,
           start: step.start || 'top 80%',
-          end: step.end || 'top 20%',
+          end: step.end || 'bottom 20%',
           scrub: 0.8,
         },
       });
