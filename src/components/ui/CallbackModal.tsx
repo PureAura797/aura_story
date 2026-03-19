@@ -16,6 +16,16 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const isPhoneComplete = phone.replace(/\D/g, "").length === 11;
+  const isNameValid = name.trim().length >= 2;
+  const isFormValid = isNameValid && isPhoneComplete;
+
+  const fieldBorder = (field: string, isValid: boolean) => {
+    if (!touched[field]) return 'border-white/10';
+    return isValid ? 'border-teal-500/40' : 'border-red-500/50';
+  };
 
   useEffect(() => {
     if (!overlayRef.current || !panelRef.current) return;
@@ -36,6 +46,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
         setSuccess(false);
         setName("");
         setPhone("");
+        setTouched({});
       }, 400);
     }
   }, [isOpen]);
@@ -111,7 +122,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div>
-                <label htmlFor="cb-name" className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
+                <label htmlFor="cb-name" className="text-[11px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
                   Имя
                 </label>
                 <input
@@ -119,12 +130,14 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  onBlur={() => setTouched({ ...touched, name: true })}
                   placeholder="Как вас зовут"
-                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
+                  className={`w-full bg-white/[0.04] border ${fieldBorder('name', isNameValid)} px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]`}
                 />
+                {touched.name && !isNameValid && <p className="text-red-400 text-[11px] mt-1">Минимум 2 символа</p>}
               </div>
               <div>
-                <label htmlFor="cb-phone" className="text-[10px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
+                <label htmlFor="cb-phone" className="text-[11px] uppercase tracking-[0.2em] text-neutral-600 font-medium block mb-2">
                   Телефон
                 </label>
                 <input
@@ -132,16 +145,18 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                   type="tel"
                   value={phone}
                   onChange={handlePhoneChange}
+                  onBlur={() => setTouched({ ...touched, phone: true })}
                   placeholder="+7 (___) ___-__-__"
                   required
-                  className="w-full bg-white/[0.04] border border-white/10 px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]"
+                  className={`w-full bg-white/[0.04] border ${fieldBorder('phone', isPhoneComplete)} px-4 py-3 text-sm text-white placeholder-neutral-600 outline-none focus-visible:outline-none transition-colors focus:border-[rgba(94,234,212,0.5)]`}
                 />
+                {touched.phone && !isPhoneComplete && <p className="text-red-400 text-[11px] mt-1">Введите полный номер</p>}
               </div>
 
               <button
                 type="submit"
-                disabled={loading}
-                className="btn-primary w-full mt-2 px-8 py-4 disabled:opacity-50"
+                disabled={loading || !isFormValid}
+                className="btn-primary w-full mt-2 px-8 py-4 disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -153,7 +168,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                 )}
               </button>
 
-              <p className="text-[10px] text-neutral-600 text-center">
+              <p className="text-[11px] text-neutral-600 text-center">
                 Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
               </p>
             </form>

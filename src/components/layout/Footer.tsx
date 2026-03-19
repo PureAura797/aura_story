@@ -99,7 +99,7 @@ export default function Footer() {
         <p className="text-[11px] text-neutral-600 uppercase tracking-[0.15em]">
           {t("footer.copyright")}
         </p>
-        <p className="text-[11px] text-neutral-700 uppercase tracking-[0.15em]">
+        <p className="text-[11px] text-neutral-500 uppercase tracking-[0.15em]">
           {t("footer.location")}
         </p>
       </div>

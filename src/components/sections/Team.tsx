@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import { EmptyState, ErrorState, SkeletonTeam } from "@/components/ui/DataStates";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -25,13 +26,20 @@ export default function Team() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
   const [members, setMembers] = useState<TeamMember[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
+  const fetchTeam = () => {
+    setDataLoading(true);
+    setError(false);
     fetch("/api/team")
       .then((res) => res.json())
       .then((data) => setMembers(data))
-      .catch(() => setMembers([]));
-  }, []);
+      .catch(() => setError(true))
+      .finally(() => setDataLoading(false));
+  };
+
+  useEffect(() => { fetchTeam(); }, []);
 
   useGSAP(() => {
     if (members.length === 0) return;
@@ -51,6 +59,13 @@ export default function Team() {
       <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("team.heading")}</h2>
       <p className="text-neutral-500 text-sm font-light mt-4 mb-12 max-w-md">{t("team.desc")}</p>
 
+      {dataLoading ? (
+        <SkeletonTeam />
+      ) : error ? (
+        <ErrorState onRetry={fetchTeam} />
+      ) : members.length === 0 ? (
+        <EmptyState title="Нет сотрудников" />
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {members.map((member) => (
           <div key={member.id} className="team-card border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 p-6 group">
@@ -95,6 +110,7 @@ export default function Team() {
           </div>
         ))}
       </div>
+      )}
     </section>
   );
 }

@@ -61,7 +61,7 @@ export default function Equipment() {
                 </div>
                 <span className="text-[11px] text-neutral-500 uppercase tracking-wider truncate">{item.tag}</span>
               </div>
-              <MoreHorizontal className="w-4 h-4 text-neutral-700 group-hover:text-neutral-500 transition-colors shrink-0" strokeWidth={1.5} />
+              <MoreHorizontal className="w-4 h-4 text-neutral-600 group-hover:text-neutral-400 transition-colors shrink-0" strokeWidth={1.5} />
             </div>
             <div className="relative aspect-square bg-black/40 overflow-hidden">
               <Image src={item.image} alt={`${item.name} — ${item.purpose}`} fill className="object-contain p-4 md:p-6 transition-transform duration-700 ease-out group-hover:scale-110" sizes="(max-width: 768px) 50vw, 33vw" loading="lazy" />

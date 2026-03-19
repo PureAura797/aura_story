@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { Plus, Minus } from "lucide-react";
+import { EmptyState, ErrorState, SkeletonFAQ } from "@/components/ui/DataStates";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -20,13 +21,20 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const { t } = useTranslation();
   const [faqItems, setFaqItems] = useState<FaqItem[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
+  const fetchFaq = () => {
+    setDataLoading(true);
+    setError(false);
     fetch("/api/faq")
       .then((res) => res.json())
       .then((data) => setFaqItems(data))
-      .catch(() => setFaqItems([]));
-  }, []);
+      .catch(() => setError(true))
+      .finally(() => setDataLoading(false));
+  };
+
+  useEffect(() => { fetchFaq(); }, []);
 
   useGSAP(() => {
     if (faqItems.length === 0) return;
@@ -69,6 +77,13 @@ export default function FAQ() {
         {t("faq.desc")}
       </p>
 
+      {dataLoading ? (
+        <SkeletonFAQ />
+      ) : error ? (
+        <ErrorState onRetry={fetchFaq} />
+      ) : faqItems.length === 0 ? (
+        <EmptyState title="Нет вопросов" />
+      ) : (
       <div
         className="flex flex-col w-full max-w-3xl gap-3"
         role="region"
@@ -121,6 +136,7 @@ export default function FAQ() {
           </div>
         ))}
       </div>
+      )}
     </section>
   );
 }

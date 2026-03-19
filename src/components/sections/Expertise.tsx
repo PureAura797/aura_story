@@ -63,7 +63,7 @@ export default function Expertise() {
                 style={{ color: i === steps.length - 1 ? "var(--accent)" : "var(--sand-dim)" }}>
                 {step}
               </span>
-              {i < steps.length - 1 && <span className="text-neutral-700 text-xs">→</span>}
+              {i < steps.length - 1 && <span className="text-neutral-500 text-xs">→</span>}
             </span>
           ))}
         </div>

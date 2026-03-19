@@ -79,7 +79,7 @@ export default function Services() {
           >
             {/* Desktop: horizontal row */}
             <div className="hidden md:flex items-start gap-8 p-7">
-              <span className="text-[11px] tracking-[0.2em] text-neutral-700 font-mono pt-2 shrink-0">
+              <span className="text-[11px] tracking-[0.2em] text-neutral-500 font-mono pt-2 shrink-0">
                 {String(idx + 1).padStart(2, "0")}
               </span>
               <div className="flex-1 min-w-0">
@@ -98,7 +98,7 @@ export default function Services() {
             {/* Mobile: stacked */}
             <div className="md:hidden p-5">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[11px] tracking-[0.2em] text-neutral-700 font-mono">
+                <span className="text-[11px] tracking-[0.2em] text-neutral-500 font-mono">
                   {String(idx + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-lg font-bold tracking-tighter group-hover:text-white transition-colors">

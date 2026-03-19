@@ -16,6 +16,17 @@ export default function ContactForm() {
   const contacts = useContacts();
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "", website: "" });
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Validation helpers
+  const isNameValid = formData.name.trim().length >= 2;
+  const isPhoneComplete = formData.phone.replace(/\D/g, "").length === 11;
+  const isFormValid = isNameValid && isPhoneComplete;
+
+  const fieldBorder = (field: string, isValid: boolean) => {
+    if (!touched[field]) return 'border-white/20';
+    return isValid ? 'border-teal-500/40' : 'border-red-500/50';
+  };
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -104,18 +115,20 @@ export default function ContactForm() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-name" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.name")}</label>
-                <input id="contact-name" type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Иван Петрович" required className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-700 text-lg" />
+                <input id="contact-name" type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} onBlur={() => setTouched({ ...touched, name: true })} placeholder="Иван Петрович" required className={`w-full bg-transparent border-b ${fieldBorder('name', isNameValid)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 text-lg`} />
+                {touched.name && !isNameValid && <p className="text-red-400 text-[11px]">Минимум 2 символа</p>}
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-phone" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.phone")}</label>
-                <input id="contact-phone" type="tel" value={formData.phone} onChange={handlePhoneChange} placeholder="+7 (___) ___-__-__" required className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-700 text-lg" />
+                <input id="contact-phone" type="tel" value={formData.phone} onChange={handlePhoneChange} onBlur={() => setTouched({ ...touched, phone: true })} placeholder="+7 (___) ___-__-__" required className={`w-full bg-transparent border-b ${fieldBorder('phone', isPhoneComplete)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 text-lg`} />
+                {touched.phone && !isPhoneComplete && <p className="text-red-400 text-[11px]">Введите полный номер телефона</p>}
               </div>
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-message" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.message")}</label>
-                <textarea id="contact-message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-700 resize-none text-lg"></textarea>
+                <textarea id="contact-message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 resize-none text-lg"></textarea>
               </div>
               <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" />
-              <button type="submit" disabled={loading} className="btn-primary w-full py-4 mt-4 disabled:opacity-50">
+              <button type="submit" disabled={loading || !isFormValid} className="btn-primary w-full py-4 mt-4 disabled:opacity-30 disabled:cursor-not-allowed">
                 {loading ? (
                   <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.3" /><path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
                 ) : (

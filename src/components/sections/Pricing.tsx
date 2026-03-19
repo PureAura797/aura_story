@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import CostCalculator from "@/components/ui/CostCalculator";
+import { EmptyState, ErrorState, SkeletonCards } from "@/components/ui/DataStates";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
 interface PricingItem {
@@ -22,13 +23,20 @@ export default function Pricing() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
   const [plans, setPlans] = useState<PricingItem[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
+  const fetchPricing = () => {
+    setDataLoading(true);
+    setError(false);
     fetch("/api/pricing")
       .then((res) => res.json())
       .then((data) => setPlans(data))
-      .catch(() => setPlans([]));
-  }, []);
+      .catch(() => setError(true))
+      .finally(() => setDataLoading(false));
+  };
+
+  useEffect(() => { fetchPricing(); }, []);
 
   useGSAP(() => {
     if (plans.length === 0) return;
@@ -53,6 +61,14 @@ export default function Pricing() {
       </div>
       <p className="text-sm text-neutral-500 font-light mb-12 max-w-md">{t("pricing.desc")}</p>
 
+      {dataLoading ? (
+        <SkeletonCards count={4} />
+      ) : error ? (
+        <ErrorState onRetry={fetchPricing} />
+      ) : plans.length === 0 ? (
+        <EmptyState title="Нет тарифов" />
+      ) : (
+      <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-5xl">
         {plans.map((plan) => (
           <div key={plan.id} className="pricing-card opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500 flex flex-col">
@@ -80,6 +96,8 @@ export default function Pricing() {
           <span>{t("pricing.guarantee4")}</span>
         </div>
       </div>
+      </>
+      )}
     </section>
   );
 }

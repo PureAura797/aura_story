@@ -292,7 +292,7 @@ export default function StoryModal({
                   <p className="text-xs font-bold text-white uppercase tracking-wider">
                     {story.title}
                   </p>
-                  <p className="text-[10px] text-white/50">{story.subtitle}</p>
+                  <p className="text-[11px] text-white/70">{story.subtitle}</p>
                 </div>
               </div>
 
