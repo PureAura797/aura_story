@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Check, Plus, Trash2, Eye, EyeOff, GripVertical } from "lucide-react";
+import AdminLoader from "../AdminLoader";
 
 interface ServiceItem {
   id: string;
@@ -69,7 +70,7 @@ export default function ServicesAdmin() {
     setItems(copy);
   };
 
-  if (loading) return <div className="text-neutral-500 text-sm p-8">Загрузка…</div>;
+  if (loading) return <AdminLoader label="Загрузка услуг" />;
 
   return (
     <div className="max-w-2xl">

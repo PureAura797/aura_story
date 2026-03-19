@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Check, Plus, Trash2, Eye, EyeOff, Download } from "lucide-react";
+import AdminLoader from "../AdminLoader";
 
 interface CertificateItem {
   id: string;
@@ -67,7 +68,7 @@ export default function CertificatesAdmin() {
     if (confirm("Удалить?")) setItems(items.filter((item) => item.id !== id));
   };
 
-  if (loading) return <div className="text-neutral-500 text-sm p-8">Загрузка…</div>;
+  if (loading) return <AdminLoader label="Загрузка сертификатов" />;
 
   return (
     <div className="max-w-2xl">

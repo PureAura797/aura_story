@@ -13,12 +13,36 @@ const MEDIA_CATEGORIES: Record<string, { dir: string; extensions: string[] }> = 
   equipment: { dir: "equipment", extensions: [".png", ".jpg", ".jpeg", ".webp"] },
 };
 
+// Filter out .webp duplicates: if both foo.png and foo.webp exist, keep only foo.png
+function dedupeFiles(files: string[]): string[] {
+  const basenames = new Map<string, string>(); // basename (no ext) -> chosen filename
+  for (const f of files) {
+    const ext = path.extname(f).toLowerCase();
+    const base = path.basename(f, ext);
+    const existing = basenames.get(base);
+    if (!existing) {
+      basenames.set(base, f);
+    } else {
+      // Prefer .png/.jpg over .webp
+      const existingExt = path.extname(existing).toLowerCase();
+      if (existingExt === ".webp" && ext !== ".webp") {
+        basenames.set(base, f);
+      }
+      // else keep existing (first non-webp wins)
+    }
+  }
+  return Array.from(basenames.values());
+}
+
 function scanDir(dirPath: string, extensions: string[]): { name: string; exists: boolean; size: number; url: string }[] {
   const fullDir = path.join(PUBLIC_DIR, dirPath);
   try {
     if (!fs.existsSync(fullDir)) return [];
-    return fs.readdirSync(fullDir)
+    const allFiles = fs.readdirSync(fullDir)
       .filter((f) => extensions.includes(path.extname(f).toLowerCase()))
+      .sort();
+    const deduplicated = dedupeFiles(allFiles);
+    return deduplicated
       .sort()
       .map((name) => {
         const filePath = path.join(fullDir, name);

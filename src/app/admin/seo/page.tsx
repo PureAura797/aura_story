@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Upload, Check, AlertCircle } from "lucide-react";
+import { Upload, Check, AlertCircle, Save } from "lucide-react";
 import Image from "next/image";
 
 interface SeoSettings {
@@ -49,7 +49,18 @@ export default function SeoAdmin() {
     setUploading(false);
   };
 
-  if (loading || !seo) return <div className="flex items-center justify-center h-64"><div className="w-5 h-5 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" /></div>;
+  if (loading || !seo) return (
+    <div className="flex flex-col items-center justify-center h-[60vh] gap-6">
+      <div className="relative w-12 h-12">
+        <div className="absolute inset-0 border border-white/[0.08]" />
+        <div className="absolute inset-0 border border-white/[0.08] animate-ping" style={{ animationDuration: "1.5s" }} />
+        <div className="absolute inset-[6px] border border-white/[0.12]" />
+        <div className="absolute inset-[6px] border border-white/[0.12] animate-ping" style={{ animationDuration: "1.5s", animationDelay: "0.3s" }} />
+        <div className="absolute inset-[12px] bg-[var(--accent)] opacity-40 animate-pulse" />
+      </div>
+      <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-600 font-medium animate-pulse">Загрузка</p>
+    </div>
+  );
 
   const titleLen = seo.title.length;
   const descLen = seo.description.length;
@@ -64,11 +75,10 @@ export default function SeoAdmin() {
         <button
           onClick={save}
           disabled={saving}
-          className={`flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-5 py-2.5 transition-all cursor-pointer ${
-            saved ? "bg-green-500/20 text-green-400 border border-green-500/30" : "bg-[var(--accent)] text-black hover:opacity-90"
-          }`}
+          className="flex items-center gap-2 px-4 py-2.5 bg-white text-black text-xs font-bold uppercase tracking-wider hover:bg-neutral-200 transition-colors disabled:opacity-50 cursor-pointer"
         >
-          {saved ? <><Check className="w-3.5 h-3.5" /> Сохранено</> : saving ? "Сохраняю..." : "Сохранить"}
+          {saved ? <Check className="w-3.5 h-3.5" strokeWidth={2} /> : <Save className="w-3.5 h-3.5" strokeWidth={1.5} />}
+          {saved ? "Сохранено" : saving ? "Сохраняю..." : "Сохранить"}
         </button>
       </div>
 

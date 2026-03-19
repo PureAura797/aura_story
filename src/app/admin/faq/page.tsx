@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Check, Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import AdminLoader from "../AdminLoader";
 
 interface FaqItem {
   id: string;
@@ -67,7 +68,7 @@ export default function FaqAdmin() {
     setItems(copy);
   };
 
-  if (loading) return <div className="text-neutral-500 text-sm p-8">Загрузка…</div>;
+  if (loading) return <AdminLoader label="Загрузка FAQ" />;
 
   return (
     <div className="max-w-2xl">
