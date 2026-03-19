@@ -89,6 +89,21 @@ export async function POST(request: NextRequest) {
     if (!file || !targetPath)
       return NextResponse.json({ error: "Файл и путь обязательны" }, { status: 400 });
 
+    // ── Path traversal protection ──
+    const ALLOWED_PREFIXES = ["stories/", "images/", "equipment/", "team/", "certificates/"];
+    const cleanPath = targetPath
+      .replace(/\.\./g, "")           // block ../
+      .replace(/\/\//g, "/")          // normalize //
+      .replace(/\0/g, "")            // block null bytes
+      .replace(/^\/+/, "");           // strip leading /
+    
+    if (!ALLOWED_PREFIXES.some((p) => cleanPath.startsWith(p))) {
+      return NextResponse.json(
+        { error: "Недопустимый путь загрузки" },
+        { status: 400 }
+      );
+    }
+
     // Size validation
     if (file.size > MAX_FILE_SIZE) {
       const maxMB = Math.round(MAX_FILE_SIZE / (1024 * 1024));
@@ -99,7 +114,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Format validation
-    const cat = category || detectCategory(targetPath);
+    const cat = category || detectCategory(cleanPath);
     if (!isAllowedExtension(file.name, cat)) {
       const allowed = ALLOWED_EXTENSIONS[cat]?.join(", ") ?? "?";
       return NextResponse.json(
@@ -109,7 +124,7 @@ export async function POST(request: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadFile(targetPath, buffer, file.type || "application/octet-stream");
+    const result = await uploadFile(cleanPath, buffer, file.type || "application/octet-stream");
 
     if ("error" in result)
       return NextResponse.json({ error: result.error }, { status: 500 });
