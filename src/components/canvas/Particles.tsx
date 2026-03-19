@@ -109,9 +109,7 @@ export default function Particles() {
 
     mouseWorld.set(mouse.x * 10, mouse.y * 6, 0);
 
-    const pulseScale = formation >= 12.5 && formation <= 13.5
-      ? 1 + Math.sin(state.clock.elapsedTime * 3) * 0.15
-      : 1;
+    const pulseScale = 1;
 
     const lerpFactor = 1 - Math.exp(-lerpSpeed * dt);
     const entrance = scProps.entranceProgress;

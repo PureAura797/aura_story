@@ -181,11 +181,12 @@ const STEPS: ChoreographyStep[] = [
   {
     trigger: '#contact',
     props: {
-      formation: 14,
+      formation: 13,
       groupX: 0,
       groupY: -12,
       speedMul: 0.3,
       radiusScale: 2.5,
+      lerpSpeed: 8.0,  // faster lerp so scatter is visually responsive
       lightColor: '#5eead4',
       lightIntensity: 3,
       bgColor: '#0a0a0c',

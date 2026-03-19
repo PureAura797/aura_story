@@ -258,8 +258,8 @@ export const formations: Formation[] = [
   createPanel(),         // 10: Pricing
   createCross(),         // 11: Reviews
   createRing(7),         // 12: FAQ (large ring)
-  createRing(6.5),       // 13: Contact (pulse ring)
-  createRain(),          // 14: Footer/Outro
+  createRain(),          // 13: Contact — scatter/fall (right after FAQ ring for smooth tween)
+  createRing(6.5),       // 14: unused (was contact pulse ring)
 ];
 
 export const PARTICLE_COUNT = COUNT;
