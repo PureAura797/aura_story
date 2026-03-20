@@ -175,7 +175,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </aside>
 
       {/* Main Content — above the 3D scene */}
-      <main className="min-h-screen p-4 pt-16 md:p-8 md:pt-8 md:ml-56 relative" style={{ zIndex: 1 }}>
+      <main className="min-h-screen p-4 pt-20 md:p-8 md:pt-8 md:ml-56 relative" style={{ zIndex: 1 }}>
         {children}
       </main>
     </div>
