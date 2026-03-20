@@ -11,6 +11,10 @@ import {
 } from "@/lib/supabase-storage";
 import fs from "fs";
 import path from "path";
+import sharp from "sharp";
+
+/** MIME types that should be auto-converted to WebP */
+const CONVERTIBLE_MIMES = new Set(["image/png", "image/jpeg"]);
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
@@ -130,8 +134,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadFile(cleanPath, buffer, file.type || "application/octet-stream");
+    let buffer = Buffer.from(await file.arrayBuffer());
+    let uploadPath = cleanPath;
+    let uploadMime = file.type || "application/octet-stream";
+
+    // ── Auto-convert PNG/JPG → WebP ──
+    if (CONVERTIBLE_MIMES.has(file.type?.toLowerCase() || "")) {
+      try {
+        buffer = await sharp(buffer)
+          .webp({ quality: 82 })
+          .toBuffer() as Buffer<ArrayBuffer>;
+        // Replace extension in path: cover-1.png → cover-1.webp
+        uploadPath = uploadPath.replace(/\.(png|jpe?g)$/i, ".webp");
+        uploadMime = "image/webp";
+      } catch (convErr) {
+        console.error("WebP conversion failed, uploading original:", convErr);
+        // fallback: upload the original file as-is
+      }
+    }
+
+    const result = await uploadFile(uploadPath, buffer, uploadMime);
 
     if ("error" in result)
       return NextResponse.json({ error: result.error }, { status: 500 });
