@@ -41,19 +41,19 @@ export default function Footer() {
           <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.services_label")}</p>
           <div className="flex flex-col gap-3">
             <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.1")}</button>
-            <button onClick={() => scrollToSection("pricing")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.2")}</button>
-            <button onClick={() => scrollToSection("portfolio")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.3")}</button>
-            <button onClick={() => scrollToSection("reviews")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.4")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.2")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.3")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.4")}</button>
           </div>
         </nav>
 
-        {/* Col 3: Company */}
-        <nav aria-label="Company navigation">
+        {/* Col 3: Navigation */}
+        <nav aria-label="Site navigation">
           <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.company_label")}</p>
           <div className="flex flex-col gap-3">
-            <button onClick={() => scrollToSection("process")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.1")}</button>
-            <button onClick={() => scrollToSection("equipment")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.2")}</button>
-            <button onClick={() => scrollToSection("expertise")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.3")}</button>
+            <button onClick={() => scrollToSection("portfolio")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.1")}</button>
+            <button onClick={() => scrollToSection("pricing")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.2")}</button>
+            <button onClick={() => scrollToSection("reviews")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.3")}</button>
             <button onClick={() => scrollToSection("faq")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.4")}</button>
           </div>
         </nav>
