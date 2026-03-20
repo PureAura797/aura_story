@@ -15,6 +15,20 @@ const securityHeaders = [
   { key: "X-XSS-Protection", value: "1; mode=block" },
   // DNS prefetch control
   { key: "X-DNS-Prefetch-Control", value: "on" },
+  // Content Security Policy
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https://*.supabase.co",
+      "media-src 'self' blob: https://*.supabase.co",
+      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com",
+      "frame-ancestors 'none'",
+    ].join("; "),
+  },
 ];
 
 const nextConfig: NextConfig = {

@@ -5,6 +5,7 @@ import {
   deleteFile,
   listFiles,
   isAllowedExtension,
+  isAllowedMime,
   MAX_FILE_SIZE,
   ALLOWED_EXTENSIONS,
 } from "@/lib/supabase-storage";
@@ -113,12 +114,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Format validation
+    // Format validation (extension + MIME)
     const cat = category || detectCategory(cleanPath);
     if (!isAllowedExtension(file.name, cat)) {
       const allowed = ALLOWED_EXTENSIONS[cat]?.join(", ") ?? "?";
       return NextResponse.json(
         { error: `Неверный формат. Допустимые: ${allowed}` },
+        { status: 400 }
+      );
+    }
+    if (!isAllowedMime(file.type || "")) {
+      return NextResponse.json(
+        { error: `Недопустимый тип файла: ${file.type}` },
         { status: 400 }
       );
     }

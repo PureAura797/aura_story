@@ -69,12 +69,32 @@ export const ALLOWED_EXTENSIONS: Record<string, string[]> = {
   certificates: [".png", ".jpg", ".jpeg", ".webp", ".pdf"],
 };
 
+/** Allowed MIME types — server-side validation */
+const ALLOWED_MIMES: Record<string, boolean> = {
+  "image/png": true,
+  "image/jpeg": true,
+  "image/webp": true,
+  "video/mp4": true,
+  "video/webm": true,
+  "video/quicktime": true,
+  "application/pdf": true,
+};
+
 /** Max file size: 10MB */
 export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
-/** Validate file extension */
+/** Validate file extension (prevents double extension: virus.exe.png) */
 export function isAllowedExtension(filename: string, category: string): boolean {
-  const ext = "." + filename.split(".").pop()?.toLowerCase();
+  const parts = filename.split(".");
+  // Block double extensions (e.g. virus.exe.png → 3+ parts)
+  if (parts.length > 2) return false;
+  const ext = "." + (parts.pop()?.toLowerCase() || "");
   const allowed = ALLOWED_EXTENSIONS[category] ?? ALLOWED_EXTENSIONS["portfolio"];
   return allowed.includes(ext);
 }
+
+/** Validate MIME type */
+export function isAllowedMime(mimeType: string): boolean {
+  return ALLOWED_MIMES[mimeType.toLowerCase()] === true;
+}
+
