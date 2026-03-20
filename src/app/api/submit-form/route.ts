@@ -1,7 +1,25 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
+import { checkRateLimit } from "@/lib/rate-limiter";
+
+/** Escape HTML to prevent XSS in email templates */
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Strip HTML tags and trim */
+function sanitize(str: string, maxLen = 500): string {
+  return str.replace(/<[^>]*>/g, "").trim().substring(0, maxLen);
+}
+
+const FORM_LIMIT = { prefix: "form", maxAttempts: 10, windowSeconds: 60 };
 
 const DATA_FILE = path.join(process.cwd(), "src/data/notifications.json");
 
@@ -50,9 +68,9 @@ function formatEmailHtml(data: Record<string, string>): string {
     <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:24px;background:#111;color:#fff;border:1px solid #333;">
       <h2 style="margin:0 0 8px;font-size:18px;color:#5eead4;">${type}</h2>
       <hr style="border:none;border-top:1px solid #333;margin:12px 0;" />
-      ${data.name ? `<p style="margin:4px 0;"><strong>Имя:</strong> ${data.name}</p>` : ""}
-      ${data.phone ? `<p style="margin:4px 0;"><strong>Телефон:</strong> <a href="tel:${data.phone.replace(/\D/g, "")}" style="color:#5eead4;">${data.phone}</a></p>` : ""}
-      ${data.message ? `<p style="margin:4px 0;"><strong>Сообщение:</strong> ${data.message}</p>` : ""}
+      ${data.name ? `<p style="margin:4px 0;"><strong>Имя:</strong> ${escapeHtml(data.name)}</p>` : ""}
+      ${data.phone ? `<p style="margin:4px 0;"><strong>Телефон:</strong> <a href="tel:${data.phone.replace(/\D/g, "")}" style="color:#5eead4;">${escapeHtml(data.phone)}</a></p>` : ""}
+      ${data.message ? `<p style="margin:4px 0;"><strong>Сообщение:</strong> ${escapeHtml(data.message)}</p>` : ""}
       <hr style="border:none;border-top:1px solid #333;margin:12px 0;" />
       <p style="margin:4px 0;font-size:12px;color:#666;">Источник: ${data.source || "сайт"}</p>
       <p style="margin:4px 0;font-size:12px;color:#666;">Время: ${data.submitted_at || new Date().toISOString()}</p>
@@ -121,16 +139,33 @@ async function sendWebhook(settings: NotificationSettings["webhook"], data: Reco
   });
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
+    // ── Rate limit (10 req/min per IP) ──
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const limit = checkRateLimit(ip, FORM_LIMIT);
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "Слишком много заявок. Попробуйте позже." },
+        { status: 429, headers: { "Retry-After": limit.retryAfterSeconds.toString() } }
+      );
+    }
+
+    const raw = await request.json();
+
+    // ── Sanitize input ──
+    const data: Record<string, string> = {
+      name: raw.name ? sanitize(String(raw.name), 100) : "",
+      phone: raw.phone ? sanitize(String(raw.phone), 30) : "",
+      message: raw.message ? sanitize(String(raw.message), 1000) : "",
+      form_type: raw.form_type === "callback" ? "callback" : "form",
+      source: raw.source ? sanitize(String(raw.source), 50) : "сайт",
+      submitted_at: new Date().toISOString(),
+    };
+
     if (!data.phone && !data.name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-
-    // Add metadata
-    data.submitted_at = data.submitted_at || new Date().toISOString();
-    data.source = data.source || "сайт";
 
     const settings = loadSettings();
 
