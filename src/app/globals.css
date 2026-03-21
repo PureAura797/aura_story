@@ -884,53 +884,6 @@ body.loading {
   border-color: rgba(13, 148, 136, 0.3) !important;
 }
 
-/* All glass panels — catch ALL bg-white/ variants */
-[data-theme="light"] [class*="bg-white/"]:not([data-dark-ui] [class*="bg-white/"]):not([data-dark-ui]) {
-  background: rgba(0, 0, 0, 0.04) !important;
-}
-
-/* ── Border overrides — catch ALL white-alpha borders ──── */
-/* Broad: any element with border-white/ NOT inside data-dark-ui */
-[data-theme="light"] [class*="border-white/"]:not([data-dark-ui] [class*="border-white/"]):not([data-dark-ui]) {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-[data-theme="light"] [class*="border-white/20"]:not([data-dark-ui] [class*="border-white/20"]):not([data-dark-ui]) {
-  border-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-/* -- Text Neutrals -------------------- */
-/* Exclude [data-dark-ui] containers from text overrides */
-[data-theme="light"] :not([data-dark-ui]) .text-white {
-  color: var(--text-primary) !important;
-}
-
-/* Form input / textarea text -- MUST be dark on light */
-[data-theme="light"] :not([data-dark-ui]) input.text-white,
-[data-theme="light"] :not([data-dark-ui]) textarea.text-white,
-[data-theme="light"] :not([data-dark-ui]) input[class*="text-white"],
-[data-theme="light"] :not([data-dark-ui]) textarea[class*="text-white"] {
-  color: #111 !important;
-}
-
-/* Placeholder text in light theme */
-[data-theme="light"] :not([data-dark-ui]) input::placeholder,
-[data-theme="light"] :not([data-dark-ui]) textarea::placeholder {
-  color: #aaa !important;
-}
-
-[data-theme="light"] .text-neutral-400 {
-  color: #555555 !important;
-}
-
-[data-theme="light"] .text-neutral-500 {
-  color: #666666 !important;
-}
-
-[data-theme="light"] .text-neutral-600 {
-  color: #888888 !important;
-}
-
 /* Hero mix-blend adjustment */
 [data-theme="light"] .mix-blend-difference {
   mix-blend-mode: normal;

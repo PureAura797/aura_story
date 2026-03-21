@@ -27,7 +27,7 @@ export default function AvailabilityPulse() {
         />
       </span>
 
-      <span className="text-[10px] sm:text-[11px] tracking-[0.12em] uppercase font-medium text-neutral-500">
+      <span className="text-[10px] sm:text-[11px] tracking-[0.12em] uppercase font-medium text-[var(--text-secondary)]">
         <span style={{ color: "var(--sand)" }}>{t("hero.pulse_available")}</span>
         <span className="hidden sm:inline"> · {t("hero.pulse_arrival").replace("{min}", String(minutes))}</span>
       </span>

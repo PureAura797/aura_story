@@ -53,13 +53,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const colors: Record<ToastType, string> = {
     success: "border-green-500/40 bg-green-950/60",
     error: "border-red-500/40 bg-red-950/60",
-    info: "border-white/20 bg-white/[0.04]",
+    info: "border-[var(--border-strong)] bg-[var(--bg-card-hover)]",
   };
 
   const iconColors: Record<ToastType, string> = {
     success: "text-green-400",
     error: "text-red-400",
-    info: "text-neutral-400",
+    info: "text-[var(--text-secondary)]",
   };
 
   return (
@@ -73,15 +73,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           return (
             <div
               key={item.id}
-              className={`pointer-events-auto flex items-center gap-3 px-4 py-3 border backdrop-blur-xl text-sm text-white animate-[slideInRight_0.3s_ease-out] ${colors[item.type]}`}
+              className={`pointer-events-auto flex items-center gap-3 px-4 py-3 border backdrop-blur-xl text-sm text-[var(--text-primary)] animate-[slideInRight_0.3s_ease-out] ${colors[item.type]}`}
             >
               <Icon className={`w-4 h-4 shrink-0 ${iconColors[item.type]}`} strokeWidth={1.5} />
               <span className="flex-1 text-[13px]">{item.message}</span>
               <button
                 onClick={() => remove(item.id)}
-                className="shrink-0 p-0.5 hover:bg-white/10 transition-colors cursor-pointer"
+                className="shrink-0 p-0.5 hover:bg-[var(--bg-card-hover)] transition-colors cursor-pointer"
               >
-                <X className="w-3.5 h-3.5 text-neutral-500" strokeWidth={1.5} />
+                <X className="w-3.5 h-3.5 text-[var(--text-secondary)]" strokeWidth={1.5} />
               </button>
             </div>
           );

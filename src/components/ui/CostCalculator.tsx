@@ -67,19 +67,19 @@ export default function CostCalculator() {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full max-w-5xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 md:p-8">
+    <div ref={containerRef} className="w-full max-w-5xl border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-6 md:p-8">
       <div className="flex items-center gap-3 mb-6">
-        <Calculator className="w-4 h-4 text-white/40" strokeWidth={1.5} />
-        <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-neutral-400">{t("calc.heading")}</h3>
+        <Calculator className="w-4 h-4 text-[var(--text-secondary)] opacity-60" strokeWidth={1.5} />
+        <h3 className="text-xs uppercase tracking-[0.2em] font-semibold text-[var(--text-secondary)]">{t("calc.heading")}</h3>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
         <div className="space-y-8">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-3">{t("calc.service_type")}</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] mb-3">{t("calc.service_type")}</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {services.map((s, i) => (
-                <button key={s.id} onClick={() => setServiceIdx(i)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer ${serviceIdx === i ? "border-white/30 bg-white/[0.08] text-white" : "border-white/10 bg-transparent text-neutral-500 hover:border-white/20 hover:text-neutral-300"}`}>
+                <button key={s.id} onClick={() => setServiceIdx(i)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer ${serviceIdx === i ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
                   {s.label}
                 </button>
               ))}
@@ -88,62 +88,62 @@ export default function CostCalculator() {
 
           <div>
             <div className="flex justify-between items-center mb-3">
-              <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500">{t("calc.area")}</p>
-              <span className="text-sm font-medium text-white tabular-nums">{area} {t("calc.area_unit")}</span>
+              <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)]">{t("calc.area")}</p>
+              <span className="text-sm font-medium text-[var(--text-primary)] tabular-nums">{area} {t("calc.area_unit")}</span>
             </div>
             <div className="relative">
               <input type="range" min={10} max={200} value={area} onChange={(e) => setArea(Number(e.target.value))} className="calc-slider w-full" />
               <div className="flex justify-between mt-2">
-                {[10, 50, 100, 150, 200].map(v => <span key={v} className="text-[9px] text-neutral-600">{v}</span>)}
+                {[10, 50, 100, 150, 200].map(v => <span key={v} className="text-[9px] text-[var(--text-muted)]">{v}</span>)}
               </div>
             </div>
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-3">{t("calc.urgency")}</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] mb-3">{t("calc.urgency")}</p>
             <div className="grid grid-cols-2 gap-2">
-              <button onClick={() => setUrgent(false)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${!urgent ? "border-white/30 bg-white/[0.08] text-white" : "border-white/10 bg-transparent text-neutral-500 hover:border-white/20 hover:text-neutral-300"}`}>
+              <button onClick={() => setUrgent(false)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${!urgent ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
                 <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />{t("calc.standard")}
               </button>
-              <button onClick={() => setUrgent(true)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${urgent ? "border-white/30 bg-white/[0.08] text-white" : "border-white/10 bg-transparent text-neutral-500 hover:border-white/20 hover:text-neutral-300"}`}>
+              <button onClick={() => setUrgent(true)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 ${urgent ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
                 <Zap className="w-3.5 h-3.5" strokeWidth={1.5} />{t("calc.urgent")}
-                <span className="text-[8px] text-neutral-500">×1.5</span>
+                <span className="text-[8px] text-[var(--text-secondary)]">×1.5</span>
               </button>
             </div>
           </div>
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-3">{t("calc.extras")}</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] mb-3">{t("calc.extras")}</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {extras.map((e) => (
-                <button key={e.id} onClick={() => toggleExtra(e.id)} className={`mag-btn px-4 py-3 text-xs border transition-all duration-300 cursor-pointer flex items-center justify-between ${selectedExtras.has(e.id) ? "border-white/30 bg-white/[0.08] text-white" : "border-white/10 bg-transparent text-neutral-500 hover:border-white/20 hover:text-neutral-300"}`}>
+                <button key={e.id} onClick={() => toggleExtra(e.id)} className={`mag-btn px-4 py-3 text-xs border transition-all duration-300 cursor-pointer flex items-center justify-between ${selectedExtras.has(e.id) ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
                   <span className="font-medium uppercase tracking-wider">{e.label}</span>
-                  <span className="text-[10px] text-neutral-500">+{e.price.toLocaleString("ru-RU")} ₽</span>
+                  <span className="text-[10px] text-[var(--text-secondary)]">+{e.price.toLocaleString("ru-RU")} ₽</span>
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col justify-between border border-white/10 bg-white/[0.02] p-6">
+        <div className="flex flex-col justify-between border border-[var(--border)] bg-[var(--glass-card)] p-6">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-2">{t("calc.result")}</p>
-            <div className="text-4xl md:text-5xl font-bold tracking-tighter text-white tabular-nums mb-4">
+            <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] mb-2">{t("calc.result")}</p>
+            <div className="text-4xl md:text-5xl font-bold tracking-tighter text-[var(--text-primary)] tabular-nums mb-4">
               <span ref={priceRef}>{formatPrice(displayPrice)}</span>
             </div>
             <div className="space-y-2 mb-6">
-              <div className="flex justify-between text-[10px] text-neutral-500 uppercase tracking-wider">
+              <div className="flex justify-between text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                 <span>{services[serviceIdx].label}</span>
                 <span>{formatPrice(services[serviceIdx].base)}</span>
               </div>
               {area > 30 && (
-                <div className="flex justify-between text-[10px] text-neutral-500 uppercase tracking-wider">
+                <div className="flex justify-between text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                   <span>{t("calc.area_label").replace("{area}", String(area))}</span>
                   <span>×{Math.max(1, 1 + (area - 30) * 0.015).toFixed(2)}</span>
                 </div>
               )}
               {urgent && (
-                <div className="flex justify-between text-[10px] text-neutral-500 uppercase tracking-wider">
+                <div className="flex justify-between text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                   <span>{t("calc.urgency_label")}</span>
                   <span>×1.50</span>
                 </div>
@@ -151,7 +151,7 @@ export default function CostCalculator() {
               {[...selectedExtras].map((id) => {
                 const e = extras.find((x) => x.id === id);
                 return e ? (
-                  <div key={id} className="flex justify-between text-[10px] text-neutral-500 uppercase tracking-wider">
+                  <div key={id} className="flex justify-between text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                     <span>{e.label}</span>
                     <span>+{formatPrice(e.price)}</span>
                   </div>
@@ -163,7 +163,7 @@ export default function CostCalculator() {
             <PhoneCall className="w-4 h-4" strokeWidth={1.5} />
             <span>{t("calc.cta")}</span>
           </a>
-          <p className="text-[9px] text-neutral-600 text-center mt-3">{t("calc.note")}</p>
+          <p className="text-[9px] text-[var(--text-muted)] text-center mt-3">{t("calc.note")}</p>
         </div>
       </div>
     </div>
