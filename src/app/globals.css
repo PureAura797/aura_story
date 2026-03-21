@@ -656,6 +656,20 @@ body.loading {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* Light theme slider */
+[data-theme="light"] .calc-slider::-webkit-slider-thumb {
+  background: #111;
+}
+[data-theme="light"] .calc-slider::-moz-range-thumb {
+  background: #111;
+}
+[data-theme="light"] .calc-slider::-webkit-slider-runnable-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .calc-slider::-moz-range-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
 /* ===== Micro-interaction Polish ===== */
 
 /* Card lift: subtle translateY + shadow on hover */
