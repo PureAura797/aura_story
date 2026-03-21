@@ -664,10 +664,18 @@ body.loading {
   background: #111;
 }
 [data-theme="light"] .calc-slider::-webkit-slider-runnable-track {
+  height: 2px;
   background: rgba(0, 0, 0, 0.1);
 }
 [data-theme="light"] .calc-slider::-moz-range-track {
+  height: 2px;
   background: rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure webkit track is always thin */
+.calc-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* ===== Micro-interaction Polish ===== */
