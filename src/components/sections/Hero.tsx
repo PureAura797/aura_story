@@ -32,19 +32,19 @@ export default function Hero() {
     <div ref={containerRef} className="relative w-full h-full flex flex-col justify-center items-start z-10 pointer-events-none">
       
       {/* USP headline */}
-      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[1.05] font-bold tracking-tighter text-white z-20 mix-blend-difference relative">
+      <h1 className="hero-reveal text-[8vw] md:text-[7vw] leading-[1.05] font-bold tracking-tighter text-[var(--text-primary)] z-20 mix-blend-difference relative">
         {t("hero.h1_1")}
         <br />
         {t("hero.h1_2")}
       </h1>
       
       {/* Service listing */}
-      <p className="hero-reveal mt-8 text-[11px] md:text-xs tracking-[0.15em] text-neutral-400 uppercase font-medium mix-blend-difference">
+      <p className="hero-reveal mt-8 text-[11px] md:text-xs tracking-[0.15em] text-[var(--text-secondary)] uppercase font-medium mix-blend-difference">
         {t("hero.services")}
       </p>
 
       {/* Trust triggers */}
-      <div className="hero-reveal mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[11px] tracking-[0.15em] text-neutral-600 uppercase font-medium mix-blend-difference">
+      <div className="hero-reveal mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[11px] tracking-[0.15em] text-[var(--text-muted)] uppercase font-medium mix-blend-difference">
         <span>{t("hero.trust1")}</span>
         <span>{t("hero.trust2")}</span>
         <span>{t("hero.trust3")}</span>

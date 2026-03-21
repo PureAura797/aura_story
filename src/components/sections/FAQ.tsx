@@ -70,10 +70,10 @@ export default function FAQ() {
   return (
     <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
       <div className="mb-4">
-        <p className="text-xs tracking-[0.2em] text-neutral-500 uppercase font-medium mb-4">{t("faq.label")}</p>
+        <p className="text-xs tracking-[0.2em] text-[var(--text-secondary)] uppercase font-medium mb-4">{t("faq.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("faq.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light mb-16 max-w-md">
+      <p className="text-sm text-[var(--text-secondary)] font-light mb-16 max-w-md">
         {t("faq.desc")}
       </p>
 
@@ -111,8 +111,8 @@ export default function FAQ() {
         {faqItems.map((item, idx) => (
           <div
             key={item.id}
-            className={`faq-card opacity-0 translate-y-10 border bg-white/[0.03] backdrop-blur-sm transition-all duration-500 ${
-              openIdx === idx ? "border-[rgba(94,234,212,0.2)]" : "border-white/10 hover:border-white/20"
+            className={`faq-card opacity-0 translate-y-10 border bg-[var(--glass-card)] backdrop-blur-sm transition-all duration-500 ${
+              openIdx === idx ? "border-[rgba(94,234,212,0.2)]" : "border-[var(--border)] hover:border-[var(--border-strong)]"
             }`}
           >
             <button
@@ -127,11 +127,11 @@ export default function FAQ() {
               {openIdx === idx ? (
                 <Minus className="w-5 h-5 shrink-0" strokeWidth={1.5} style={{ color: "var(--accent)" }} aria-hidden="true" />
               ) : (
-                <Plus className="w-5 h-5 text-neutral-500 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                <Plus className="w-5 h-5 text-[var(--text-secondary)] shrink-0" strokeWidth={1.5} aria-hidden="true" />
               )}
             </button>
             <div id={`faq-answer-${idx}`} className="overflow-hidden" style={{ height: 0, opacity: 0 }}>
-              <p className="text-neutral-400 text-sm leading-relaxed px-8 pb-6 pr-16">{item.answer}</p>
+              <p className="text-[var(--text-secondary)] text-sm leading-relaxed px-8 pb-6 pr-16">{item.answer}</p>
             </div>
           </div>
         ))}

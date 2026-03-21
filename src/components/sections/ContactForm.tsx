@@ -24,7 +24,7 @@ export default function ContactForm() {
   const isFormValid = isNameValid && isPhoneComplete;
 
   const fieldBorder = (field: string, isValid: boolean) => {
-    if (!touched[field]) return 'border-white/20';
+    if (!touched[field]) return 'border-[var(--border-strong)]';
     return isValid ? 'border-teal-500/40' : 'border-red-500/50';
   };
 
@@ -84,48 +84,48 @@ export default function ContactForm() {
         <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("contact.label")}</p>
         <h2 className="text-4xl md:text-7xl font-bold uppercase tracking-tighter">{t("contact.heading_1")}<br />{t("contact.heading_2")}</h2>
       </div>
-      <p className="contact-reveal text-sm text-neutral-500 font-light mb-16 max-w-md">{t("contact.desc")}</p>
+      <p className="contact-reveal text-sm text-[var(--text-secondary)] font-light mb-16 max-w-md">{t("contact.desc")}</p>
 
       <div className="flex flex-col md:flex-row w-full gap-4">
-        <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
-          <p className="text-neutral-400 text-lg font-light leading-relaxed max-w-md mb-8">{t("contact.info")}</p>
+        <div className="contact-reveal flex-1 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 md:p-10">
+          <p className="text-[var(--text-secondary)] text-lg font-light leading-relaxed max-w-md mb-8">{t("contact.info")}</p>
           <div className="flex flex-col gap-6 mb-8">
-            <a href={`tel:${contacts.phone}`} className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
-              <Phone className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
+            <a href={`tel:${contacts.phone}`} className="group flex items-center gap-4 text-[var(--text-primary)] hover:opacity-80 transition-opacity">
+              <Phone className="w-4 h-4 text-[var(--text-secondary)] group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
               <span className="text-lg tracking-wide">{contacts.phoneDisplay}</span>
-              <span className="text-xs text-neutral-600 uppercase tracking-widest">24/7</span>
+              <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest">24/7</span>
             </a>
-            <a href={`mailto:${contacts.email}`} className="group flex items-center gap-4 text-white hover:opacity-80 transition-opacity">
-              <Send className="w-4 h-4 text-neutral-500 group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
+            <a href={`mailto:${contacts.email}`} className="group flex items-center gap-4 text-[var(--text-primary)] hover:opacity-80 transition-opacity">
+              <Send className="w-4 h-4 text-[var(--text-secondary)] group-hover:opacity-80 transition-opacity" strokeWidth={1.5} />
               <span className="text-lg tracking-wide">{contacts.email}</span>
             </a>
           </div>
           <div className="flex gap-6">
-            <a href={contacts.max} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+            <a href={contacts.max} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm uppercase tracking-widest font-medium">
               MAX <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
-            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-colors text-sm uppercase tracking-widest font-medium">
+            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm uppercase tracking-widest font-medium">
               Telegram <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} />
             </a>
           </div>
         </div>
 
-        <div className="contact-reveal flex-1 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 md:p-10">
+        <div className="contact-reveal flex-1 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 md:p-10">
           {!success ? (
             <form onSubmit={handleSubmit} className="flex flex-col gap-8">
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-name" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.name")}</label>
-                <input id="contact-name" type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} onBlur={() => setTouched({ ...touched, name: true })} placeholder="Иван Петрович" required className={`w-full bg-transparent border-b ${fieldBorder('name', isNameValid)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 text-lg`} />
+                <label htmlFor="contact-name" className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-medium">{t("contact.name")}</label>
+                <input id="contact-name" type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} onBlur={() => setTouched({ ...touched, name: true })} placeholder="Иван Петрович" required className={`w-full bg-transparent border-b ${fieldBorder('name', isNameValid)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-[var(--text-primary)] placeholder-[var(--placeholder)] text-lg`} />
                 {touched.name && !isNameValid && <p className="text-red-400 text-[11px]">Минимум 2 символа</p>}
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-phone" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.phone")}</label>
-                <input id="contact-phone" type="tel" value={formData.phone} onChange={handlePhoneChange} onBlur={() => setTouched({ ...touched, phone: true })} placeholder="+7 (___) ___-__-__" required className={`w-full bg-transparent border-b ${fieldBorder('phone', isPhoneComplete)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 text-lg`} />
+                <label htmlFor="contact-phone" className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-medium">{t("contact.phone")}</label>
+                <input id="contact-phone" type="tel" value={formData.phone} onChange={handlePhoneChange} onBlur={() => setTouched({ ...touched, phone: true })} placeholder="+7 (___) ___-__-__" required className={`w-full bg-transparent border-b ${fieldBorder('phone', isPhoneComplete)} py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-[var(--text-primary)] placeholder-[var(--placeholder)] text-lg`} />
                 {touched.phone && !isPhoneComplete && <p className="text-red-400 text-[11px]">Введите полный номер телефона</p>}
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-message" className="text-xs text-neutral-500 uppercase tracking-widest font-medium">{t("contact.message")}</label>
-                <textarea id="contact-message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-white placeholder-neutral-600 resize-none text-lg"></textarea>
+                <label htmlFor="contact-message" className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-medium">{t("contact.message")}</label>
+                <textarea id="contact-message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-[var(--border-strong)] py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-[var(--text-primary)] placeholder-[var(--placeholder)] resize-none text-lg"></textarea>
               </div>
               <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" />
               <button type="submit" disabled={loading || !isFormValid} className="btn-primary w-full py-4 mt-4 disabled:opacity-30 disabled:cursor-not-allowed">
@@ -135,13 +135,13 @@ export default function ContactForm() {
                   <><Send className="w-4 h-4" strokeWidth={1.5} />{t("contact.submit")}</>
                 )}
               </button>
-              <p className="text-[11px] text-neutral-600 tracking-wide">{t("contact.consent")}</p>
+              <p className="text-[11px] text-[var(--text-muted)] tracking-wide">{t("contact.consent")}</p>
             </form>
           ) : (
             <div className="flex flex-col items-center justify-center py-24">
               <div className="success-check text-6xl mb-6">✓</div>
               <h3 className="text-3xl font-bold uppercase tracking-tighter mb-4">{t("contact.success_heading")}</h3>
-              <p className="text-neutral-500 text-sm tracking-wide">{t("contact.success_desc")}</p>
+              <p className="text-[var(--text-secondary)] text-sm tracking-wide">{t("contact.success_desc")}</p>
             </div>
           )}
         </div>

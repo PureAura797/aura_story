@@ -19,8 +19,8 @@ export default function SectionCTA({ variant = "call", label }: SectionCTAProps)
 
   if (variant === "form") {
     return (
-      <div className="w-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">
-        <p className="text-[11px] sm:text-xs text-neutral-500 font-light">
+      <div className="w-full border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">
+        <p className="text-[11px] sm:text-xs text-[var(--text-secondary)] font-light">
           {label || t("cta.form_default")}
         </p>
         <button
@@ -34,8 +34,8 @@ export default function SectionCTA({ variant = "call", label }: SectionCTAProps)
   }
 
   return (
-    <div className="w-full border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">
-      <p className="text-[11px] sm:text-xs text-neutral-500 font-light">
+    <div className="w-full border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-8">
+      <p className="text-[11px] sm:text-xs text-[var(--text-secondary)] font-light">
         {label || t("cta.call_default")}
       </p>
       <a
