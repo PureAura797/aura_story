@@ -83,7 +83,7 @@ export default function MessengerWidget() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в MAX"
-              className="flex items-center gap-3 px-1 py-3 hover:bg-white/[0.04] transition-all duration-300 group"
+              className="flex items-center gap-3 px-1 py-3 transition-all duration-300 group"
             >
               <img src="/icons/max-mono.svg" alt="MAX" className="w-6 h-6 shrink-0" style={{ filter: "invert(1)" }} />
               <div>
@@ -96,7 +96,7 @@ export default function MessengerWidget() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Написать в Telegram"
-              className="flex items-center gap-3 px-1 py-3 hover:bg-white/[0.04] transition-all duration-300 group"
+              className="flex items-center gap-3 px-1 py-3 transition-all duration-300 group"
             >
               <img src="/icons/telegram-mono.svg" alt="Telegram" className="w-6 h-6 shrink-0" style={{ filter: "invert(1)" }} />
               <div>
