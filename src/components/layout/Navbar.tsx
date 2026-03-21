@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Phone, Menu, X, ArrowUpRight, Globe } from "lucide-react";
+import { Phone, Menu, X, ArrowUpRight, Globe, Moon, Sun } from "lucide-react";
+import { useTheme } from "@/lib/theme-context";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -24,6 +25,7 @@ export default function Navbar() {
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t, locale, setLocale } = useTranslation();
   const contacts = useContacts();
+  const { theme, toggleTheme } = useTheme();
   const isAnimating = useRef(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -191,27 +193,35 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full border-b border-white/10 bg-black/60 backdrop-blur-sm ${menuOpen ? "z-[70]" : "z-50"}`} aria-label="Главная навигация">
+      <nav className={`fixed top-0 w-full border-b border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm ${menuOpen ? "z-[70]" : "z-50"} transition-colors duration-500`} aria-label="Главная навигация">
         <div className="w-full px-5 sm:px-10 lg:px-[8vw] py-4 flex items-center justify-between">
           
           {/* Logo — just text, no icon */}
-          <button onClick={() => scrollToSection("hero")} className="text-white cursor-pointer" aria-label="На главную">
+          <button onClick={() => scrollToSection("hero")} className="text-[var(--text-primary)] cursor-pointer" aria-label="На главную">
             <Logo size="sm" />
           </button>
 
           {/* Center: Navigation links */}
-          <div className="hidden lg:flex items-center gap-10 text-[11px] font-medium text-neutral-500 uppercase tracking-[0.2em]">
-            <button onClick={() => scrollToSection("services")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.services")}</button>
-            <button onClick={() => scrollToSection("expertise")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.expertise")}</button>
-            <button onClick={() => scrollToSection("pricing")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.pricing")}</button>
-            <button onClick={() => scrollToSection("contact")} className="hover:text-white transition-colors duration-300 cursor-pointer">{t("nav.contact")}</button>
+          <div className="hidden lg:flex items-center gap-10 text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.2em]">
+            <button onClick={() => scrollToSection("services")} className="hover:text-[var(--text-primary)] transition-colors duration-300 cursor-pointer">{t("nav.services")}</button>
+            <button onClick={() => scrollToSection("expertise")} className="hover:text-[var(--text-primary)] transition-colors duration-300 cursor-pointer">{t("nav.expertise")}</button>
+            <button onClick={() => scrollToSection("pricing")} className="hover:text-[var(--text-primary)] transition-colors duration-300 cursor-pointer">{t("nav.pricing")}</button>
+            <button onClick={() => scrollToSection("contact")} className="hover:text-[var(--text-primary)] transition-colors duration-300 cursor-pointer">{t("nav.contact")}</button>
           </div>
 
           {/* Right: Phone + CTA — only visible when burger is hidden (lg+) */}
           <div className="hidden lg:flex items-center gap-8">
             <button
+              onClick={toggleTheme}
+              className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.15em] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+              aria-label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
+            >
+              {theme === 'dark' ? <Moon className="w-3.5 h-3.5" strokeWidth={1.5} /> : <Sun className="w-3.5 h-3.5" strokeWidth={1.5} />}
+              {theme === 'dark' ? 'СВЕТЛАЯ' : 'ТЁМНАЯ'}
+            </button>
+            <button
               onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-              className="flex items-center gap-1.5 text-[11px] font-medium text-neutral-500 uppercase tracking-[0.15em] hover:text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.15em] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
               aria-label="Switch language"
             >
               <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -219,7 +229,7 @@ export default function Navbar() {
             </button>
             <a
               href={`tel:${contacts.phone}`}
-              className="text-[11px] font-medium text-neutral-500 uppercase tracking-[0.15em] hover:text-white transition-colors flex items-center gap-2"
+              className="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.15em] hover:text-[var(--text-primary)] transition-colors flex items-center gap-2"
               aria-label={`Позвонить ${contacts.phoneDisplay}`}
             >
               <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
@@ -236,7 +246,7 @@ export default function Navbar() {
           <button 
             ref={triggerRef}
             onClick={toggleMenu} 
-            className="lg:hidden text-white cursor-pointer p-3 -mr-3 relative z-[70]" 
+            className="lg:hidden text-[var(--text-primary)] cursor-pointer p-3 -mr-3 relative z-[70]" 
             aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={menuOpen}
           >
@@ -248,28 +258,36 @@ export default function Navbar() {
       {/* Fullscreen overlay — clip-path animated */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] flex flex-col items-start justify-center px-10"
+        className="fixed inset-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl z-[60] flex flex-col items-start justify-center px-10"
         style={{ visibility: "hidden", clipPath: "circle(0% at calc(100% - 32px) 28px)" }}
         role="dialog"
         aria-modal="true"
         aria-label="Меню навигации"
       >
         <div className="flex flex-col gap-6">
-          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>
-          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.expertise")}</button>
-          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.pricing")}</button>
-          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.contact")}</button>
+          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>
+          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.expertise")}</button>
+          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.pricing")}</button>
+          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.contact")}</button>
           
-          <div className="w-16 h-[1px] bg-white/20 my-4 menu-divider origin-left"></div>
+          <div className="w-16 h-[1px] bg-[var(--border-strong)] my-4 menu-divider origin-left"></div>
           
-          <a href={`tel:${contacts.phone}`} className="text-lg text-neutral-400 hover:text-white flex items-center gap-3 transition-colors mobile-link" aria-label={`Позвонить ${contacts.phoneDisplay}`}>
+          <a href={`tel:${contacts.phone}`} className="text-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-3 transition-colors mobile-link" aria-label={`Позвонить ${contacts.phoneDisplay}`}>
             <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             {contacts.phoneDisplay}
           </a>
           
           <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mobile-link cursor-pointer"
+          >
+            {theme === 'dark' ? <Moon className="w-4 h-4" strokeWidth={1.5} /> : <Sun className="w-4 h-4" strokeWidth={1.5} />}
+            {theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
+          </button>
+
+          <button
             onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-            className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mobile-link cursor-pointer"
+            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mobile-link cursor-pointer"
           >
             <Globe className="w-4 h-4" strokeWidth={1.5} />
             {t("lang.switch")}
@@ -283,10 +301,10 @@ export default function Navbar() {
           </button>
           
           <div className="flex gap-8 mt-2 mobile-link">
-            <a href={contacts.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
+            <a href={contacts.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-[var(--text-muted)] uppercase tracking-widest hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
               MAX <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
-            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
+            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-[var(--text-muted)] uppercase tracking-widest hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
               Telegram <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
           </div>

@@ -346,10 +346,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`dark ${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} style={{ backgroundColor: "#0b0c0f" }}>
+    <html lang="ru" className={`${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} suppressHydrationWarning>
       <head>
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
-        <style dangerouslySetInnerHTML={{ __html: `html{background:#0b0c0f!important}body{background:transparent!important}` }} />
+        {/* Theme flash prevention — reads localStorage before paint */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}else{document.documentElement.style.background='#0b0c0f'}}catch(e){document.documentElement.style.background='#0b0c0f'}})()` }} />
+        <style dangerouslySetInnerHTML={{ __html: `body{background:transparent!important}` }} />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -375,7 +377,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdReviews) }}
         />
       </head>
-      <body className="text-white selection:bg-[#5eead4]/30 selection:text-white overflow-x-hidden antialiased">
+      <body className="text-[var(--text-primary)] selection:bg-[var(--accent)]/30 selection:text-[var(--text-primary)] overflow-x-hidden antialiased transition-colors duration-500">
         {/* P0: Skip to content for keyboard/screen-reader users (WCAG 2.4.1) */}
         <a
           href="#main-content"

@@ -18,7 +18,7 @@ export default function Footer() {
   const contacts = useContacts();
 
   return (
-    <footer id="site-footer" className="bg-black text-white relative z-[60] border-t border-white/10" role="contentinfo" aria-label="Footer">
+    <footer id="site-footer" className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative z-[60] border-t border-[var(--border)] transition-colors duration-500" role="contentinfo" aria-label="Footer">
       
       {/* Big brand statement */}
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-20">
@@ -26,30 +26,30 @@ export default function Footer() {
       </div>
 
       {/* Content grid */}
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 pb-16 grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 border-t border-white/10 pt-12">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 pb-16 grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8 border-t border-[var(--border)] pt-12">
         
         {/* Col 1: About */}
         <div className="col-span-2 md:col-span-1">
-          <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.about_label")}</p>
-          <p className="text-sm text-neutral-500 font-light leading-relaxed max-w-xs">
+          <p className="text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase font-medium mb-6">{t("footer.about_label")}</p>
+          <p className="text-sm text-[var(--text-secondary)] font-light leading-relaxed max-w-xs">
             {t("footer.about_text")}
           </p>
         </div>
 
         {/* Col 2: Services */}
         <nav aria-label="Services navigation">
-          <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.services_label")}</p>
+          <p className="text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase font-medium mb-6">{t("footer.services_label")}</p>
           <div className="flex flex-col gap-3">
-            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.1")}</button>
-            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.2")}</button>
-            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.3")}</button>
-            <button onClick={() => scrollToSection("services")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.services.4")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-[var(--text-secondary)] link-underline hover:text-[var(--text-primary)] transition-colors text-left cursor-pointer">{t("footer.services.1")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-[var(--text-secondary)] link-underline hover:text-[var(--text-primary)] transition-colors text-left cursor-pointer">{t("footer.services.2")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-[var(--text-secondary)] link-underline hover:text-[var(--text-primary)] transition-colors text-left cursor-pointer">{t("footer.services.3")}</button>
+            <button onClick={() => scrollToSection("services")} className="text-sm text-[var(--text-secondary)] link-underline hover:text-[var(--text-primary)] transition-colors text-left cursor-pointer">{t("footer.services.4")}</button>
           </div>
         </nav>
 
         {/* Col 3: Navigation */}
         <nav aria-label="Site navigation">
-          <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.company_label")}</p>
+          <p className="text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase font-medium mb-6">{t("footer.company_label")}</p>
           <div className="flex flex-col gap-3">
             <button onClick={() => scrollToSection("portfolio")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.1")}</button>
             <button onClick={() => scrollToSection("pricing")} className="text-sm text-neutral-500 link-underline hover:text-white transition-colors text-left cursor-pointer">{t("footer.company.2")}</button>
@@ -60,16 +60,16 @@ export default function Footer() {
 
         {/* Col 4: Contact */}
         <address className="not-italic">
-          <p className="text-xs tracking-[0.2em] text-neutral-600 uppercase font-medium mb-6">{t("footer.contact_label")}</p>
+          <p className="text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase font-medium mb-6">{t("footer.contact_label")}</p>
           <a
             href={`tel:${contacts.phone}`}
-            className="group flex items-center gap-2 text-white hover:opacity-80 transition-opacity mb-4"
+            className="group flex items-center gap-2 text-[var(--text-primary)] hover:opacity-80 transition-opacity mb-4"
             aria-label={`Call ${contacts.phoneDisplay}`}
           >
             <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
             <span className="text-sm font-medium tracking-wide">{contacts.phoneDisplay}</span>
           </a>
-          <p className="text-xs text-neutral-600 mb-6">{t("footer.contact_schedule")}</p>
+          <p className="text-xs text-[var(--text-muted)] mb-6">{t("footer.contact_schedule")}</p>
 
           <div className="flex gap-6">
             <a
@@ -77,7 +77,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Message on MAX"
-              className="group text-xs text-neutral-500 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1"
+              className="group text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase tracking-widest transition-colors flex items-center gap-1"
             >
               MAX <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
             </a>
@@ -86,7 +86,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Message on Telegram"
-              className="group text-xs text-neutral-500 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1"
+              className="group text-xs text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase tracking-widest transition-colors flex items-center gap-1"
             >
               TG <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" strokeWidth={1.5} aria-hidden="true" />
             </a>
@@ -95,11 +95,11 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 py-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-[11px] text-neutral-600 uppercase tracking-[0.15em]">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 py-6 border-t border-[var(--border)] flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-[11px] text-[var(--text-muted)] uppercase tracking-[0.15em]">
           {t("footer.copyright")}
         </p>
-        <p className="text-[11px] text-neutral-500 uppercase tracking-[0.15em]">
+        <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-[0.15em]">
           {t("footer.location")}
         </p>
       </div>

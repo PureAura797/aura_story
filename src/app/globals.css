@@ -2,12 +2,60 @@
 
 :root {
   color-scheme: dark;
+  /* ═══ Accent ═══ */
   --accent: #5eead4;
   --accent-deep: #14b8a6;
   --sand: #d4a574;
   --sand-dim: #a67c52;
+  /* ═══ Backgrounds ═══ */
   --bg-deep: #0b0c0f;
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #121418;
   --surface: #121418;
+  --bg-card: rgba(255,255,255,0.025);
+  --bg-card-hover: rgba(255,255,255,0.05);
+  /* ═══ Text ═══ */
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  /* ═══ Borders ═══ */
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.12);
+  /* ═══ Glass ═══ */
+  --glass-bg: rgba(0,0,0,0.6);
+  --glass-card: rgba(255,255,255,0.03);
+  /* ═══ Shadows ═══ */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+  --accent-glow: rgba(94, 234, 212, 0.15);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  /* ═══ Accent — deeper teal for contrast on light ═══ */
+  --accent: #0d9488;
+  --accent-deep: #0f766e;
+  --sand: #92400e;
+  --sand-dim: #78350f;
+  /* ═══ Backgrounds ═══ */
+  --bg-deep: #f5f5f7;
+  --bg-primary: #f7f7f8;
+  --bg-secondary: #eeeef0;
+  --surface: #e8e8ec;
+  --bg-card: rgba(0,0,0,0.025);
+  --bg-card-hover: rgba(0,0,0,0.05);
+  /* ═══ Text ═══ */
+  --text-primary: #111111;
+  --text-secondary: #6b6b6b;
+  --text-muted: #a0a0a0;
+  /* ═══ Borders ═══ */
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.15);
+  /* ═══ Glass ═══ */
+  --glass-bg: rgba(255,255,255,0.7);
+  --glass-card: rgba(0,0,0,0.03);
+  /* ═══ Shadows ═══ */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.06);
+  --accent-glow: rgba(13, 148, 136, 0.12);
 }
 
 html {
@@ -690,3 +738,105 @@ body.loading {
   transform: translateY(1px) scale(0.98);
   transition-duration: 0.1s;
 }
+
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — Global Component Overrides
+   ══════════════════════════════════════════════════════ */
+
+[data-theme="light"] .section-grain {
+  background: rgba(0, 0, 0, 0.025);
+}
+
+[data-theme="light"] .section-grain::after {
+  opacity: 0.02;
+}
+
+/* Buttons */
+[data-theme="light"] .btn-primary {
+  background: #111;
+  color: #fff;
+}
+
+[data-theme="light"] .btn-primary:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .btn-ghost {
+  color: #111;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Icon badge */
+[data-theme="light"] .icon-badge {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.02));
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="light"] .icon-badge:hover {
+  border-color: rgba(13, 148, 136, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 20px rgba(13, 148, 136, 0.08);
+}
+
+[data-theme="light"] .icon-badge::after {
+  background: radial-gradient(circle at 50% 0%, rgba(13, 148, 136, 0.15), transparent 70%);
+}
+
+/* Section card */
+[data-theme="light"] .section-card::after {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+/* Scroll progress */
+[data-theme="light"] #scroll-progress {
+  background: linear-gradient(90deg, #0d9488, #0f766e, #115e59);
+  box-shadow: 0 0 8px rgba(13, 148, 136, 0.5), 0 0 20px rgba(13, 148, 136, 0.2);
+}
+
+/* Hero glow pulse */
+[data-theme="light"] .btn-primary--hero {
+  animation: btn-glow-light 3s ease-in-out infinite;
+}
+
+@keyframes btn-glow-light {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(0, 0, 0, 0.12), 0 0 60px rgba(13, 148, 136, 0.08); }
+}
+
+/* Link underline effect */
+[data-theme="light"] .link-underline::after {
+  background: #111 !important;
+}
+
+/* Custom cursor */
+[data-theme="light"] .cursor-dot {
+  background: #111 !important;
+}
+
+[data-theme="light"] .cursor-ring {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Trust marquee */
+[data-theme="light"] .trust-marquee-container {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: var(--border);
+}
+
+/* Emergency button */
+[data-theme="light"] #emergency-btn {
+  background: #111;
+  color: #fff;
+}
+
+/* Smooth global transitions */
+[data-theme="light"] html {
+  background: #f7f7f8;
+}
+
