@@ -63,7 +63,7 @@ export default function Equipment() {
               </div>
               <MoreHorizontal className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] transition-colors shrink-0" strokeWidth={1.5} />
             </div>
-            <div className="relative aspect-square bg-black/40 overflow-hidden">
+            <div className="relative aspect-square overflow-hidden" style={{ background: "var(--bg-primary)" }}>
               <Image src={item.image} alt={`${item.name} — ${item.purpose}`} fill className="object-contain p-4 md:p-6 transition-transform duration-700 ease-out group-hover:scale-110" sizes="(max-width: 768px) 50vw, 33vw" loading="lazy" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" style={{ background: `radial-gradient(circle at center, ${item.color}08 0%, transparent 70%)` }} />
               <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3">
