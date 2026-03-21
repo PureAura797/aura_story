@@ -213,19 +213,17 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-8">
             <button
               onClick={toggleTheme}
-              className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.15em] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+              className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
               aria-label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
             >
-              {theme === 'dark' ? <Moon className="w-3.5 h-3.5" strokeWidth={1.5} /> : <Sun className="w-3.5 h-3.5" strokeWidth={1.5} />}
-              {theme === 'dark' ? 'СВЕТЛАЯ' : 'ТЁМНАЯ'}
+              {theme === 'dark' ? <Moon className="w-4 h-4" strokeWidth={1.5} /> : <Sun className="w-4 h-4" strokeWidth={1.5} />}
             </button>
             <button
               onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-              className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-[0.15em] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+              className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
               aria-label="Switch language"
             >
-              <Globe className="w-3.5 h-3.5" strokeWidth={1.5} />
-              {t("lang.switch")}
+              <Globe className="w-4 h-4" strokeWidth={1.5} />
             </button>
             <a
               href={`tel:${contacts.phone}`}
