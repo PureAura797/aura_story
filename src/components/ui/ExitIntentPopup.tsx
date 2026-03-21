@@ -65,14 +65,18 @@ export default function ExitIntentPopup() {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6"
+      className="fixed inset-0 z-[80] flex items-center justify-center p-6"
       onClick={handleDismiss}
       style={{ opacity: 0 }}
     >
+      {/* Backdrop — separate sibling, same as CallbackModal */}
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+
+      {/* Panel */}
       <div
         ref={panelRef}
         data-dark-ui
-        className="border border-white/10 bg-white/[0.06] backdrop-blur-xl p-8 sm:p-10 max-w-md w-full relative"
+        className="relative border border-white/10 bg-white/[0.04] backdrop-blur-xl p-8 sm:p-10 max-w-md w-full"
         onClick={(e) => e.stopPropagation()}
         style={{ opacity: 0 }}
       >
