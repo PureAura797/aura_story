@@ -77,9 +77,9 @@ export default function CostCalculator() {
         <div className="space-y-8">
           <div>
             <p className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] mb-3">{t("calc.service_type")}</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="flex flex-wrap gap-2">
               {services.map((s, i) => (
-                <button key={s.id} onClick={() => setServiceIdx(i)} className={`mag-btn px-4 py-3 text-xs font-medium uppercase tracking-wider border transition-all duration-300 cursor-pointer ${serviceIdx === i ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
+                <button key={s.id} onClick={() => setServiceIdx(i)} className={`mag-btn flex-1 min-w-[120px] px-4 py-3 text-[10px] font-medium uppercase tracking-wider border text-center transition-all duration-300 cursor-pointer ${serviceIdx === i ? "border-[var(--border-strong)] bg-[var(--bg-card-hover)] text-[var(--text-primary)]" : "border-[var(--border)] bg-transparent text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"}`}>
                   {s.label}
                 </button>
               ))}
