@@ -49,7 +49,7 @@ export default function Home() {
         Перейти к основному содержимому
       </a>
 
-      <main id="main-content" className="relative w-full z-10 text-[var(--text-primary)] font-sans overflow-x-hidden transition-colors duration-500" role="main">
+      <main id="main-content" className="relative w-full z-10 text-[var(--text-primary)] font-sans overflow-x-hidden" role="main">
         {/* Sec 1: Hero — Уборка после смерти, дезинфекция помещений */}
         <section id="hero" aria-label="Главный экран — экстренная уборка после ЧП в Москве" className={`h-screen w-full flex flex-col justify-center ${SP}`}>
             <Hero />

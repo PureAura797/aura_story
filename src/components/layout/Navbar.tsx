@@ -222,7 +222,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full border-b border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm ${menuOpen ? "z-[70]" : "z-50"} transition-colors duration-500`} aria-label="Главная навигация">
+      <nav className={`fixed top-0 w-full border-b border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm ${menuOpen ? "z-[70]" : "z-50"}`} aria-label="Главная навигация">
         <div className="w-full px-5 sm:px-10 lg:px-[8vw] py-4 flex items-center justify-between">
           
           {/* Logo — just text, no icon */}
