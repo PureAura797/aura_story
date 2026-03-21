@@ -949,7 +949,6 @@ body.loading {
 [data-theme="light"] input,
 [data-theme="light"] textarea,
 [data-theme="light"] select {
-  background: rgba(0, 0, 0, 0.03) !important;
   border-color: rgba(0, 0, 0, 0.1) !important;
   color: #111 !important;
 }
