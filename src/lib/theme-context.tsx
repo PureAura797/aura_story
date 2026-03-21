@@ -37,16 +37,23 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleTheme = useCallback((e?: React.MouseEvent) => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
+    // Read current theme from DOM to avoid stale closure
+    const current = (document.documentElement.getAttribute("data-theme") || "light") as Theme;
+    const nextTheme: Theme = current === "dark" ? "light" : "dark";
 
     if (isTransitioning.current) return;
+
+    // Safety: auto-reset transitioning after 1.5s in case of errors
+    const safetyTimer = setTimeout(() => {
+      isTransitioning.current = false;
+      document.getElementById("vt-freeze")?.remove();
+    }, 1500);
 
     // --- Strategy 1: View Transitions API (Chrome/Edge) ---
     if (e && "startViewTransition" in document) {
       const x = e.clientX;
       const y = e.clientY;
 
-      // Max radius to cover entire viewport from click point
       const maxRadius = Math.ceil(
         Math.sqrt(
           Math.max(x, window.innerWidth - x) ** 2 +
@@ -56,7 +63,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
       isTransitioning.current = true;
 
-      // Inject the animation styles (only once)
+      // Inject the animation styles
       let styleEl = document.getElementById("vt-ripple-styles");
       if (!styleEl) {
         styleEl = document.createElement("style");
@@ -64,7 +71,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.head.appendChild(styleEl);
       }
       styleEl.textContent = `
-        /* Disable CSS transitions during view transition to prevent text flicker */
         ::view-transition-image-pair(root) {
           isolation: auto;
         }
@@ -88,7 +94,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         }
       `;
 
-      // Disable CSS transitions on all elements during view transition
+      // Freeze CSS transitions during view transition
       const freezeStyle = document.createElement("style");
       freezeStyle.id = "vt-freeze";
       freezeStyle.textContent = `* { transition: none !important; }`;
@@ -99,14 +105,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setTheme(nextTheme);
       });
 
-      transition.finished.then(() => {
+      const cleanup = () => {
+        clearTimeout(safetyTimer);
         freezeStyle.remove();
         isTransitioning.current = false;
-      }).catch(() => {
-        freezeStyle.remove();
-        isTransitioning.current = false;
-      });
+      };
 
+      transition.finished.then(cleanup).catch(cleanup);
       return;
     }
 
@@ -130,6 +135,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
             root.style.transition = "";
             root.style.filter = "";
             root.style.opacity = "";
+            clearTimeout(safetyTimer);
             isTransitioning.current = false;
           }, 350);
         });
@@ -139,8 +145,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
 
     // --- No event — instant switch ---
+    clearTimeout(safetyTimer);
     setTheme(nextTheme);
-  }, [theme, setTheme]);
+  }, [setTheme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
