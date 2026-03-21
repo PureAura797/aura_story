@@ -34,6 +34,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(t);
     localStorage.setItem("theme", t);
     document.documentElement.setAttribute("data-theme", t);
+    // Clear inline background set by flash-prevention script in <head>
+    // Otherwise it overrides CSS theme variables
+    document.documentElement.style.background = "";
   }, []);
 
   const toggleTheme = useCallback((e?: React.MouseEvent) => {
