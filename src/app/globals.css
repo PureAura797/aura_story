@@ -883,17 +883,18 @@ body.loading {
   background: rgba(0, 0, 0, 0.025) !important;
 }
 
-[data-theme="light"] [class*="border-white/10"],
-[data-theme="light"] [class*="border-white/5"] {
+[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/10"],
+[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/5"] {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-[data-theme="light"] [class*="border-white/20"] {
+[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/20"] {
   border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 /* ── Text Neutrals ─────────────────────────────────────── */
-[data-theme="light"] .text-white {
+/* Exclude [data-dark-ui] containers from text overrides */
+[data-theme="light"] .text-white:not([data-dark-ui] .text-white) {
   color: var(--text-primary) !important;
 }
 
@@ -915,6 +916,43 @@ body.loading {
 }
 
 /* bg-black/ override REMOVED — it was breaking navbar/footer */
+
+/* ══════════════════════════════════════════════════════
+   DARK UI Elements — these stay dark regardless of theme
+   Components with data-dark-ui attribute keep dark colors.
+   ══════════════════════════════════════════════════════ */
+
+[data-theme="light"] [data-dark-ui] {
+  --text-primary: #fff;
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --text-muted: rgba(255, 255, 255, 0.35);
+  --border: rgba(255, 255, 255, 0.08);
+  --bg-primary: #0b0c0f;
+}
+
+[data-theme="light"] [data-dark-ui] .text-white {
+  color: #fff !important;
+}
+
+[data-theme="light"] [data-dark-ui] .text-neutral-400 {
+  color: #a3a3a3 !important;
+}
+
+[data-theme="light"] [data-dark-ui] .text-neutral-500 {
+  color: #737373 !important;
+}
+
+[data-theme="light"] [data-dark-ui] [class*="border-white/"] {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="light"] [data-dark-ui] [class*="bg-white/"] {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-theme="light"] [data-dark-ui]:hover [class*="bg-white/"] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
 
 /* ── Form Inputs ───────────────────────────────────────── */
 [data-theme="light"] input,

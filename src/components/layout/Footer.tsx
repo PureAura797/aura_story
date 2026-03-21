@@ -18,7 +18,7 @@ export default function Footer() {
   const contacts = useContacts();
 
   return (
-    <footer id="site-footer" className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative z-[60] border-t border-[var(--border)] transition-colors duration-500" role="contentinfo" aria-label="Footer">
+    <footer id="site-footer" data-dark-ui className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative z-[60] border-t border-[var(--border)] transition-colors duration-500" role="contentinfo" aria-label="Footer">
       
       {/* Big brand statement */}
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 pt-24 pb-20">
