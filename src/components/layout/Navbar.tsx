@@ -64,28 +64,57 @@ export default function Navbar() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     const nav = document.querySelector("nav");
-    if (nav) {
-      ScrollTrigger.create({
-        start: 100,
-        onUpdate: (self) => {
-          // Keep navbar visible when burger menu is open
-          if (document.body.hasAttribute("data-menu-open")) {
-            gsap.to(nav, { y: 0, duration: 0.3, ease: "power3.inOut" });
-            return;
+    if (!nav) return;
+
+    let lastDir = 0; // debounce — only animate on direction change
+
+    ScrollTrigger.create({
+      start: 100,
+      onUpdate: (self) => {
+        // Keep navbar visible when burger menu is open
+        if (document.body.hasAttribute("data-menu-open")) {
+          if (lastDir !== 99) {
+            gsap.to(nav, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.3, overwrite: "auto" });
+            lastDir = 99;
           }
-          // Hide navbar when a story modal is open
-          if (document.body.hasAttribute("data-modal-open")) {
-            gsap.to(nav, { y: -100, duration: 0.3, ease: "power3.inOut" });
-            return;
+          return;
+        }
+        // Hide navbar when a story modal is open
+        if (document.body.hasAttribute("data-modal-open")) {
+          if (lastDir !== -99) {
+            gsap.to(nav, { y: "-100%", opacity: 0, filter: "blur(8px)", duration: 0.3, overwrite: "auto" });
+            lastDir = -99;
           }
-          if (self.direction === 1 && self.scroll() > 100) {
-            gsap.to(nav, { y: -100, duration: 0.5, ease: "power3.inOut" });
-          } else {
-            gsap.to(nav, { y: 0, duration: 0.5, ease: "power3.inOut" });
-          }
-        },
-      });
-    }
+          return;
+        }
+
+        const dir = self.direction;
+        if (dir === lastDir) return; // same direction — skip
+        lastDir = dir;
+
+        if (dir === 1 && self.scroll() > 100) {
+          // Scrolling DOWN — Glass dissolve out
+          gsap.to(nav, {
+            y: "-100%",
+            opacity: 0,
+            filter: "blur(8px)",
+            duration: 0.35,
+            ease: "power2.in",
+            overwrite: "auto",
+          });
+        } else {
+          // Scrolling UP — Glass materialize in
+          gsap.to(nav, {
+            y: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.5,
+            ease: "back.out(1.7)",
+            overwrite: "auto",
+          });
+        }
+      },
+    });
   }, []);
 
   const openMenu = useCallback(() => {
@@ -97,7 +126,7 @@ export default function Navbar() {
 
     // Force navbar visible
     const nav = document.querySelector("nav");
-    if (nav) gsap.to(nav, { y: 0, duration: 0.3, ease: "power3.inOut" });
+    if (nav) gsap.to(nav, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.3, overwrite: "auto" });
 
     const overlay = overlayRef.current;
     if (!overlay) return;
