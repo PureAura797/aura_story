@@ -26,7 +26,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setThemeState(saved);
       document.documentElement.setAttribute("data-theme", saved);
     } else {
-      // First visit — default to light
       document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
@@ -40,57 +39,97 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = useCallback((e?: React.MouseEvent) => {
     const nextTheme = theme === "dark" ? "light" : "dark";
 
-    // If no mouse event or transitions not supported — instant switch
-    if (!e || isTransitioning.current) {
-      setTheme(nextTheme);
+    if (isTransitioning.current) return;
+
+    // --- Strategy 1: View Transitions API (Chrome/Edge) ---
+    if (e && "startViewTransition" in document) {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      // Max radius to cover entire viewport from click point
+      const maxRadius = Math.ceil(
+        Math.sqrt(
+          Math.max(x, window.innerWidth - x) ** 2 +
+          Math.max(y, window.innerHeight - y) ** 2
+        )
+      );
+
+      isTransitioning.current = true;
+
+      // Inject the animation styles (only once)
+      let styleEl = document.getElementById("vt-ripple-styles");
+      if (!styleEl) {
+        styleEl = document.createElement("style");
+        styleEl.id = "vt-ripple-styles";
+        document.head.appendChild(styleEl);
+      }
+      styleEl.textContent = `
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none;
+          mix-blend-mode: normal;
+        }
+        ::view-transition-new(root) {
+          clip-path: circle(0px at ${x}px ${y}px);
+          animation: ripple-expand 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        ::view-transition-old(root) {
+          z-index: 1;
+        }
+        ::view-transition-new(root) {
+          z-index: 9999;
+        }
+        @keyframes ripple-expand {
+          to {
+            clip-path: circle(${maxRadius}px at ${x}px ${y}px);
+          }
+        }
+      `;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const transition = (document as any).startViewTransition(() => {
+        setTheme(nextTheme);
+      });
+
+      transition.finished.then(() => {
+        isTransitioning.current = false;
+      }).catch(() => {
+        isTransitioning.current = false;
+      });
+
       return;
     }
 
-    // Get click coordinates for ripple origin
-    const x = e.clientX;
-    const y = e.clientY;
+    // --- Strategy 2: Blur Dissolve fallback (Safari/Firefox) ---
+    if (e) {
+      isTransitioning.current = true;
+      const root = document.documentElement;
 
-    // Calculate the max radius needed to cover the entire viewport
-    const maxRadius = Math.ceil(
-      Math.sqrt(
-        Math.max(x, window.innerWidth - x) ** 2 +
-        Math.max(y, window.innerHeight - y) ** 2
-      )
-    );
+      root.style.transition = "filter 0.3s ease, opacity 0.3s ease";
+      root.style.filter = "blur(6px)";
+      root.style.opacity = "0.7";
 
-    // Create ripple overlay
-    const overlay = document.createElement("div");
-    overlay.style.cssText = `
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      pointer-events: none;
-      background: ${nextTheme === "light" ? "#f7f7f8" : "#0b0c0f"};
-      clip-path: circle(0px at ${x}px ${y}px);
-      transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: clip-path;
-    `;
-    document.body.appendChild(overlay);
+      setTimeout(() => {
+        setTheme(nextTheme);
 
-    isTransitioning.current = true;
+        requestAnimationFrame(() => {
+          root.style.filter = "blur(0px)";
+          root.style.opacity = "1";
 
-    // Trigger the ripple expansion (next frame for transition to fire)
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        overlay.style.clipPath = `circle(${maxRadius}px at ${x}px ${y}px)`;
+          setTimeout(() => {
+            root.style.transition = "";
+            root.style.filter = "";
+            root.style.opacity = "";
+            isTransitioning.current = false;
+          }, 350);
+        });
+      }, 300);
 
-        // Switch theme at ~40% of animation (when ripple covers enough area)
-        setTimeout(() => {
-          setTheme(nextTheme);
-        }, 240);
+      return;
+    }
 
-        // Remove overlay after animation completes
-        setTimeout(() => {
-          overlay.remove();
-          isTransitioning.current = false;
-        }, 650);
-      });
-    });
+    // --- No event — instant switch ---
+    setTheme(nextTheme);
   }, [theme, setTheme]);
 
   return (
