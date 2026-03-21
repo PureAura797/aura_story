@@ -137,7 +137,7 @@ export default function Scene() {
   return (
     <div 
       ref={containerRef}
-      className="fixed top-0 left-0 w-full h-full -z-10"
+      className="scene-container fixed top-0 left-0 w-full h-full -z-10 transition-opacity duration-500"
       style={{ pointerEvents: 'none' }}
     >
       <Canvas dpr={[1, 2]} style={{ pointerEvents: 'auto' }}>
