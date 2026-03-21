@@ -54,10 +54,10 @@ function DynamicBackground() {
   const { scene } = useThree();
   const bgColorObj = useRef(new THREE.Color(DARK_BG));
   const theme = useCurrentTheme();
-  const themeTarget = useRef(new THREE.Color(DARK_BG));
+  const targetColor = useRef(new THREE.Color(DARK_BG));
 
   useEffect(() => {
-    themeTarget.current.set(theme === 'light' ? LIGHT_BG : DARK_BG);
+    targetColor.current.set(theme === 'light' ? LIGHT_BG : DARK_BG);
   }, [theme]);
 
   if (!scene.background) {
@@ -65,15 +65,18 @@ function DynamicBackground() {
   }
 
   useFrame(() => {
-    // Blend scroll-driven bg with theme bg
-    bgColorObj.current.set(scProps.bgColor);
-    // On light theme, override scroll-driven bg toward light
-    bgColorObj.current.lerp(themeTarget.current, 0.3);
+    if (theme === 'light') {
+      // Light theme: go DIRECTLY to white, ignore scroll-driven bg
+      bgColorObj.current.set(LIGHT_BG);
+    } else {
+      // Dark theme: follow scroll-driven bg
+      bgColorObj.current.set(scProps.bgColor);
+    }
     if (scene.background instanceof THREE.Color) {
-      scene.background.lerp(bgColorObj.current, 0.05);
+      scene.background.lerp(bgColorObj.current, 0.08);
     }
     if (scene.fog && scene.fog instanceof THREE.Fog) {
-      scene.fog.color.lerp(bgColorObj.current, 0.05);
+      scene.fog.color.lerp(bgColorObj.current, 0.08);
     }
   });
 

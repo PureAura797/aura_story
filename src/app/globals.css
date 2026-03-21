@@ -898,15 +898,15 @@ body.loading {
 }
 
 [data-theme="light"] .text-neutral-400 {
-  color: #6b6b6b !important;
+  color: #555555 !important;
 }
 
 [data-theme="light"] .text-neutral-500 {
-  color: #888888 !important;
+  color: #666666 !important;
 }
 
 [data-theme="light"] .text-neutral-600 {
-  color: #a0a0a0 !important;
+  color: #888888 !important;
 }
 
 /* Hero mix-blend adjustment */
@@ -914,10 +914,7 @@ body.loading {
   mix-blend-mode: normal;
 }
 
-/* ── Glass & Backdrop ──────────────────────────────────── */
-[data-theme="light"] [class*="bg-black/"] {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-}
+/* bg-black/ override REMOVED — it was breaking navbar/footer */
 
 /* ── Form Inputs ───────────────────────────────────────── */
 [data-theme="light"] input,
@@ -1037,32 +1034,38 @@ body.loading {
 /* --- Footer stays dark --- */
 [data-theme="light"] #site-footer {
   background: #0b0c0f !important;
-  color: #fff !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-[data-theme="light"] #site-footer p,
-[data-theme="light"] #site-footer span,
-[data-theme="light"] #site-footer a,
-[data-theme="light"] #site-footer button {
-  color: inherit !important;
+/* Force ALL text/links inside footer to dark-theme colors */
+[data-theme="light"] #site-footer * {
+  color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
-[data-theme="light"] #site-footer .text-\[var\(--text-muted\)\] {
+/* Footer headings / labels — dimmer */
+[data-theme="light"] #site-footer h2,
+[data-theme="light"] #site-footer h3,
+[data-theme="light"] #site-footer [class*="tracking-[0.2em]"] {
   color: rgba(255, 255, 255, 0.35) !important;
 }
 
-[data-theme="light"] #site-footer .text-\[var\(--text-secondary\)\] {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-[data-theme="light"] #site-footer a:hover,
-[data-theme="light"] #site-footer button:hover {
+/* Phone number — bright */
+[data-theme="light"] #site-footer address a[href^="tel:"] span,
+[data-theme="light"] #site-footer address a[href^="tel:"] {
   color: #fff !important;
 }
 
-[data-theme="light"] #site-footer [class*="border-"] {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+/* Logo in footer */
+[data-theme="light"] #site-footer svg,
+[data-theme="light"] #site-footer svg path {
+  fill: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Footer hovers */
+[data-theme="light"] #site-footer a:hover,
+[data-theme="light"] #site-footer button:hover {
+  color: #fff !important;
 }
 
 /* ══════════════════════════════════════════════════════
