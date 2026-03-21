@@ -241,7 +241,7 @@ export default function Navbar() {
           {/* Right: Phone + CTA — only visible when burger is hidden (lg+) */}
           <div className="hidden lg:flex items-center gap-8">
             <button
-              onClick={toggleTheme}
+              onClick={(e) => toggleTheme(e)}
               className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
               aria-label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
             >
@@ -305,7 +305,7 @@ export default function Navbar() {
           </a>
           
           <button
-            onClick={toggleTheme}
+            onClick={(e) => toggleTheme(e)}
             className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mobile-link cursor-pointer"
           >
             {theme === 'dark' ? <Moon className="w-4 h-4" strokeWidth={1.5} /> : <Sun className="w-4 h-4" strokeWidth={1.5} />}
