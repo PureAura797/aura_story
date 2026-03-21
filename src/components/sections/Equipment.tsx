@@ -49,19 +49,19 @@ export default function Equipment() {
         <p className="text-[11px] tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("equipment.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("equipment.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light mb-12 max-w-lg">{t("equipment.desc")}</p>
+      <p className="text-sm text-[var(--text-secondary)] font-light mb-12 max-w-lg">{t("equipment.desc")}</p>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full items-start">
         {equipment.map((item, idx) => (
-          <div key={idx} className="equip-card card-lift group flex flex-col border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden hover:border-white/10 transition-all duration-500">
+          <div key={idx} className="equip-card card-lift group flex flex-col border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm overflow-hidden hover:border-[var(--border-strong)] transition-all duration-500">
             <div className="flex items-center justify-between px-3 py-2.5 md:px-4 md:py-3">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${item.color}20`, border: `1px solid ${item.color}30` }}>
                   <span className="text-[11px] font-bold" style={{ color: item.color }}>{String(idx + 1).padStart(2, "0")}</span>
                 </div>
-                <span className="text-[11px] text-neutral-500 uppercase tracking-wider truncate">{item.tag}</span>
+                <span className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider truncate">{item.tag}</span>
               </div>
-              <MoreHorizontal className="w-4 h-4 text-neutral-600 group-hover:text-neutral-400 transition-colors shrink-0" strokeWidth={1.5} />
+              <MoreHorizontal className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] transition-colors shrink-0" strokeWidth={1.5} />
             </div>
             <div className="relative aspect-square bg-black/40 overflow-hidden">
               <Image src={item.image} alt={`${item.name} — ${item.purpose}`} fill className="object-contain p-4 md:p-6 transition-transform duration-700 ease-out group-hover:scale-110" sizes="(max-width: 768px) 50vw, 33vw" loading="lazy" />
@@ -71,19 +71,19 @@ export default function Equipment() {
               </div>
             </div>
             <div className="px-3 pt-3 md:px-4 md:pt-3">
-              <h3 className="text-xs md:text-sm font-bold text-white tracking-tight mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{item.name}</h3>
-              <p className="text-[11px] md:text-xs text-neutral-500 leading-relaxed line-clamp-2">{item.purpose}</p>
+              <h3 className="text-xs md:text-sm font-bold text-[var(--text-primary)] tracking-tight mb-1 group-hover:text-[var(--accent)] transition-colors duration-300">{item.name}</h3>
+              <p className="text-[11px] md:text-xs text-[var(--text-secondary)] leading-relaxed line-clamp-2">{item.purpose}</p>
             </div>
             <div className="px-3 pb-3 md:px-4 md:pb-4 pt-2">
-              <button onClick={() => toggleExpand(idx)} className="mag-btn w-full flex items-center justify-center gap-1.5 py-2 rounded-sm border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/10 transition-all duration-300 cursor-pointer group/btn">
-                <span className="text-[11px] text-neutral-500 uppercase tracking-wider group-hover/btn:text-neutral-300 transition-colors">{expanded === idx ? t("equipment.less") : t("equipment.more")}</span>
-                <ChevronDown className={`w-3 h-3 text-neutral-600 group-hover/btn:text-neutral-400 transition-all duration-300 ${expanded === idx ? "rotate-180" : ""}`} strokeWidth={1.5} />
+              <button onClick={() => toggleExpand(idx)} className="mag-btn w-full flex items-center justify-center gap-1.5 py-2 rounded-sm border border-[var(--border)] bg-[var(--glass-card)] hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)] transition-all duration-300 cursor-pointer group/btn">
+                <span className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider group-hover/btn:text-[var(--text-primary)] transition-colors">{expanded === idx ? t("equipment.less") : t("equipment.more")}</span>
+                <ChevronDown className={`w-3 h-3 text-[var(--text-muted)] group-hover/btn:text-[var(--text-secondary)] transition-all duration-300 ${expanded === idx ? "rotate-180" : ""}`} strokeWidth={1.5} />
               </button>
               <AnimatePresence>
                 {expanded === idx && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: "easeInOut" }} className="overflow-hidden">
-                    <div className="pt-3 border-t border-white/5 mt-3">
-                      <p className="text-[11px] md:text-xs text-neutral-400 leading-relaxed">{item.details}</p>
+                    <div className="pt-3 border-t border-[var(--border)] mt-3">
+                      <p className="text-[11px] md:text-xs text-[var(--text-secondary)] leading-relaxed">{item.details}</p>
                     </div>
                   </motion.div>
                 )}

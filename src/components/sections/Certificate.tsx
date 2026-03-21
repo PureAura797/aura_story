@@ -54,7 +54,7 @@ export default function Certificate() {
           Лицензии
         </h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light text-right mb-12 max-w-md">
+      <p className="text-sm text-[var(--text-secondary)] font-light text-right mb-12 max-w-md">
         Официальные разрешительные документы компании
       </p>
 
@@ -62,13 +62,13 @@ export default function Certificate() {
         {certs.map((cert) => (
           <div
             key={cert.id}
-            className="cert-card card-lift opacity-0 translate-y-10 border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-white/10 transition-all duration-500 overflow-hidden"
+            className="cert-card card-lift opacity-0 translate-y-10 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm hover:border-[var(--border-strong)] transition-all duration-500 overflow-hidden"
           >
             <div className="flex flex-col md:flex-row gap-6 p-7">
               {/* Preview thumbnail */}
               {cert.preview_url && (
                 <div className="shrink-0 w-full md:w-40 lg:w-48">
-                  <div className="relative group overflow-hidden border border-white/[0.06]">
+                  <div className="relative group overflow-hidden border border-[var(--border)]">
                     <img
                       src={cert.preview_url}
                       alt={cert.title}
@@ -87,14 +87,14 @@ export default function Certificate() {
                     {cert.title}
                   </h3>
                   <div className="flex flex-wrap gap-3 mb-4">
-                    <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
+                    <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] border border-[var(--border)] px-3 py-1">
                       № {cert.number}
                     </span>
-                    <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600 border border-white/10 px-3 py-1">
+                    <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)] border border-[var(--border)] px-3 py-1">
                       от {cert.date}
                     </span>
                   </div>
-                  <p className="text-neutral-500 text-sm leading-relaxed mb-4">
+                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
                     {cert.description}
                   </p>
                 </div>
@@ -106,7 +106,7 @@ export default function Certificate() {
                     download
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-white/[0.06] border border-white/10 px-5 py-3 hover:bg-white/10 hover:border-white/20 transition-all duration-300 w-fit"
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] bg-[var(--glass-card)] border border-[var(--border)] px-5 py-3 hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-strong)] transition-all duration-300 w-fit"
                   >
                     <Download className="w-3.5 h-3.5" strokeWidth={1.5} />
                     Скачать PDF

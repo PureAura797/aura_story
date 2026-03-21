@@ -35,16 +35,16 @@ export default function Process() {
         <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("process.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("process.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light mb-16 max-w-lg">
+      <p className="text-sm text-[var(--text-secondary)] font-light mb-16 max-w-lg">
         {t("process.desc")}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {steps.map((step, idx) => (
-          <div key={idx} className="process-step card-lift accent-glow-hover opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500">
-            <span className="text-5xl md:text-6xl font-bold text-white/[0.06] tracking-tighter block mb-6">{step.num}</span>
+          <div key={idx} className="process-step card-lift accent-glow-hover opacity-0 translate-y-10 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[rgba(94,234,212,0.2)] transition-all duration-500">
+            <span className="text-5xl md:text-6xl font-bold text-[var(--text-primary)] opacity-[0.06] tracking-tighter block mb-6">{step.num}</span>
             <h3 className="text-xl md:text-2xl font-bold tracking-tighter mb-4 group-hover:text-[var(--accent)] transition-colors duration-500">{step.title}</h3>
-            <p className="text-neutral-500 text-sm leading-relaxed">{step.description}</p>
+            <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{step.description}</p>
           </div>
         ))}
       </div>

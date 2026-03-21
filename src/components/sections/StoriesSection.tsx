@@ -90,20 +90,20 @@ export default function StoriesSection() {
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => scrollTo("left")}
-              className={`w-7 h-7 rounded-full border border-white/10 flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-7 h-7 rounded-full border border-[var(--border)] flex items-center justify-center transition-all cursor-pointer ${
                 canScrollLeft
-                  ? "text-white/60 hover:text-white hover:border-white/30"
-                  : "text-white/10 pointer-events-none"
+                  ? "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]"
+                  : "text-[var(--text-muted)] pointer-events-none"
               }`}
             >
               <ChevronLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
             </button>
             <button
               onClick={() => scrollTo("right")}
-              className={`w-7 h-7 rounded-full border border-white/10 flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-7 h-7 rounded-full border border-[var(--border)] flex items-center justify-center transition-all cursor-pointer ${
                 canScrollRight
-                  ? "text-white/60 hover:text-white hover:border-white/30"
-                  : "text-white/10 pointer-events-none"
+                  ? "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)]"
+                  : "text-[var(--text-muted)] pointer-events-none"
               }`}
             >
               <ChevronRight className="w-3.5 h-3.5" strokeWidth={1.5} />
@@ -183,7 +183,7 @@ export default function StoriesSection() {
                   <p className="text-[11px] text-white/80 font-medium tracking-wide uppercase group-hover:text-white transition-colors leading-tight">
                     {story.title}
                   </p>
-                  <p className="text-[11px] md:text-xs text-neutral-600 tracking-wider uppercase mt-0.5 leading-tight">
+                  <p className="text-[11px] md:text-xs text-[var(--text-muted)] tracking-wider uppercase mt-0.5 leading-tight">
                     {story.subtitle}
                   </p>
                 </div>

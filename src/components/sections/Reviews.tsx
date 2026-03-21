@@ -38,36 +38,36 @@ export default function Reviews() {
         <p className="text-xs tracking-[0.2em] uppercase font-medium mb-4" style={{ color: "var(--accent)" }}>{t("reviews.label")}</p>
         <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">{t("reviews.heading")}</h2>
       </div>
-      <p className="text-sm text-neutral-500 font-light mb-12 max-w-lg">{t("reviews.desc")}</p>
+      <p className="text-sm text-[var(--text-secondary)] font-light mb-12 max-w-lg">{t("reviews.desc")}</p>
 
       <div className="review-card opacity-0 translate-y-10 flex flex-wrap gap-6 mb-8 w-full max-w-3xl">
-        <div className="border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex items-center gap-4">
+        <div className="border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-6 flex items-center gap-4">
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">4.9</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_yandex")}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-secondary)] font-medium mt-1">{t("reviews.platform_yandex")}</span>
           </div>
         </div>
-        <div className="border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex items-center gap-4">
+        <div className="border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-6 flex items-center gap-4">
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">5.0</span>
           <div className="flex flex-col">
             <Star className="w-4 h-4 fill-current" strokeWidth={1.5} style={{ color: "var(--sand)" }} />
-            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500 font-medium mt-1">{t("reviews.platform_avito")}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-secondary)] font-medium mt-1">{t("reviews.platform_avito")}</span>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col w-full max-w-3xl gap-4">
         {reviews.map((review, idx) => (
-          <div key={idx} className="review-card card-lift accent-glow-hover opacity-0 translate-y-10 border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
+          <div key={idx} className="review-card card-lift accent-glow-hover opacity-0 translate-y-10 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-white font-bold text-sm">{t(review.nameKey)}</span>
+                <span className="text-[var(--text-primary)] font-bold text-sm">{t(review.nameKey)}</span>
                 <span className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{t(review.serviceKey)}</span>
               </div>
-              <span className="text-[11px] uppercase tracking-[0.15em] text-neutral-600">{t(review.dateKey)}</span>
+              <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)]">{t(review.dateKey)}</span>
             </div>
-            <p className="text-neutral-400 text-sm leading-relaxed">«{t(review.textKey)}»</p>
+            <p className="text-[var(--text-secondary)] text-sm leading-relaxed">«{t(review.textKey)}»</p>
           </div>
         ))}
       </div>
