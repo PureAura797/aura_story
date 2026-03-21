@@ -107,8 +107,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
       const cleanup = () => {
         clearTimeout(safetyTimer);
-        freezeStyle.remove();
-        isTransitioning.current = false;
+        // Delay freeze removal — body/main have transition-colors 500ms
+        // which would animate CSS vars if we remove freeze immediately
+        setTimeout(() => {
+          freezeStyle.remove();
+          isTransitioning.current = false;
+        }, 50);
       };
 
       transition.finished.then(cleanup).catch(cleanup);
