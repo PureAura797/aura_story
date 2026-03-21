@@ -157,7 +157,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
               <button
                 type="submit"
                 disabled={loading || !isFormValid}
-                className="btn-primary w-full mt-2 px-8 py-4 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="btn-primary w-full mt-2 px-8 py-4 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
