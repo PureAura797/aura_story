@@ -943,6 +943,7 @@ body.loading {
   --text-muted: rgba(255, 255, 255, 0.35);
   --border: rgba(255, 255, 255, 0.08);
   --bg-primary: #0b0c0f;
+  color: #fff !important;
 }
 
 [data-theme="light"] [data-dark-ui] .text-white {
