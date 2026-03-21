@@ -71,6 +71,7 @@ export default function ExitIntentPopup() {
     >
       <div
         ref={panelRef}
+        data-dark-ui
         className="bg-[#111214] border border-white/10 p-8 sm:p-10 max-w-md w-full relative"
         onClick={(e) => e.stopPropagation()}
         style={{ opacity: 0 }}

@@ -98,6 +98,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
       {/* Panel */}
       <div
         ref={panelRef}
+        data-dark-ui
         className="relative w-full max-w-md border border-white/10 bg-white/[0.04] backdrop-blur-xl p-10"
       >
         {/* Close button */}

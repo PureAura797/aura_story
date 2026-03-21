@@ -860,6 +860,7 @@ body.loading {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
+/* Card hover states in light theme */
 [data-theme="light"] .service-card:hover,
 [data-theme="light"] .pricing-card:hover,
 [data-theme="light"] .expertise-item:hover,
@@ -877,25 +878,39 @@ body.loading {
   border-color: rgba(13, 148, 136, 0.3) !important;
 }
 
-/* All inline glass panels (used by many sections for summary boxes) */
-[data-theme="light"] [class*="bg-white/[0.0"],
-[data-theme="light"] [class*="bg-white/\[0.0"] {
-  background: rgba(0, 0, 0, 0.025) !important;
+/* All glass panels — catch ALL bg-white/ variants */
+[data-theme="light"] [class*="bg-white/"]:not([data-dark-ui] [class*="bg-white/"]):not([data-dark-ui]) {
+  background: rgba(0, 0, 0, 0.04) !important;
 }
 
-[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/10"],
-[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/5"] {
+/* ── Border overrides — catch ALL white-alpha borders ──── */
+/* Broad: any element with border-white/ NOT inside data-dark-ui */
+[data-theme="light"] [class*="border-white/"]:not([data-dark-ui] [class*="border-white/"]):not([data-dark-ui]) {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
-[data-theme="light"] :not([data-dark-ui]) > [class*="border-white/20"] {
+[data-theme="light"] [class*="border-white/20"]:not([data-dark-ui] [class*="border-white/20"]):not([data-dark-ui]) {
   border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-/* ── Text Neutrals ─────────────────────────────────────── */
+/* -- Text Neutrals -------------------- */
 /* Exclude [data-dark-ui] containers from text overrides */
-[data-theme="light"] .text-white:not([data-dark-ui] .text-white) {
+[data-theme="light"] :not([data-dark-ui]) .text-white {
   color: var(--text-primary) !important;
+}
+
+/* Form input / textarea text -- MUST be dark on light */
+[data-theme="light"] :not([data-dark-ui]) input.text-white,
+[data-theme="light"] :not([data-dark-ui]) textarea.text-white,
+[data-theme="light"] :not([data-dark-ui]) input[class*="text-white"],
+[data-theme="light"] :not([data-dark-ui]) textarea[class*="text-white"] {
+  color: #111 !important;
+}
+
+/* Placeholder text in light theme */
+[data-theme="light"] :not([data-dark-ui]) input::placeholder,
+[data-theme="light"] :not([data-dark-ui]) textarea::placeholder {
+  color: #aaa !important;
 }
 
 [data-theme="light"] .text-neutral-400 {
@@ -1038,8 +1053,9 @@ body.loading {
   color: #fff !important;
 }
 
-/* Logo in navbar stays white */
-[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="На главную"] {
+/* Logo in navbar stays white — force ALL descendants */
+[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="На главную"],
+[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="На главную"] * {
   color: #fff !important;
 }
 
@@ -1106,7 +1122,8 @@ body.loading {
 [data-theme="light"] #site-footer svg {
   fill: none !important;
 }
-[data-theme="light"] #site-footer .text-white\/\[0\.04\] {
+[data-theme="light"] #site-footer .text-white\/\[0\.04\],
+[data-theme="light"] #site-footer .text-white\/\[0\.04\] span {
   color: rgba(255, 255, 255, 0.04) !important;
 }
 
@@ -1121,10 +1138,14 @@ body.loading {
    ══════════════════════════════════════════════════════ */
 
 [data-theme="light"] .marquee-fade-left {
+  --tw-gradient-from: #ffffff !important;
   background: linear-gradient(to right, #ffffff, transparent) !important;
+  background-image: linear-gradient(to right, #ffffff, transparent) !important;
 }
 [data-theme="light"] .marquee-fade-right {
+  --tw-gradient-from: #ffffff !important;
   background: linear-gradient(to left, #ffffff, transparent) !important;
+  background-image: linear-gradient(to left, #ffffff, transparent) !important;
 }
 
 /* ══════════════════════════════════════════════════════
