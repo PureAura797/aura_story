@@ -914,6 +914,17 @@ body.loading {
   color: #fff !important;
 }
 
+/* Buttons inside dark UI stay in dark-theme style: white bg, dark text */
+[data-theme="light"] [data-dark-ui] .btn-primary {
+  background: white;
+  color: #0b0c0f;
+}
+
+[data-theme="light"] [data-dark-ui] .btn-ghost {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
 [data-theme="light"] [data-dark-ui] .text-neutral-400 {
   color: #a3a3a3 !important;
 }
