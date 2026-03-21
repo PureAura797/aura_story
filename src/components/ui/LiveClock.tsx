@@ -88,8 +88,7 @@ export default function LiveClock() {
   return (
     <div
       ref={clockRef}
-      data-dark-ui
-      className="fixed z-50 border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)]
+      className="live-clock fixed z-50 border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.5)]
         bottom-4 left-5 right-5 h-12 flex items-center justify-center gap-3 px-5
         sm:left-10 sm:right-10
         lg:bottom-6 lg:left-1/2 lg:-translate-x-1/2 lg:right-auto lg:h-12 lg:w-auto"

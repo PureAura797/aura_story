@@ -1,13 +1,29 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { scProps } from '@/lib/scrollProps';
 
+function useCurrentTheme() {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  useEffect(() => {
+    const check = () => {
+      const t = document.documentElement.getAttribute('data-theme');
+      setTheme(t === 'light' ? 'light' : 'dark');
+    };
+    check();
+    const obs = new MutationObserver(check);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
+  }, []);
+  return theme;
+}
+
 export default function Torus() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
+  const theme = useCurrentTheme();
 
   // Torus parameters
   const count = 80;
@@ -75,13 +91,17 @@ export default function Torus() {
     meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
+  // Darker material on light theme for contrast against white bg
+  const matColor = theme === 'light' ? 0x222222 : 0x555555;
+
   return (
     <instancedMesh ref={meshRef} args={[geometry, undefined, count]} >
       <meshStandardMaterial 
-        color={0x555555} 
+        color={matColor} 
         metalness={0.4} 
         roughness={0.8} 
       />
     </instancedMesh>
   );
 }
+
