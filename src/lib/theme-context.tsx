@@ -64,6 +64,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         document.head.appendChild(styleEl);
       }
       styleEl.textContent = `
+        /* Disable CSS transitions during view transition to prevent text flicker */
+        ::view-transition-image-pair(root) {
+          isolation: auto;
+        }
         ::view-transition-old(root),
         ::view-transition-new(root) {
           animation: none;
@@ -72,12 +76,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         ::view-transition-new(root) {
           clip-path: circle(0px at ${x}px ${y}px);
           animation: ripple-expand 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          z-index: 9999;
         }
         ::view-transition-old(root) {
           z-index: 1;
-        }
-        ::view-transition-new(root) {
-          z-index: 9999;
         }
         @keyframes ripple-expand {
           to {
@@ -86,14 +88,22 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         }
       `;
 
+      // Disable CSS transitions on all elements during view transition
+      const freezeStyle = document.createElement("style");
+      freezeStyle.id = "vt-freeze";
+      freezeStyle.textContent = `* { transition: none !important; }`;
+      document.head.appendChild(freezeStyle);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const transition = (document as any).startViewTransition(() => {
         setTheme(nextTheme);
       });
 
       transition.finished.then(() => {
+        freezeStyle.remove();
         isTransitioning.current = false;
       }).catch(() => {
+        freezeStyle.remove();
         isTransitioning.current = false;
       });
 

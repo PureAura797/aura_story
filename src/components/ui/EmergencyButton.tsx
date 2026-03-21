@@ -76,13 +76,10 @@ export default function EmergencyButton() {
       style={{ opacity: 0, pointerEvents: isShown ? "auto" : "none" }}
       aria-label="Экстренный вызов"
     >
-      {/* White dot pulse */}
+      {/* Static dot */}
       <span className="relative flex h-2 w-2 shrink-0">
         <span
-          className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/50"
-        />
-        <span
-          className="relative inline-flex rounded-full h-2 w-2 bg-white"
+          className="inline-flex rounded-full h-2 w-2 bg-white"
         />
       </span>
 
