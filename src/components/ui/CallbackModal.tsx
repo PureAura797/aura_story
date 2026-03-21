@@ -32,15 +32,29 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
 
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      gsap.to(overlayRef.current, { opacity: 1, pointerEvents: "auto", duration: 0.3, ease: "power2.out" });
-      gsap.fromTo(panelRef.current, 
-        { y: 40, opacity: 0, scale: 0.96 }, 
-        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power4.out", delay: 0.1 }
+
+      // Overlay fade-in
+      gsap.to(overlayRef.current, { opacity: 1, pointerEvents: "auto", duration: 0.4, ease: "power2.out" });
+
+      // Panel — Glass Float entrance (3D depth)
+      gsap.fromTo(panelRef.current,
+        { y: 50, opacity: 0, scale: 0.92, rotateX: 3 },
+        { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.6, ease: "back.out(1.4)", delay: 0.1 }
+      );
+
+      // Inner content elements — stagger cascade
+      const children = panelRef.current.querySelectorAll(":scope > *");
+      gsap.fromTo(children,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out", stagger: 0.06, delay: 0.25 }
       );
     } else {
       document.body.style.overflow = "";
-      gsap.to(panelRef.current, { y: 20, opacity: 0, scale: 0.97, duration: 0.3, ease: "power3.in" });
+
+      // Panel — fast upward exit
+      gsap.to(panelRef.current, { y: -20, opacity: 0, scale: 0.96, duration: 0.25, ease: "power3.in" });
       gsap.to(overlayRef.current, { opacity: 0, pointerEvents: "none", duration: 0.3, delay: 0.1 });
+
       // Reset state when closing
       setTimeout(() => {
         setSuccess(false);
@@ -89,7 +103,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
     <div
       ref={overlayRef}
       className="fixed inset-0 z-[200] flex items-center justify-center px-6"
-      style={{ opacity: 0, pointerEvents: "none" }}
+      style={{ opacity: 0, pointerEvents: "none", perspective: "800px" }}
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
     >
       {/* Backdrop */}

@@ -32,23 +32,33 @@ export default function ExitIntentPopup() {
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, [dismissed, shown]);
 
-  // Animate in
+  // Animate in — Glass Float
   useEffect(() => {
     if (!shown || !overlayRef.current || !panelRef.current) return;
 
+    // Overlay fade-in
     gsap.fromTo(overlayRef.current,
       { opacity: 0 },
-      { opacity: 1, duration: 0.3 }
+      { opacity: 1, duration: 0.4, ease: "power2.out" }
     );
+
+    // Panel — Glass Float entrance (3D depth)
     gsap.fromTo(panelRef.current,
-      { y: 30, opacity: 0, scale: 0.95 },
-      { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out", delay: 0.1 }
+      { y: 50, opacity: 0, scale: 0.92, rotateX: 3 },
+      { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.6, ease: "back.out(1.4)", delay: 0.1 }
+    );
+
+    // Inner content elements — stagger cascade
+    const children = panelRef.current.querySelectorAll(":scope > *");
+    gsap.fromTo(children,
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.4, ease: "power3.out", stagger: 0.06, delay: 0.25 }
     );
   }, [shown]);
 
   const handleDismiss = () => {
     if (!overlayRef.current || !panelRef.current) return;
-    gsap.to(panelRef.current, { y: 20, opacity: 0, scale: 0.95, duration: 0.25 });
+    gsap.to(panelRef.current, { y: -20, opacity: 0, scale: 0.96, duration: 0.25, ease: "power3.in" });
     gsap.to(overlayRef.current, {
       opacity: 0,
       duration: 0.3,
@@ -67,7 +77,7 @@ export default function ExitIntentPopup() {
       ref={overlayRef}
       className="fixed inset-0 z-[80] flex items-center justify-center p-6"
       onClick={handleDismiss}
-      style={{ opacity: 0 }}
+      style={{ opacity: 0, perspective: "800px" }}
     >
       {/* Backdrop — separate sibling, same as CallbackModal */}
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
