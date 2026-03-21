@@ -101,15 +101,15 @@ export default function ExitIntentPopup() {
         <div className="flex flex-col sm:flex-row gap-3">
           <a
             href={`tel:${contacts.phone}`}
-            className="btn-primary px-6 py-3.5"
+            className="flex-1 flex items-center justify-center gap-2 bg-white/[0.06] border border-white/15 px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-white/10 hover:border-white/25 cursor-pointer"
             aria-label="Позвонить 8 495 120-34-56"
           >
-            <PhoneCall className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
+            <PhoneCall className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
             Позвонить сейчас
           </a>
           <button
             onClick={handleDismiss}
-            className="btn-ghost px-6 py-3.5 text-neutral-500 hover:text-white"
+            className="flex-1 flex items-center justify-center bg-transparent border border-white/10 px-6 py-3.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-400 transition-all duration-300 hover:bg-white/[0.04] hover:text-white hover:border-white/20 cursor-pointer"
           >
             Не сейчас
           </button>
