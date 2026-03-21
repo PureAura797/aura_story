@@ -635,6 +635,7 @@ body.loading {
   background: white;
   border: none;
   cursor: pointer;
+  margin-top: -6px;
   transition: transform 0.2s ease;
 }
 
