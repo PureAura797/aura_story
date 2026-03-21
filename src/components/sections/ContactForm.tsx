@@ -128,7 +128,7 @@ export default function ContactForm() {
                 <textarea id="contact-message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} placeholder={t("contact.message_placeholder")} rows={2} className="w-full bg-transparent border-b border-[var(--border-strong)] py-4 outline-none focus:border-[rgba(94,234,212,0.5)] focus-visible:outline-none transition-colors text-[var(--text-primary)] placeholder-[var(--placeholder)] resize-none text-lg"></textarea>
               </div>
               <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" />
-              <button type="submit" disabled={loading || !isFormValid} className="btn-primary w-full py-4 mt-4 disabled:opacity-30 disabled:cursor-not-allowed">
+              <button type="submit" disabled={loading || !isFormValid} className="btn-primary w-full py-4 mt-4 disabled:opacity-50 disabled:cursor-not-allowed">
                 {loading ? (
                   <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity="0.3" /><path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
                 ) : (
