@@ -840,3 +840,144 @@ body.loading {
   background: #f7f7f8;
 }
 
+/* ── Card & Glass Overrides ─────────────────────────────
+   Most section components use: border-white/10 bg-white/[0.03]
+   This set maps them to light equivalents globally.
+*/
+
+/* Cards: border + bg */
+[data-theme="light"] .service-card,
+[data-theme="light"] .pricing-card,
+[data-theme="light"] .expertise-item,
+[data-theme="light"] .review-card,
+[data-theme="light"] .faq-card,
+[data-theme="light"] .process-step,
+[data-theme="light"] .team-card,
+[data-theme="light"] .equipment-card,
+[data-theme="light"] .certificate-card,
+[data-theme="light"] .portfolio-card {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .service-card:hover,
+[data-theme="light"] .pricing-card:hover,
+[data-theme="light"] .expertise-item:hover,
+[data-theme="light"] .review-card:hover,
+[data-theme="light"] .faq-card:hover,
+[data-theme="light"] .process-step:hover,
+[data-theme="light"] .team-card:hover,
+[data-theme="light"] .equipment-card:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* FAQ open border */
+[data-theme="light"] .faq-card.border-\[rgba\(94\,234\,212\,0\.2\)\] {
+  border-color: rgba(13, 148, 136, 0.3) !important;
+}
+
+/* All inline glass panels (used by many sections for summary boxes) */
+[data-theme="light"] [class*="bg-white/[0.0"],
+[data-theme="light"] [class*="bg-white/\[0.0"] {
+  background: rgba(0, 0, 0, 0.025) !important;
+}
+
+[data-theme="light"] [class*="border-white/10"],
+[data-theme="light"] [class*="border-white/5"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] [class*="border-white/20"] {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ── Text Neutrals ─────────────────────────────────────── */
+[data-theme="light"] .text-white {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-neutral-400 {
+  color: #6b6b6b !important;
+}
+
+[data-theme="light"] .text-neutral-500 {
+  color: #888888 !important;
+}
+
+[data-theme="light"] .text-neutral-600 {
+  color: #a0a0a0 !important;
+}
+
+/* Hero mix-blend adjustment */
+[data-theme="light"] .mix-blend-difference {
+  mix-blend-mode: normal;
+}
+
+/* ── Glass & Backdrop ──────────────────────────────────── */
+[data-theme="light"] [class*="bg-black/"] {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* ── Form Inputs ───────────────────────────────────────── */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #111 !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #aaa !important;
+}
+
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+  border-color: var(--accent) !important;
+}
+
+/* ── Card-lift / Glow ─────────────────────────────────── */
+[data-theme="light"] .accent-glow-hover:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 0 15px var(--accent-glow) !important;
+}
+
+/* ── CostCalculator ───────────────────────────────────── */
+[data-theme="light"] .calculator-panel {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ── Preloader ────────────────────────────────────────── */
+[data-theme="light"] #preloader {
+  background: #f7f7f8 !important;
+}
+
+/* ── Stories Section ──────────────────────────────────── */
+[data-theme="light"] .story-card {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ── Trust Marquee text ──────────────────────────────── */
+[data-theme="light"] .trust-item {
+  color: #888 !important;
+}
+
+/* ── SectionCTA button context ───────────────────────── */
+[data-theme="light"] .section-cta-wrap {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ── LiveClock ───────────────────────────────────────── */
+[data-theme="light"] #live-clock {
+  color: #888;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Availability Pulse ──────────────────────────────── */
+[data-theme="light"] .availability-pulse {
+  color: #111;
+}
+
