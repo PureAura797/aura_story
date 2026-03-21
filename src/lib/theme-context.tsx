@@ -17,13 +17,16 @@ const ThemeContext = createContext<ThemeContextValue>({
 });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
     const saved = localStorage.getItem("theme") as Theme | null;
     if (saved === "light" || saved === "dark") {
       setThemeState(saved);
       document.documentElement.setAttribute("data-theme", saved);
+    } else {
+      // First visit — default to light
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 

@@ -981,3 +981,116 @@ body.loading {
   color: #111;
 }
 
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — Dark Navbar & Footer (per client request)
+   Navbar and Footer keep their dark aesthetic on light theme.
+   ══════════════════════════════════════════════════════ */
+
+/* --- Navbar stays dark --- */
+[data-theme="light"] nav[aria-label="Главная навигация"] {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="light"] nav[aria-label="Главная навигация"] button,
+[data-theme="light"] nav[aria-label="Главная навигация"] a {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-theme="light"] nav[aria-label="Главная навигация"] button:hover,
+[data-theme="light"] nav[aria-label="Главная навигация"] a:hover {
+  color: #fff !important;
+}
+
+/* Logo in navbar stays white */
+[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="На главную"] {
+  color: #fff !important;
+}
+
+/* Navbar CTA button stays white bg */
+[data-theme="light"] nav[aria-label="Главная навигация"] .btn-primary {
+  background: #fff !important;
+  color: #0b0c0f !important;
+}
+
+/* Mobile menu stays dark */
+[data-theme="light"] [role="dialog"][aria-modal="true"] {
+  background: rgba(0, 0, 0, 0.95) !important;
+}
+
+[data-theme="light"] [role="dialog"][aria-modal="true"] button,
+[data-theme="light"] [role="dialog"][aria-modal="true"] a {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="light"] [role="dialog"][aria-modal="true"] .text-4xl {
+  color: #fff !important;
+}
+
+/* Burger icon stays white on light theme */
+[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="Открыть меню"],
+[data-theme="light"] nav[aria-label="Главная навигация"] [aria-label="Закрыть меню"] {
+  color: #fff !important;
+}
+
+/* --- Footer stays dark --- */
+[data-theme="light"] #site-footer {
+  background: #0b0c0f !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="light"] #site-footer p,
+[data-theme="light"] #site-footer span,
+[data-theme="light"] #site-footer a,
+[data-theme="light"] #site-footer button {
+  color: inherit !important;
+}
+
+[data-theme="light"] #site-footer .text-\[var\(--text-muted\)\] {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+[data-theme="light"] #site-footer .text-\[var\(--text-secondary\)\] {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-theme="light"] #site-footer a:hover,
+[data-theme="light"] #site-footer button:hover {
+  color: #fff !important;
+}
+
+[data-theme="light"] #site-footer [class*="border-"] {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — 3D Scene: fully white bg, no vignette
+   ══════════════════════════════════════════════════════ */
+
+[data-theme="light"] .scene-vignette {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════
+   LIGHT THEME — Preloader: dark logo on light background
+   ══════════════════════════════════════════════════════ */
+
+[data-theme="light"] [class*="z-[100]"][class*="fixed"] {
+  background-color: #f7f7f8 !important;
+}
+
+[data-theme="light"] [class*="z-[100]"][class*="fixed"] svg g {
+  fill: #111 !important;
+}
+
+[data-theme="light"] [class*="z-[100]"][class*="fixed"] span {
+  color: #111 !important;
+}
+
+/* Preloader grid lines flip to dark */
+[data-theme="light"] [class*="z-[100]"][class*="fixed"] .bg-white {
+  background-color: #000 !important;
+}

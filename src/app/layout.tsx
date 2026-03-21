@@ -350,7 +350,7 @@ export default function RootLayout({
       <head>
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
         {/* Theme flash prevention — reads localStorage before paint */}
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}else{document.documentElement.style.background='#0b0c0f'}}catch(e){document.documentElement.style.background='#0b0c0f'}})()` }} />
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.style.background='#0b0c0f'}else{document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}})()` }} />
         <style dangerouslySetInnerHTML={{ __html: `body{background:transparent!important}` }} />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />

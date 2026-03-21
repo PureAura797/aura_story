@@ -33,7 +33,7 @@ function DynamicLighting() {
 
 // Theme colors for 3D
 const DARK_BG = '#0b0c0f';
-const LIGHT_BG = '#f0f0f2';
+const LIGHT_BG = '#ffffff';
 
 function useCurrentTheme() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
