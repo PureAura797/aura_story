@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { PhoneCall, ArrowRight } from "lucide-react";
@@ -8,10 +8,28 @@ import AvailabilityPulse from "@/components/ui/AvailabilityPulse";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import { useContacts } from "@/lib/contacts-context";
 
+function maskLicense(text: string, mask: boolean): string {
+  if (!mask) return text;
+  // Match license-like number patterns (e.g. 77.01.13.003.Л.000022.02.26)
+  return text.replace(/№\s*[\d.\w]+/i, (m) => {
+    const clean = m.replace("№ ", "").replace("№", "");
+    if (clean.length <= 4) return m;
+    return "№ •••" + clean.slice(-4);
+  });
+}
+
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
   const contacts = useContacts();
+  const [maskLicenseNum, setMaskLicenseNum] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/site-settings")
+      .then((r) => r.json())
+      .then((d) => { if (d.certificateMaskLicense) setMaskLicenseNum(true); })
+      .catch(() => {});
+  }, []);
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -47,7 +65,7 @@ export default function Hero() {
       <div className="hero-reveal mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[11px] tracking-[0.15em] text-[var(--text-muted)] uppercase font-medium mix-blend-difference">
         <span>{t("hero.trust1")}</span>
         <span>{t("hero.trust2")}</span>
-        <span>{t("hero.trust3")}</span>
+        <span>{maskLicense(t("hero.trust3"), maskLicenseNum)}</span>
       </div>
 
       {/* Live availability pulse */}
