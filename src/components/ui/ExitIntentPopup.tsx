@@ -109,7 +109,7 @@ export default function ExitIntentPopup() {
           прямо сейчас?
         </h3>
         <p className="text-sm text-neutral-500 font-light leading-relaxed mb-8">
-          Оставьте номер — мы перезвоним за 30 секунд и бесплатно проконсультируем по вашей ситуации. Конфиденциально.
+          Оставьте номер — мы перезвоним в течение 15 минут и бесплатно проконсультируем по вашей ситуации. Конфиденциально.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">

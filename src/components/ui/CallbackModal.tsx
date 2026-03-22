@@ -131,7 +131,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
               Обратный звонок
             </h3>
             <p className="text-sm text-neutral-500 font-light mb-8">
-              Оставьте номер — перезвоним в течение 2 минут.
+              Оставьте номер — перезвоним в течение 15 минут.
             </p>
 
             {/* Form */}
@@ -193,11 +193,11 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
             <CheckCircle className="w-12 h-12 text-teal-400 mb-4" strokeWidth={1.5} />
             <h3 className="text-2xl font-bold uppercase tracking-tighter mb-2">Заявка принята</h3>
             <p className="text-sm text-neutral-500 text-center">
-              Мы перезвоним в течение 2 минут. Спасибо!
+              Мы перезвоним в течение 15 минут. Спасибо!
             </p>
             <button
               onClick={onClose}
-              className="btn-ghost mt-6 px-6 py-2.5"
+              className="btn-primary mt-6 px-6 py-2.5"
             >
               Закрыть
             </button>

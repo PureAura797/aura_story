@@ -75,7 +75,7 @@ export default function MessengerWidget() {
       >
       <div data-dark-ui className="bg-[#111214] border border-white/10 backdrop-blur-xl p-5 w-[260px] sm:w-[280px] shadow-2xl">
           <p className="text-xs text-neutral-400 font-light mb-4 leading-relaxed">
-            Напишите нам — ответим за 2 минуты. Конфиденциально.
+            Напишите нам — ответим в течение 15 минут. Конфиденциально.
           </p>
           <div className="flex flex-col divide-y divide-white/[0.06]">
             <a
