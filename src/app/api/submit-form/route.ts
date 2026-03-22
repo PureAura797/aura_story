@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rate-limiter";
+import { readData } from "@/lib/supabase";
 
 /** Escape HTML to prevent XSS in email templates */
 function escapeHtml(str: string): string {
@@ -37,7 +38,15 @@ const DEFAULTS: NotificationSettings = {
   webhook: { enabled: false, url: "" },
 };
 
-function loadSettings(): NotificationSettings {
+async function loadSettings(): Promise<NotificationSettings> {
+  // Primary: read from Supabase (where admin panel saves)
+  try {
+    const saved = await readData<Partial<NotificationSettings>>("notifications", {});
+    if (saved && Object.keys(saved).length > 0) {
+      return { ...DEFAULTS, ...saved };
+    }
+  } catch {}
+  // Fallback: local file
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
@@ -167,7 +176,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const settings = loadSettings();
+    const settings = await loadSettings();
 
     // Check if any channel is enabled
     const anyEnabled = settings.email.enabled || settings.telegram.enabled || settings.max.enabled || settings.webhook.enabled;
