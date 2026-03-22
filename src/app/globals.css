@@ -480,31 +480,7 @@ body.loading {
   transition: color 0.3s, background 0.3s;
 }
 
-/* Shimmer — only on hero variant */
-.btn-primary--hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0) 20%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0) 80%,
-    transparent 100%
-  );
-  animation: shimmer 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* Hero-level glow pulse */
-.btn-primary--hero {
-  overflow: hidden;
-  animation: btn-glow 3s ease-in-out infinite;
-}
+/* Hero — no extra animations, Living Glass handles interactions */
 
 /* Ghost — transparent bg, subtle white border, sharp */
 .btn-ghost {
@@ -799,15 +775,7 @@ body.loading {
   box-shadow: 0 0 8px rgba(13, 148, 136, 0.5), 0 0 20px rgba(13, 148, 136, 0.2);
 }
 
-/* Hero glow pulse */
-[data-theme="light"] .btn-primary--hero {
-  animation: btn-glow-light 3s ease-in-out infinite;
-}
-
-@keyframes btn-glow-light {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 0, 0, 0.05); }
-  50% { box-shadow: 0 0 30px rgba(0, 0, 0, 0.12), 0 0 60px rgba(13, 148, 136, 0.08); }
-}
+/* Hero glow — removed, Living Glass handles all */
 
 /* Link underline effect */
 [data-theme="light"] .link-underline::after {
