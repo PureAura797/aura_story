@@ -85,7 +85,7 @@ const jsonLdOrganization = {
   "alternateName": "Аура Чистоты",
   "description": "Профессиональная биологическая очистка и дезинфекция помещений в Москве и Московской области. Уборка после смерти, пожара, прорыва канализации, накопительства. Устранение запахов, инфекционный контроль.",
   "url": SITE_URL,
-  "telephone": "+7-495-120-34-56",
+  "telephone": "+7-499-964-00-42",
   "email": "help@auraremediation.com",
   "image": `${SITE_URL}/og-image.png`,
   "logo": `${SITE_URL}/logo.svg`,

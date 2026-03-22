@@ -114,9 +114,9 @@ export default function ExitIntentPopup() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <a
-            href={`tel:${contacts.phone}`}
+            href={`tel:${contacts.phoneMobile}`}
             className="btn-primary flex-1 px-6 py-3.5"
-            aria-label="Позвонить 8 495 120-34-56"
+            aria-label={`Позвонить ${contacts.phoneMobileDisplay}`}
           >
             <PhoneCall className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
             Позвонить сейчас

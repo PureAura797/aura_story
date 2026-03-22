@@ -15,6 +15,8 @@ const MaxIcon = (props: LucideProps) => (
 interface ContactsData {
   phone: string;
   phoneDisplay: string;
+  phoneMobile: string;
+  phoneMobileDisplay: string;
   email: string;
   telegram: string;
   max: string;
@@ -30,8 +32,10 @@ const FIELDS: {
   placeholder: string;
   hint: string;
 }[] = [
-  { key: "phone", label: "Телефон (tel: формат)", icon: Phone, placeholder: "+74951203456", hint: "Для ссылок tel: — без пробелов и скобок" },
-  { key: "phoneDisplay", label: "Телефон (отображение)", icon: Phone, placeholder: "8 495 120-34-56", hint: "Как телефон видит посетитель на сайте" },
+  { key: "phone", label: "Городской телефон (tel: формат)", icon: Phone, placeholder: "+74999640042", hint: "Для ссылок tel: — без пробелов и скобок" },
+  { key: "phoneDisplay", label: "Городской телефон (отображение)", icon: Phone, placeholder: "8 (499) 964-00-42", hint: "Как телефон видит посетитель — навбар, футер, форма связи" },
+  { key: "phoneMobile", label: "Мобильный телефон (tel: формат)", icon: Phone, placeholder: "+79916343620", hint: "Экстренная кнопка вызова, попап при уходе" },
+  { key: "phoneMobileDisplay", label: "Мобильный телефон (отображение)", icon: Phone, placeholder: "8 (991) 634-36-20", hint: "Отображается на экстренных кнопках" },
   { key: "email", label: "Email", icon: Mail, placeholder: "help@auraremediation.com", hint: "Для ссылок mailto: и отображения" },
   { key: "telegram", label: "Telegram", icon: TelegramIcon, placeholder: "https://t.me/pureaura", hint: "Ссылка на Telegram аккаунт/бот" },
   { key: "max", label: "MAX Мессенджер", icon: MaxIcon, placeholder: "https://max.ru/pureaura", hint: "Ссылка на MAX аккаунт" },

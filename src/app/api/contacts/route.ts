@@ -6,8 +6,10 @@ const DATA_DIR = path.join(process.cwd(), "src", "data");
 const CONTACTS_FILE = path.join(DATA_DIR, "contacts.json");
 
 const DEFAULTS = {
-  phone: "+74951203456",
-  phoneDisplay: "8 495 120-34-56",
+  phone: "+74999640042",
+  phoneDisplay: "8 (499) 964-00-42",
+  phoneMobile: "+79916343620",
+  phoneMobileDisplay: "8 (991) 634-36-20",
   email: "help@auraremediation.com",
   telegram: "https://t.me/pureaura",
   max: "https://max.ru/pureaura",

@@ -5,6 +5,8 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 export interface ContactsData {
   phone: string;
   phoneDisplay: string;
+  phoneMobile: string;
+  phoneMobileDisplay: string;
   email: string;
   telegram: string;
   max: string;
@@ -14,8 +16,10 @@ export interface ContactsData {
 }
 
 const DEFAULTS: ContactsData = {
-  phone: "+74951203456",
-  phoneDisplay: "8 495 120-34-56",
+  phone: "+74999640042",
+  phoneDisplay: "8 (499) 964-00-42",
+  phoneMobile: "+79916343620",
+  phoneMobileDisplay: "8 (991) 634-36-20",
   email: "help@auraremediation.com",
   telegram: "https://t.me/pureaura",
   max: "https://max.ru/pureaura",

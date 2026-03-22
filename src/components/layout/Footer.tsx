@@ -63,11 +63,19 @@ export default function Footer() {
           <p className="text-xs tracking-[0.2em] text-[var(--text-muted)] uppercase font-medium mb-6">{t("footer.contact_label")}</p>
           <a
             href={`tel:${contacts.phone}`}
-            className="group flex items-center gap-2 text-[var(--text-primary)] hover:opacity-80 transition-opacity mb-4"
+            className="group flex items-center gap-2 text-[var(--text-primary)] hover:opacity-80 transition-opacity mb-2"
             aria-label={`Call ${contacts.phoneDisplay}`}
           >
             <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
             <span className="text-sm font-medium tracking-wide">{contacts.phoneDisplay}</span>
+          </a>
+          <a
+            href={`tel:${contacts.phoneMobile}`}
+            className="group flex items-center gap-2 text-[var(--text-primary)] hover:opacity-80 transition-opacity mb-4"
+            aria-label={`Call ${contacts.phoneMobileDisplay}`}
+          >
+            <Phone className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+            <span className="text-sm font-medium tracking-wide">{contacts.phoneMobileDisplay}</span>
           </a>
           <p className="text-xs text-[var(--text-muted)] mb-6">{t("footer.contact_schedule")}</p>
 

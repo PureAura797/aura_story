@@ -31,7 +31,7 @@ export default function NotFound() {
           На главную
         </Link>
         <a
-          href="tel:+74951203456"
+          href="tel:+74999640042"
           className="px-6 py-3 border border-white/10 text-xs font-bold uppercase tracking-wider text-neutral-400 hover:text-white hover:border-white/30 transition-all"
         >
           Позвонить 24/7
