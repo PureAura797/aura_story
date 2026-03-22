@@ -24,7 +24,7 @@ export default function Reviews() {
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const items = gsap.utils.toArray(".review-card") as HTMLElement[];
+    const items = gsap.utils.toArray(".review-card, [data-animate]") as HTMLElement[];
     ScrollTrigger.batch(items, {
       start: "top 98%",
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
@@ -40,7 +40,7 @@ export default function Reviews() {
       </div>
       <p className="text-sm text-[var(--text-secondary)] font-light mb-12 max-w-lg">{t("reviews.desc")}</p>
 
-      <div className="review-card opacity-0 translate-y-10 flex flex-wrap gap-6 mb-8 w-full max-w-3xl">
+      <div className="opacity-0 translate-y-10 flex flex-wrap gap-6 mb-8 w-full max-w-3xl" data-animate="fade-up">
         <div className="border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-6 flex items-center gap-4">
           <span className="text-4xl md:text-5xl font-bold tracking-tighter">4.9</span>
           <div className="flex flex-col">
