@@ -69,6 +69,12 @@
   opacity: 0.35;
 }
 
+/* Exclude 3D canvas from View Transitions to prevent WebGL context loss */
+.scene-container,
+.scene-container canvas {
+  view-transition-name: none;
+}
+
 html {
   overflow-x: hidden;
 }

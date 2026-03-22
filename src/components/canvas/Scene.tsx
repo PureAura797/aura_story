@@ -138,16 +138,12 @@ export default function Scene() {
     <div 
       ref={containerRef}
       className="scene-container fixed top-0 left-0 w-full h-full -z-10 transition-opacity duration-500"
-      style={{ pointerEvents: 'none', viewTransitionName: 'none' } as React.CSSProperties}
+      style={{ pointerEvents: 'none' }}
     >
       <Canvas
         dpr={[1, 2]}
         style={{ pointerEvents: 'auto' }}
         gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
-        onCreated={({ gl }) => {
-          // Opt canvas out of View Transitions to prevent WebGL context loss
-          gl.domElement.style.viewTransitionName = 'none';
-        }}
       >
         <CameraManager />
         <DynamicBackground />
