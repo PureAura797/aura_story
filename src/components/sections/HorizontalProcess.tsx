@@ -110,7 +110,7 @@ export default function HorizontalProcess() {
           <span className="font-mono text-sm tracking-widest mb-6 md:mb-8" style={{ color: "var(--accent-deep)" }}>ФАЗА 03</span>
           <h3 className="text-xl md:text-2xl font-medium mb-4">Очистка</h3>
           <p className="text-neutral-500 font-light text-[15px] md:text-base">
-            Удаление испорченных материалов, поэтапная химическая обработка и АТФ-тестирование для подтверждения стерильности.
+            Удаление испорченных материалов, поэтапная химическая обработка и контроль чистоты для подтверждения стерильности.
           </p>
         </div>
 
