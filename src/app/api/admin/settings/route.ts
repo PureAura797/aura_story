@@ -2,7 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { isAdminAuthenticatedFromRequest } from "@/lib/admin-auth";
 import { readData, writeData } from "@/lib/supabase";
 
-const DEFAULTS = { recoveryEmail: "", adminPhone: "" };
+const DEFAULTS = {
+  recoveryEmail: "",
+  adminPhone: "",
+  certificateDownloadEnabled: true,
+  certificateMaskLicense: false,
+};
 
 export async function GET(request: NextRequest) {
   if (!(await isAdminAuthenticatedFromRequest(request))) {
@@ -23,6 +28,8 @@ export async function POST(request: NextRequest) {
       ...current,
       recoveryEmail: body.recoveryEmail ?? current.recoveryEmail,
       adminPhone: body.adminPhone ?? current.adminPhone,
+      certificateDownloadEnabled: body.certificateDownloadEnabled ?? current.certificateDownloadEnabled,
+      certificateMaskLicense: body.certificateMaskLicense ?? current.certificateMaskLicense,
     };
     await writeData("settings", updated);
     return NextResponse.json({ success: true });
@@ -30,3 +37,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+

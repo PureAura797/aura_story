@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check, AlertCircle, Lock, Shield, Eye, EyeOff, Mail, Phone, Save, Loader2, ShieldCheck, ShieldOff, Copy, KeyRound } from "lucide-react";
+import { Check, AlertCircle, Lock, Shield, Eye, EyeOff, Mail, Phone, Save, Loader2, ShieldCheck, ShieldOff, Copy, KeyRound, FileText, Download, Hash } from "lucide-react";
 
 function PasswordInput({
   label,
@@ -64,6 +64,11 @@ export default function AdminSettings() {
   const [showDisable, setShowDisable] = useState(false);
   const [backupsCopied, setBackupsCopied] = useState(false);
 
+  // Certificate settings
+  const [certDownload, setCertDownload] = useState(true);
+  const [certMask, setCertMask] = useState(false);
+  const [certSaving, setCertSaving] = useState(false);
+
   useEffect(() => {
     fetch("/api/admin/settings")
       .then((r) => r.json())
@@ -71,6 +76,8 @@ export default function AdminSettings() {
         setRecoveryEmail(data.recoveryEmail || "");
         setAdminPhone(data.adminPhone || "");
         setOriginalProfile({ recoveryEmail: data.recoveryEmail || "", adminPhone: data.adminPhone || "" });
+        if (typeof data.certificateDownloadEnabled === "boolean") setCertDownload(data.certificateDownloadEnabled);
+        if (typeof data.certificateMaskLicense === "boolean") setCertMask(data.certificateMaskLicense);
       })
       .catch(() => {});
 
@@ -211,6 +218,20 @@ export default function AdminSettings() {
     setTwoFALoading(false);
   };
 
+  const handleCertToggle = async (field: "certificateDownloadEnabled" | "certificateMaskLicense", value: boolean) => {
+    if (field === "certificateDownloadEnabled") setCertDownload(value);
+    else setCertMask(value);
+    setCertSaving(true);
+    try {
+      await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: value }),
+      });
+    } catch { /* ignore */ }
+    setCertSaving(false);
+  };
+
   const copyBackupCodes = () => {
     if (setupData?.backupCodes) {
       navigator.clipboard.writeText(setupData.backupCodes.join("\n"));
@@ -280,6 +301,69 @@ export default function AdminSettings() {
               {profileSaved ? "Сохранено" : "Сохранить профиль"}
             </button>
           )}
+        </div>
+      </div>
+
+      {/* ── Certificate Settings ── */}
+      <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-6 mb-4">
+        <div className="flex items-center gap-2.5 mb-6">
+          <FileText className="w-4 h-4 text-amber-400" strokeWidth={1.5} />
+          <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-300">Сертификаты</h2>
+          {certSaving && <Loader2 className="w-3 h-3 animate-spin text-neutral-500 ml-auto" />}
+        </div>
+
+        <div className="space-y-4">
+          {/* Download toggle */}
+          <div className="flex items-center justify-between py-3 px-4 bg-white/[0.02] border border-white/[0.06]">
+            <div className="flex items-center gap-3">
+              <Download className="w-3.5 h-3.5 text-neutral-500" strokeWidth={1.5} />
+              <div>
+                <p className="text-xs text-neutral-300">Скачивание сертификатов</p>
+                <p className="text-[11px] text-neutral-600">Кнопка «Скачать PDF» на сайте</p>
+              </div>
+            </div>
+            <button
+              onClick={() => handleCertToggle("certificateDownloadEnabled", !certDownload)}
+              className={`relative w-10 h-5 transition-colors cursor-pointer ${
+                certDownload ? "bg-teal-500/30" : "bg-white/[0.06]"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 w-4 h-4 bg-white transition-all ${
+                  certDownload ? "left-[22px]" : "left-0.5"
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Mask toggle */}
+          <div className="flex items-center justify-between py-3 px-4 bg-white/[0.02] border border-white/[0.06]">
+            <div className="flex items-center gap-3">
+              <Hash className="w-3.5 h-3.5 text-neutral-500" strokeWidth={1.5} />
+              <div>
+                <p className="text-xs text-neutral-300">Маскировать номер лицензии</p>
+                <p className="text-[11px] text-neutral-600">
+                  {certMask ? (
+                    <>Пример: <span className="font-mono text-amber-400/80">•••0022</span></>
+                  ) : (
+                    "Показывать полный номер на сайте"
+                  )}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => handleCertToggle("certificateMaskLicense", !certMask)}
+              className={`relative w-10 h-5 transition-colors cursor-pointer ${
+                certMask ? "bg-amber-500/30" : "bg-white/[0.06]"
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 w-4 h-4 bg-white transition-all ${
+                  certMask ? "left-[22px]" : "left-0.5"
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
