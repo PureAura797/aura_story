@@ -5,6 +5,7 @@ import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
+import VerificationMeta from "@/components/VerificationMeta";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -58,11 +59,7 @@ export const metadata: Metadata = {
     description: "Профессиональная биологическая очистка: уборка после смерти, пожара, канализации, накопительства. Выезд за 60 минут.",
     images: [`${SITE_URL}/og-image.png`],
   },
-  // TODO: Replace with real verification codes from Yandex Webmaster & Google Search Console
-  // verification: {
-  //   google: "YOUR_GOOGLE_VERIFICATION_CODE",
-  //   yandex: "YOUR_YANDEX_VERIFICATION_CODE",
-  // },
+  verification: {},
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '32x32' },
@@ -356,6 +353,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <VerificationMeta />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}

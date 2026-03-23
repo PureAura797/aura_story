@@ -10,6 +10,8 @@ interface SeoSettings {
   description: string;
   ogImage: string;
   favicon: string;
+  yandexVerification: string;
+  googleVerification: string;
 }
 
 export default function SeoAdmin() {
@@ -182,6 +184,44 @@ export default function SeoAdmin() {
           const f = e.target.files?.[0];
           if (f) uploadFile(f, "favicon.ico", (v) => setSeo({ ...seo, favicon: v }), setFavUploading);
         }} />
+      </div>
+
+      {/* Webmaster Verification */}
+      <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-5 mb-4">
+        <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Верификация в поисковиках</label>
+        <p className="text-[11px] text-neutral-600 mb-4">Коды подтверждения владения сайтом из Яндекс.Вебмастер и Google Search Console. Вставляются как мета-теги в &lt;head&gt;.</p>
+        
+        <div className="space-y-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <div className="w-2 h-2 rounded-full bg-red-500" />
+              <label className="text-xs text-neutral-300">Яндекс.Вебмастер</label>
+            </div>
+            <input
+              type="text"
+              value={seo.yandexVerification || ""}
+              onChange={(e) => setSeo({ ...seo, yandexVerification: e.target.value })}
+              className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-white/20 focus-visible:outline-none transition-colors font-mono text-xs"
+              placeholder="abc123def456"
+            />
+            <p className="text-[11px] text-neutral-600 mt-1">Код из <a href="https://webmaster.yandex.ru" target="_blank" rel="noopener" className="text-red-400/60 hover:text-red-400 underline">webmaster.yandex.ru</a> → Права доступа → HTML-тег → значение content</p>
+          </div>
+          
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              <label className="text-xs text-neutral-300">Google Search Console</label>
+            </div>
+            <input
+              type="text"
+              value={seo.googleVerification || ""}
+              onChange={(e) => setSeo({ ...seo, googleVerification: e.target.value })}
+              className="w-full bg-white/[0.04] border border-white/[0.08] px-4 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-white/20 focus-visible:outline-none transition-colors font-mono text-xs"
+              placeholder="xyz789abc012"
+            />
+            <p className="text-[11px] text-neutral-600 mt-1">Код из <a href="https://search.google.com/search-console" target="_blank" rel="noopener" className="text-blue-400/60 hover:text-blue-400 underline">Search Console</a> → Настройки → Подтверждение → Тег HTML → значение content</p>
+          </div>
+        </div>
       </div>
 
       {/* Preview */}

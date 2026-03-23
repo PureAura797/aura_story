@@ -352,6 +352,8 @@ export interface SeoSettings {
   description: string;
   ogImage: string;
   favicon: string;
+  yandexVerification: string;
+  googleVerification: string;
 }
 
 const DEFAULT_SEO: SeoSettings = {
@@ -359,6 +361,8 @@ const DEFAULT_SEO: SeoSettings = {
   description: "Профессиональная уборка после смерти, пожара, прорыва канализации и накопительства в Москве и МО. Устранение запаха, копоти, сажи. Дезинфекция по СанПиН. Выезд 60 минут, лицензия СЭС. Фиксированная цена, NDA, гарантия 30 дней.",
   ogImage: "/og-image.png",
   favicon: "/favicon.ico",
+  yandexVerification: "",
+  googleVerification: "",
 };
 
 export async function getSeo(): Promise<SeoSettings> {
