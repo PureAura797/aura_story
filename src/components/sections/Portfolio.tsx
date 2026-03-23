@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -8,18 +8,32 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import SectionCTA from "@/components/ui/SectionCTA";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface PortfolioProject {
+  id: string;
+  type: string;
+  area: string;
+  time: string;
+  description: string;
+  beforeImg: string;
+  afterImg: string;
+}
+
 export default function Portfolio() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
-  const projects = [
-    { type: t("portfolio.1.type"), area: t("portfolio.1.area"), time: t("portfolio.1.time"), description: t("portfolio.1.desc"), beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp" },
-    { type: t("portfolio.2.type"), area: t("portfolio.2.area"), time: t("portfolio.2.time"), description: t("portfolio.2.desc"), beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp" },
-    { type: t("portfolio.3.type"), area: t("portfolio.3.area"), time: t("portfolio.3.time"), description: t("portfolio.3.desc"), beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp" },
-    { type: t("portfolio.4.type"), area: t("portfolio.4.area"), time: t("portfolio.4.time"), description: t("portfolio.4.desc"), beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp" },
-  ];
+  useEffect(() => {
+    fetch("/api/portfolio")
+      .then((res) => res.json())
+      .then((data) => setProjects(data))
+      .catch(() => setProjects([]))
+      .finally(() => setDataLoading(false));
+  }, []);
 
   useGSAP(() => {
+    if (projects.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".portfolio-card") as HTMLElement[];
     ScrollTrigger.batch(cards, {
@@ -27,7 +41,9 @@ export default function Portfolio() {
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [projects] });
+
+  if (dataLoading || projects.length === 0) return null;
 
   return (
     <section ref={containerRef} className="w-full flex flex-col items-end z-10 relative">
@@ -38,8 +54,8 @@ export default function Portfolio() {
       <p className="text-sm text-[var(--text-secondary)] font-light text-right mb-16 max-w-md">{t("portfolio.desc")}</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-        {projects.map((project, idx) => (
-          <div key={idx} className="portfolio-card opacity-0 translate-y-10 relative overflow-hidden border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[var(--border-strong)] transition-all duration-500">
+        {projects.map((project) => (
+          <div key={project.id} className="portfolio-card opacity-0 translate-y-10 relative overflow-hidden border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[var(--border-strong)] transition-all duration-500">
             <div className="flex gap-2 mb-6">
               <div className="flex-1 h-40 bg-[var(--bg-card)] border border-[var(--border)] relative overflow-hidden group/img">
                 {project.beforeImg && <Image src={project.beforeImg} alt={`${project.type} - ${t("portfolio.before")}`} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover opacity-60 mix-blend-luminosity group-hover/img:opacity-100 group-hover/img:mix-blend-normal transition-all duration-700" loading="lazy" />}

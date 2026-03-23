@@ -136,6 +136,34 @@ export async function saveServices(services: ServiceItem[]): Promise<void> {
   await writeJSON("services", services);
 }
 
+// ─── Portfolio ────────────────────────────────────────
+export interface PortfolioItem {
+  id: string;
+  type: string;
+  area: string;
+  time: string;
+  description: string;
+  beforeImg: string;
+  afterImg: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_PORTFOLIO: PortfolioItem[] = [
+  { id: "1", type: "Уборка после ЧП", area: "48 кв.м", time: "8 часов", description: "Однокомнатная квартира. Полный демонтаж напольного покрытия, STP-обработка стен и потолка, трёхкратная озонация.", beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp", published: true, sort_order: 0 },
+  { id: "2", type: "Расхламление", area: "72 кв.м", time: "2 дня", description: "Двухкомнатная квартира. Вывоз 180 мешков, дезинсекция, дезинфекция всех поверхностей, восстановление вентиляции.", beforeImg: "/images/portfolio/hoarder_before.webp", afterImg: "/images/portfolio/hoarder_after.webp", published: true, sort_order: 1 },
+  { id: "3", type: "Устранение запахов", area: "95 кв.м", time: "6 часов", description: "Трёхкомнатная квартира. Локализация источника в стяжке, демонтаж 12 кв.м пола, обработка гидроксилом, контрольные замеры.", beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp", published: true, sort_order: 2 },
+  { id: "4", type: "Инфекционный контроль", area: "110 кв.м", time: "10 часов", description: "Коммерческое помещение после прорыва канализации. Откачка, дезинфекция по СанПиН, сушка промышленными осушителями.", beforeImg: "/images/portfolio/fire_before.webp", afterImg: "/images/portfolio/fire_after.webp", published: true, sort_order: 3 },
+];
+
+export async function getPortfolio(): Promise<PortfolioItem[]> {
+  return readJSON<PortfolioItem[]>("portfolio", DEFAULT_PORTFOLIO);
+}
+
+export async function savePortfolio(items: PortfolioItem[]): Promise<void> {
+  await writeJSON("portfolio", items);
+}
+
 // ─── Pricing ─────────────────────────────────────────
 export interface PricingItem {
   id: string;
