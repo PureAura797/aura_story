@@ -164,6 +164,37 @@ export async function savePortfolio(items: PortfolioItem[]): Promise<void> {
   await writeJSON("portfolio", items);
 }
 
+// ─── Equipment ────────────────────────────────────────
+export interface EquipmentItem {
+  id: string;
+  name: string;
+  tag: string;
+  specs: string;
+  purpose: string;
+  details: string;
+  image: string;
+  color: string;
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_EQUIPMENT: EquipmentItem[] = [
+  { id: "1", name: "Генератор озона Dragon 20g", tag: "озонирование", specs: "20 г/ч", purpose: "Уничтожение органики и патогенов в воздухе. Мощность 20 г/ч.", details: "Промышленный озонатор для обеззараживания воздуха и поверхностей. Генерирует 20 граммов озона в час — достаточно для обработки помещений до 100 м². Озон окисляет органические соединения, уничтожает бактерии, вирусы и споры плесени. Полный цикл обработки — 2 часа.", image: "/equipment/ozone.webp", color: "#5eead4", published: true, sort_order: 0 },
+  { id: "2", name: "Генератор гидроксила Biozone", tag: "очистка воздуха", specs: "PCO + UV-C", purpose: "Расщепление сложных запахов на молекулярном уровне без химических остатков.", details: "Фотокаталитический очиститель воздуха на основе UV-C ламп и TiO₂ катализатора. Генерирует гидроксильные радикалы, которые разрушают молекулы запахов, летучие органические соединения и патогены. Безопасен для людей — можно работать в присутствии заказчика.", image: "/equipment/hydroxyl.webp", color: "#38bdf8", published: true, sort_order: 1 },
+  { id: "3", name: "STP-аппарат ULV Cold Fogger", tag: "распыление", specs: "5L / 800W", purpose: "Нанесение биоцидных составов на все поверхности, включая труднодоступные зоны.", details: "Ультранизкообъёмный распылитель холодного тумана. Размер капель 5–50 мкм — проникает в щели, вентиляцию, за мебель. Бак 5 литров, мощность 800 Вт. Обрабатывает до 200 м² за один заход. Совместим со всеми биоцидными и дезинфицирующими растворами.", image: "/equipment/fogger.webp", color: "#d4a574", published: true, sort_order: 2 },
+  { id: "4", name: "Люминометр 3M Clean-Trace", tag: "диагностика", specs: "15 сек", purpose: "Объективный контроль чистоты поверхностей до и после обработки. Результат за 15 секунд.", details: "Портативный прибор для экспресс-анализа чистоты поверхностей. Измеряет уровень биологического загрязнения. Результат в RLU за 15 секунд. Протокол до/после обработки — объективное доказательство качества для заказчика.", image: "/equipment/atp.webp", color: "#a78bfa", published: true, sort_order: 3 },
+  { id: "5", name: "Осушитель Trotec TTK", tag: "сушка", specs: "70 л/сут", purpose: "Принудительная сушка помещений после мокрой обработки. Производительность до 70 л/сутки.", details: "Промышленный конденсационный осушитель немецкого производства. Удаляет до 70 литров влаги в сутки. Применяется после мокрой дезинфекции, устранения последствий затоплений. Встроенный гигростат, автоматическое отключение, транспортировочные колёса.", image: "/equipment/dehumidifier.webp", color: "#fb7185", published: true, sort_order: 4 },
+  { id: "6", name: "СИЗ и герметизация 3М", tag: "защита", specs: "класс 3", purpose: "Полная защита персонала и изоляция зоны заражения от остальных помещений.", details: "Полнолицевой респиратор 3М серии 6000 с комбинированными фильтрами ABEK2P3. Защитный комбинезон Tyvek категории III. Герметизация зон заражения полиэтиленом с проклейкой швов. Полная изоляция рабочей зоны от остального помещения.", image: "/equipment/ppe.webp", color: "#14b8a6", published: true, sort_order: 5 },
+];
+
+export async function getEquipment(): Promise<EquipmentItem[]> {
+  return readJSON<EquipmentItem[]>("equipment", DEFAULT_EQUIPMENT);
+}
+
+export async function saveEquipment(items: EquipmentItem[]): Promise<void> {
+  await writeJSON("equipment", items);
+}
+
 // ─── Pricing ─────────────────────────────────────────
 export interface PricingItem {
   id: string;

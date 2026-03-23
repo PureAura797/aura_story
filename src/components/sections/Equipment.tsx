@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -9,30 +9,36 @@ import { ChevronDown, MoreHorizontal } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface EquipmentData {
+  id: string;
+  name: string;
+  tag: string;
+  specs: string;
+  purpose: string;
+  details: string;
+  image: string;
+  color: string;
+}
+
 export default function Equipment() {
   const containerRef = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [equipment, setEquipment] = useState<EquipmentData[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
   const { t } = useTranslation();
 
-  const equipment = [
-    { image: "/equipment/ozone.webp", color: "#5eead4" },
-    { image: "/equipment/hydroxyl.webp", color: "#38bdf8" },
-    { image: "/equipment/fogger.webp", color: "#d4a574" },
-    { image: "/equipment/atp.webp", color: "#a78bfa" },
-    { image: "/equipment/dehumidifier.webp", color: "#fb7185" },
-    { image: "/equipment/ppe.webp", color: "#14b8a6" },
-  ].map((item, i) => ({
-    ...item,
-    specs: t(`equipment.${i + 1}.specs`),
-    name: t(`equipment.${i + 1}.name`),
-    purpose: t(`equipment.${i + 1}.purpose`),
-    tag: t(`equipment.${i + 1}.tag`),
-    details: t(`equipment.${i + 1}.details`),
-  }));
+  useEffect(() => {
+    fetch("/api/equipment")
+      .then((res) => res.json())
+      .then((data) => setEquipment(data))
+      .catch(() => setEquipment([]))
+      .finally(() => setDataLoading(false));
+  }, []);
 
   const toggleExpand = (idx: number) => setExpanded((prev) => (prev === idx ? null : idx));
 
   useGSAP(() => {
+    if (equipment.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray(".equip-card") as HTMLElement[];
     gsap.set(cards, { y: 40, opacity: 0, scale: 0.95 });
@@ -41,7 +47,9 @@ export default function Equipment() {
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, scale: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [equipment] });
+
+  if (dataLoading || equipment.length === 0) return null;
 
   return (
     <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
@@ -53,7 +61,7 @@ export default function Equipment() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full items-start">
         {equipment.map((item, idx) => (
-          <div key={idx} className="equip-card card-lift group flex flex-col border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm overflow-hidden hover:border-[var(--border-strong)] transition-all duration-500">
+          <div key={item.id} className="equip-card card-lift group flex flex-col border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm overflow-hidden hover:border-[var(--border-strong)] transition-all duration-500">
             <div className="flex items-center justify-between px-3 py-2.5 md:px-4 md:py-3">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: `${item.color}20`, border: `1px solid ${item.color}30` }}>
