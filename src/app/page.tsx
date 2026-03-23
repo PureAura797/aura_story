@@ -29,6 +29,9 @@ import ClientWidgets from "@/components/ui/ClientWidgets";
 */}
 const SP = "px-5 sm:px-10 lg:px-[8vw]";
 
+/** ISR — static page cached on CDN, revalidated every hour */
+export const revalidate = 3600;
+
 export default function Home() {
   return (
     <>

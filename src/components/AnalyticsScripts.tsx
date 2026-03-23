@@ -1,5 +1,6 @@
-import fs from "fs";
-import path from "path";
+"use client";
+
+import { useEffect, useState } from "react";
 import Script from "next/script";
 
 interface CustomScript {
@@ -18,25 +19,17 @@ interface AnalyticsSettings {
   customScripts: CustomScript[];
 }
 
-function loadAnalytics(): AnalyticsSettings {
-  const DATA_FILE = path.join(process.cwd(), "src/data/analytics.json");
-  const defaults: AnalyticsSettings = {
-    yandexMetrika: "",
-    googleAnalytics: "",
-    googleTagManager: "",
-    vkPixel: "",
-    customScripts: [],
-  };
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      return { ...defaults, ...JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")) };
-    }
-  } catch {}
-  return defaults;
-}
-
 export default function AnalyticsScripts() {
-  const a = loadAnalytics();
+  const [a, setA] = useState<AnalyticsSettings | null>(null);
+
+  useEffect(() => {
+    fetch("/api/analytics")
+      .then((r) => r.json())
+      .then(setA)
+      .catch(() => {});
+  }, []);
+
+  if (!a) return null;
 
   return (
     <>

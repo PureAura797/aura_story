@@ -354,7 +354,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <VerificationMeta />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
@@ -390,6 +389,7 @@ export default function RootLayout({
           {children}
         </Providers>
         <AnalyticsScripts />
+        <VerificationMeta />
         <SpeedInsights />
       </body>
     </html>

@@ -1,33 +1,29 @@
-import fs from "fs";
-import path from "path";
+"use client";
 
-interface SeoData {
-  yandexVerification: string;
-  googleVerification: string;
-}
-
-function loadSeo(): SeoData {
-  const DATA_FILE = path.join(process.cwd(), "src/data/seo.json");
-  const defaults: SeoData = { yandexVerification: "", googleVerification: "" };
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      return { ...defaults, ...JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")) };
-    }
-  } catch {}
-  return defaults;
-}
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function VerificationMeta() {
-  const seo = loadSeo();
+  const [yandex, setYandex] = useState("");
+  const [google, setGoogle] = useState("");
 
-  return (
+  useEffect(() => {
+    fetch("/api/seo")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.yandexVerification) setYandex(d.yandexVerification);
+        if (d.googleVerification) setGoogle(d.googleVerification);
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!yandex && !google) return null;
+
+  return createPortal(
     <>
-      {seo.yandexVerification && (
-        <meta name="yandex-verification" content={seo.yandexVerification} />
-      )}
-      {seo.googleVerification && (
-        <meta name="google-site-verification" content={seo.googleVerification} />
-      )}
-    </>
+      {yandex && <meta name="yandex-verification" content={yandex} />}
+      {google && <meta name="google-site-verification" content={google} />}
+    </>,
+    document.head
   );
 }
