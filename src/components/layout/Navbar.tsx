@@ -322,7 +322,7 @@ export default function Navbar() {
 
           <button 
             onClick={() => { closeMenu(); setTimeout(() => setModalOpen(true), 600); }}
-            className="px-6 py-3 text-sm mt-2 mobile-link bg-white text-black font-bold uppercase tracking-wider text-xs hover:bg-neutral-200 transition-colors cursor-pointer"
+            className="px-6 py-3 mt-2 mobile-link bg-white !text-black font-bold uppercase tracking-wider text-xs hover:bg-neutral-200 transition-colors cursor-pointer"
           >
             {t("nav.callback")}
           </button>

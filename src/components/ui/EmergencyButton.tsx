@@ -47,7 +47,18 @@ export default function EmergencyButton() {
     };
   }, []);
 
-  const isShown = visible && !modalOpen;
+  const [menuOpen, setMenuState] = useState(false);
+
+  // Watch for menu open state
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setMenuState(document.body.hasAttribute("data-menu-open"));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-menu-open"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const isShown = visible && !modalOpen && !menuOpen;
 
   useEffect(() => {
     if (!btnRef.current) return;
