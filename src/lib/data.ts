@@ -195,6 +195,35 @@ export async function saveEquipment(items: EquipmentItem[]): Promise<void> {
   await writeJSON("equipment", items);
 }
 
+// ─── Stories ──────────────────────────────────────────
+export interface StoryItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  cover: string;
+  videos: string[];
+  published: boolean;
+  sort_order: number;
+}
+
+const DEFAULT_STORIES: StoryItem[] = [
+  { id: "1", title: "Кейс", subtitle: "Уборка", color: "#5eead4", cover: "/stories/covers/cover-1.webp", videos: ["/stories/story-1_1.mp4", "/stories/story-1_2.mp4", "/stories/story-1_3.mp4", "/stories/story-1_4.mp4"], published: true, sort_order: 0 },
+  { id: "2", title: "Кейс", subtitle: "Расхлам", color: "#d4a574", cover: "/stories/covers/cover-2.webp", videos: ["/stories/story-2_1.mp4", "/stories/story-2_2.mp4", "/stories/story-2_3.mp4", "/stories/story-2_4.mp4"], published: true, sort_order: 1 },
+  { id: "3", title: "Кейс", subtitle: "Запахи", color: "#14b8a6", cover: "/stories/covers/cover-3.webp", videos: ["/stories/story-3_1.mp4", "/stories/story-3_2.mp4", "/stories/story-3_3.mp4", "/stories/story-3_4.mp4"], published: true, sort_order: 2 },
+  { id: "4", title: "Кейс", subtitle: "Пожар", color: "#fb7185", cover: "/stories/covers/cover-4.webp", videos: ["/stories/story-4_1.mp4", "/stories/story-4_2.mp4", "/stories/story-4_3.mp4", "/stories/story-4_4.mp4"], published: true, sort_order: 3 },
+  { id: "5", title: "Кейс", subtitle: "Плесень", color: "#a78bfa", cover: "/stories/covers/cover-5.webp", videos: ["/stories/story-5_1.mp4", "/stories/story-5_2.mp4", "/stories/story-5_3.mp4", "/stories/story-5_4.mp4"], published: true, sort_order: 4 },
+  { id: "6", title: "Кейс", subtitle: "Контроль", color: "#5eead4", cover: "/stories/covers/cover-6.webp", videos: ["/stories/story-6_1.mp4", "/stories/story-6_2.mp4", "/stories/story-6_3.mp4", "/stories/story-6_4.mp4"], published: true, sort_order: 5 },
+];
+
+export async function getStories(): Promise<StoryItem[]> {
+  return readJSON<StoryItem[]>("stories", DEFAULT_STORIES);
+}
+
+export async function saveStories(items: StoryItem[]): Promise<void> {
+  await writeJSON("stories", items);
+}
+
 // ─── Pricing ─────────────────────────────────────────
 export interface PricingItem {
   id: string;

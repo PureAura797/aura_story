@@ -7,10 +7,10 @@ import { X, ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 const SWIPE_THRESHOLD = 50;
 
 interface Story {
-  id: number;
+  id: string | number;
   title: string;
   subtitle: string;
-  gradient: string;
+  gradient?: string;
   color: string;
   videos: string[];
 }

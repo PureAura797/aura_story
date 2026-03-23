@@ -21,8 +21,6 @@ interface MediaCategory {
 type MediaData = Record<string, MediaCategory>;
 
 const CATEGORY_META: Record<string, { label: string; icon: typeof ImageIcon; description: string }> = {
-  stories_covers: { label: "Сторис — обложки", icon: ImageIcon, description: "Обложки сторис (PNG, 1080×1920 рек.)" },
-  stories_videos: { label: "Сторис — видео", icon: Film, description: "Видео сторис (MP4, до 15 сек каждое)" },
   certificates: { label: "Сертификаты", icon: Award, description: "Лицензии и сертификаты (PNG/WebP, любой размер)" },
 };
 
