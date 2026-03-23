@@ -222,7 +222,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full border-b border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm ${menuOpen ? "z-[70]" : "z-50"}`} aria-label="Главная навигация">
+      <nav className={`fixed top-0 w-full border-b border-[var(--border)] bg-[var(--glass-bg)] backdrop-blur-sm ${menuOpen ? "z-[10000]" : "z-50"}`} aria-label="Главная навигация">
         <div className="w-full px-5 sm:px-10 lg:px-[8vw] py-4 flex items-center justify-between">
           
           {/* Logo — just text, no icon */}
@@ -285,7 +285,7 @@ export default function Navbar() {
       {/* Fullscreen overlay — clip-path animated */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 h-[100dvh] bg-[#0b0c0f] z-[60] flex flex-col items-start justify-center px-10"
+        className="fixed inset-0 h-[100dvh] bg-[#0b0c0f] z-[9999] isolate flex flex-col items-start justify-center px-10"
         style={{ visibility: "hidden", clipPath: "circle(0% at calc(100% - 32px) 28px)" }}
         role="dialog"
         aria-modal="true"
