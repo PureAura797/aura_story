@@ -1,28 +1,46 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Star } from "lucide-react";
+import { EmptyState, ErrorState, SkeletonCards } from "@/components/ui/DataStates";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SectionCTA from "@/components/ui/SectionCTA";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface Review {
+  id: string;
+  author: string;
+  service: string;
+  text: string;
+  date_label: string;
+  rating: number;
+  published: boolean;
+  sort_order: number;
+}
+
 export default function Reviews() {
   const containerRef = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const reviews = [
-    { nameKey: "reviews.1.name", dateKey: "reviews.1.date", serviceKey: "pricing.1.name", textKey: "reviews.1.text" },
-    { nameKey: "reviews.2.name", dateKey: "reviews.2.date", serviceKey: "pricing.2.name", textKey: "reviews.2.text" },
-    { nameKey: "reviews.3.name", dateKey: "reviews.3.date", serviceKey: "pricing.4.name", textKey: "reviews.3.text" },
-    { nameKey: "reviews.4.name", dateKey: "reviews.4.date", serviceKey: "pricing.3.name", textKey: "reviews.4.text" },
-    { nameKey: "reviews.5.name", dateKey: "reviews.5.date", serviceKey: "pricing.7.name", textKey: "reviews.5.text" },
-    { nameKey: "reviews.6.name", dateKey: "reviews.6.date", serviceKey: "pricing.5.name", textKey: "reviews.6.text" },
-    { nameKey: "reviews.7.name", dateKey: "reviews.7.date", serviceKey: "pricing.5.name", textKey: "reviews.7.text" },
-  ];
+  const fetchReviews = () => {
+    setDataLoading(true);
+    setError(false);
+    fetch("/api/reviews")
+      .then((res) => res.json())
+      .then((data) => setReviews(data))
+      .catch(() => setError(true))
+      .finally(() => setDataLoading(false));
+  };
+
+  useEffect(() => { fetchReviews(); }, []);
 
   useGSAP(() => {
+    if (reviews.length === 0) return;
     gsap.registerPlugin(ScrollTrigger);
     const items = gsap.utils.toArray(".review-card, [data-animate]") as HTMLElement[];
     ScrollTrigger.batch(items, {
@@ -30,7 +48,7 @@ export default function Reviews() {
       onEnter: (batch) => gsap.to(batch, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: "power2.out" }),
       once: true,
     });
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [reviews] });
 
   return (
     <section ref={containerRef} className="w-full flex flex-col items-start z-10 relative">
@@ -57,20 +75,28 @@ export default function Reviews() {
         </div>
       </div>
 
+      {dataLoading ? (
+        <SkeletonCards count={3} />
+      ) : error ? (
+        <ErrorState onRetry={fetchReviews} />
+      ) : reviews.length === 0 ? (
+        <EmptyState title="Нет отзывов" />
+      ) : (
       <div className="flex flex-col w-full max-w-3xl gap-4">
-        {reviews.map((review, idx) => (
-          <div key={idx} className="review-card card-lift accent-glow-hover opacity-0 translate-y-10 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
+        {reviews.map((review) => (
+          <div key={review.id} className="review-card card-lift accent-glow-hover opacity-0 translate-y-10 border border-[var(--border)] bg-[var(--glass-card)] backdrop-blur-sm p-8 group hover:border-[var(--sand)]/20 transition-all duration-500">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-4">
-                <span className="text-[var(--text-primary)] font-bold text-sm">{t(review.nameKey)}</span>
-                <span className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{t(review.serviceKey)}</span>
+                <span className="text-[var(--text-primary)] font-bold text-sm">{review.author}</span>
+                <span className="text-[11px] uppercase tracking-[0.15em] font-medium" style={{ color: "var(--accent)" }}>{review.service}</span>
               </div>
-              <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)]">{t(review.dateKey)}</span>
+              <span className="text-[11px] uppercase tracking-[0.15em] text-[var(--text-muted)]">{review.date_label}</span>
             </div>
-            <p className="text-[var(--text-secondary)] text-sm leading-relaxed">«{t(review.textKey)}»</p>
+            <p className="text-[var(--text-secondary)] text-sm leading-relaxed">«{review.text}»</p>
           </div>
         ))}
       </div>
+      )}
 
       <SectionCTA variant="form" label={t("reviews.cta")} />
     </section>
