@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Upload, Check, AlertCircle, Film, ImageIcon, Briefcase, Wrench, Plus, Trash2 } from "lucide-react";
+import { Upload, Check, AlertCircle, Film, ImageIcon, Briefcase, Wrench, Plus, Trash2, Award } from "lucide-react";
 import AdminLoader from "../AdminLoader";
 import { useToast } from "@/components/ui/Toast";
 import { ALLOWED_EXTENSIONS, MAX_FILE_SIZE } from "@/lib/supabase-storage";
@@ -25,6 +25,7 @@ const CATEGORY_META: Record<string, { label: string; icon: typeof ImageIcon; des
   stories_videos: { label: "Сторис — видео", icon: Film, description: "Видео сторис (MP4, до 15 сек каждое)" },
   portfolio: { label: "Портфолио", icon: Briefcase, description: "До/После фото (PNG, 1200×800 рек.)" },
   equipment: { label: "Оборудование", icon: Wrench, description: "Фото оборудования (PNG, 800×600 рек.)" },
+  certificates: { label: "Сертификаты", icon: Award, description: "Лицензии и сертификаты (PNG/WebP, любой размер)" },
 };
 
 function formatSize(bytes: number): string {
@@ -107,14 +108,6 @@ function SlotCard({
 
   return (
     <div className="border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl backdrop-saturate-150 p-3 hover:border-white/10 transition-all group relative">
-      {/* Delete button */}
-      <button
-        onClick={() => { if (confirm(`Удалить ${file.name}?`)) onDelete(dir, file.name); }}
-        className="absolute top-1.5 right-1.5 p-1 bg-black/60 border border-white/[0.06] opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer hover:border-red-500/30"
-      >
-        <Trash2 className="w-3 h-3 text-red-400" strokeWidth={1.5} />
-      </button>
-
       {/* Preview */}
       <div className="relative w-full aspect-square bg-white/[0.02] mb-3 overflow-hidden flex items-center justify-center">
         {file.exists ? (
@@ -160,10 +153,17 @@ function SlotCard({
         </div>
       </div>
 
-      {/* Info */}
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] text-neutral-400 font-mono truncate">{file.name}</span>
-        <span className="text-[11px] text-neutral-600">{formatSize(file.size)}</span>
+      {/* Info + delete */}
+      <div className="flex items-center justify-between gap-1">
+        <span className="text-[11px] text-neutral-400 font-mono truncate flex-1 min-w-0">{file.name}</span>
+        <span className="text-[11px] text-neutral-600 shrink-0">{formatSize(file.size)}</span>
+        <button
+          onClick={() => { if (confirm(`Удалить ${file.name}?`)) onDelete(dir, file.name); }}
+          className="shrink-0 ml-1 p-1.5 border border-white/[0.06] hover:border-red-500/30 transition-colors cursor-pointer"
+          title="Удалить"
+        >
+          <Trash2 className="w-3.5 h-3.5 text-red-400" strokeWidth={1.5} />
+        </button>
       </div>
 
       {error && (

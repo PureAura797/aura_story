@@ -24,6 +24,7 @@ const MEDIA_CATEGORIES: Record<string, { dir: string; category: string }> = {
   stories_videos: { dir: "stories", category: "stories_videos" },
   portfolio: { dir: "images/portfolio", category: "portfolio" },
   equipment: { dir: "equipment", category: "equipment" },
+  certificates: { dir: "certificates", category: "certificates" },
 };
 
 // Scan local public/ directory for legacy files
