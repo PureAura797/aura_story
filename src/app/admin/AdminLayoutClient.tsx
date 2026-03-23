@@ -5,20 +5,30 @@ import { usePathname } from "next/navigation";
 import AdminShellInner from "./AdminShell";
 import { ToastProvider } from "@/components/ui/Toast";
 
+declare global {
+  interface Window {
+    __adminPrevTheme?: string;
+    __adminPrevBg?: string;
+  }
+}
+
 export default function AdminLayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Force dark theme for all admin pages
+  // Keep dark theme enforced (in case something resets it)
+  // and handle cleanup when leaving admin
   useEffect(() => {
     const html = document.documentElement;
-    const prev = html.getAttribute("data-theme") || "light";
     html.setAttribute("data-theme", "dark");
     html.style.background = "#0b0c0f";
 
     return () => {
       // Restore previous theme when leaving admin
-      html.setAttribute("data-theme", prev);
-      html.style.background = prev === "dark" ? "#0b0c0f" : "#f7f7f8";
+      const prev = window.__adminPrevTheme || "";
+      if (prev && prev !== "dark") {
+        html.setAttribute("data-theme", prev);
+        html.style.background = window.__adminPrevBg || (prev === "light" ? "#f7f7f8" : "#0b0c0f");
+      }
     };
   }, []);
 
