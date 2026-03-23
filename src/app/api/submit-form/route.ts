@@ -74,15 +74,15 @@ function formatMessage(data: Record<string, string>): string {
 function formatEmailHtml(data: Record<string, string>): string {
   const type = data.form_type === "callback" ? "Обратный звонок" : "Заявка с сайта";
   return `
-    <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:24px;background:#111;color:#fff;border:1px solid #333;">
-      <h2 style="margin:0 0 8px;font-size:18px;color:#5eead4;">${type}</h2>
-      <hr style="border:none;border-top:1px solid #333;margin:12px 0;" />
-      ${data.name ? `<p style="margin:4px 0;"><strong>Имя:</strong> ${escapeHtml(data.name)}</p>` : ""}
-      ${data.phone ? `<p style="margin:4px 0;"><strong>Телефон:</strong> <a href="tel:${data.phone.replace(/\D/g, "")}" style="color:#5eead4;">${escapeHtml(data.phone)}</a></p>` : ""}
-      ${data.message ? `<p style="margin:4px 0;"><strong>Сообщение:</strong> ${escapeHtml(data.message)}</p>` : ""}
-      <hr style="border:none;border-top:1px solid #333;margin:12px 0;" />
-      <p style="margin:4px 0;font-size:12px;color:#666;">Источник: ${data.source || "сайт"}</p>
-      <p style="margin:4px 0;font-size:12px;color:#666;">Время: ${data.submitted_at || new Date().toISOString()}</p>
+    <div style="font-family:system-ui,-apple-system,sans-serif;max-width:480px;margin:0 auto;padding:24px;background:#ffffff;color:#111111;border:1px solid #e0e0e0;border-radius:8px;">
+      <h2 style="margin:0 0 8px;font-size:18px;color:#0d9488;">${type}</h2>
+      <hr style="border:none;border-top:1px solid #e0e0e0;margin:12px 0;" />
+      ${data.name ? `<p style="margin:4px 0;color:#111111;"><strong>Имя:</strong> ${escapeHtml(data.name)}</p>` : ""}
+      ${data.phone ? `<p style="margin:4px 0;color:#111111;"><strong>Телефон:</strong> <a href="tel:${data.phone.replace(/\D/g, "")}" style="color:#0d9488;">${escapeHtml(data.phone)}</a></p>` : ""}
+      ${data.message ? `<p style="margin:4px 0;color:#111111;"><strong>Сообщение:</strong> ${escapeHtml(data.message)}</p>` : ""}
+      <hr style="border:none;border-top:1px solid #e0e0e0;margin:12px 0;" />
+      <p style="margin:4px 0;font-size:12px;color:#888888;">Источник: <a href="${data.source || 'сайт'}" style="color:#0d9488;">${data.source || "сайт"}</a></p>
+      <p style="margin:4px 0;font-size:12px;color:#888888;">Время: ${data.submitted_at || new Date().toISOString()}</p>
     </div>
   `;
 }
