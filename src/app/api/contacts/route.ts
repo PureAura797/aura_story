@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const DATA_DIR = path.join(process.cwd(), "src", "data");
-const CONTACTS_FILE = path.join(DATA_DIR, "contacts.json");
+import { readData } from "@/lib/supabase";
 
 const DEFAULTS = {
   phone: "+74999640042",
@@ -20,11 +16,8 @@ const DEFAULTS = {
 
 export async function GET() {
   try {
-    let contacts = { ...DEFAULTS };
-    if (fs.existsSync(CONTACTS_FILE)) {
-      const saved = JSON.parse(fs.readFileSync(CONTACTS_FILE, "utf-8"));
-      contacts = { ...DEFAULTS, ...saved };
-    }
+    const saved = await readData<Partial<typeof DEFAULTS>>("contacts", {});
+    const contacts = { ...DEFAULTS, ...saved };
     return NextResponse.json(contacts, {
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
