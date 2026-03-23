@@ -21,7 +21,6 @@ interface MediaCategory {
 type MediaData = Record<string, MediaCategory>;
 
 const CATEGORY_META: Record<string, { label: string; icon: typeof ImageIcon; description: string }> = {
-  certificates: { label: "Сертификаты", icon: Award, description: "Лицензии и сертификаты (PNG/WebP, любой размер)" },
 };
 
 function formatSize(bytes: number): string {
