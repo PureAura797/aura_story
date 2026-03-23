@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Save, Check, Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Save, Check, Plus, Trash2, Eye, EyeOff, Upload } from "lucide-react";
 import AdminLoader from "../AdminLoader";
 
 interface PortfolioItem {
@@ -14,6 +14,91 @@ interface PortfolioItem {
   afterImg: string;
   published: boolean;
   sort_order: number;
+}
+
+function ImageField({
+  label,
+  value,
+  itemId,
+  field,
+  onUpdate,
+}: {
+  label: string;
+  value: string;
+  itemId: string;
+  field: "beforeImg" | "afterImg";
+  onUpdate: (id: string, field: keyof PortfolioItem, value: string) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+
+    const suffix = field === "beforeImg" ? "before" : "after";
+    const ext = file.name.split(".").pop()?.toLowerCase() || "webp";
+    const fileName = `${itemId}_${suffix}.${ext}`;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("path", `images/portfolio/${fileName}`);
+    formData.append("category", "portfolio");
+
+    try {
+      const res = await fetch("/api/admin/media", { method: "POST", body: formData });
+      if (res.ok) {
+        const data = await res.json();
+        onUpdate(itemId, field, data.url || `/images/portfolio/${fileName}`);
+      } else {
+        alert("Ошибка загрузки");
+      }
+    } catch {
+      alert("Сетевая ошибка");
+    }
+    setUploading(false);
+    if (inputRef.current) inputRef.current.value = "";
+  };
+
+  return (
+    <div>
+      <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">{label}</label>
+      <div className="flex gap-1.5 mb-1.5">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onUpdate(itemId, field, e.target.value)}
+          placeholder="/images/portfolio/..."
+          className="flex-1 bg-transparent border border-white/[0.06] text-[11px] text-neutral-400 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors font-mono min-w-0"
+        />
+        <button
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading}
+          className="shrink-0 px-3 py-2 border border-white/[0.06] hover:border-white/20 transition-colors cursor-pointer flex items-center gap-1.5 text-[11px] text-neutral-400 hover:text-white disabled:opacity-50"
+          title="Загрузить фото"
+        >
+          {uploading ? (
+            <div className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />
+          ) : (
+            <Upload className="w-3 h-3" strokeWidth={1.5} />
+          )}
+        </button>
+      </div>
+      {value && (
+        <div className="h-20 border border-white/[0.06] overflow-hidden">
+          <img src={value} alt={label} className="w-full h-full object-cover" />
+        </div>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        onChange={handleUpload}
+        className="hidden"
+      />
+    </div>
+  );
 }
 
 export default function PortfolioAdmin() {
@@ -151,36 +236,8 @@ export default function PortfolioAdmin() {
             />
 
             <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Фото «До»</label>
-                <input
-                  type="text"
-                  value={item.beforeImg}
-                  onChange={(e) => updateItem(item.id, "beforeImg", e.target.value)}
-                  placeholder="/images/portfolio/..."
-                  className="w-full bg-transparent border border-white/[0.06] text-[11px] text-neutral-400 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors font-mono"
-                />
-                {item.beforeImg && (
-                  <div className="mt-2 h-16 border border-white/[0.06] overflow-hidden">
-                    <img src={item.beforeImg} alt="До" className="w-full h-full object-cover" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <label className="text-[11px] text-neutral-600 uppercase tracking-wider mb-1 block">Фото «После»</label>
-                <input
-                  type="text"
-                  value={item.afterImg}
-                  onChange={(e) => updateItem(item.id, "afterImg", e.target.value)}
-                  placeholder="/images/portfolio/..."
-                  className="w-full bg-transparent border border-white/[0.06] text-[11px] text-neutral-400 p-2.5 focus:border-white/20 focus-visible:outline-none transition-colors font-mono"
-                />
-                {item.afterImg && (
-                  <div className="mt-2 h-16 border border-white/[0.06] overflow-hidden">
-                    <img src={item.afterImg} alt="После" className="w-full h-full object-cover" />
-                  </div>
-                )}
-              </div>
+              <ImageField label="Фото «До»" value={item.beforeImg} itemId={item.id} field="beforeImg" onUpdate={updateItem} />
+              <ImageField label="Фото «После»" value={item.afterImg} itemId={item.id} field="afterImg" onUpdate={updateItem} />
             </div>
           </div>
         ))}

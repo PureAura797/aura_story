@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import nodemailer from "nodemailer";
 import { checkRateLimit } from "@/lib/rate-limiter";
 import { readData } from "@/lib/supabase";
@@ -22,8 +20,6 @@ function sanitize(str: string, maxLen = 500): string {
 
 const FORM_LIMIT = { prefix: "form", maxAttempts: 10, windowSeconds: 60 };
 
-const DATA_FILE = path.join(process.cwd(), "src/data/notifications.json");
-
 interface NotificationSettings {
   email: { enabled: boolean; recipients: string; smtp: { host: string; port: number; user: string; pass: string } };
   telegram: { enabled: boolean; botToken: string; chatIds: string };
@@ -39,20 +35,20 @@ const DEFAULTS: NotificationSettings = {
 };
 
 async function loadSettings(): Promise<NotificationSettings> {
-  // Primary: read from Supabase (where admin panel saves)
   try {
     const saved = await readData<Partial<NotificationSettings>>("notifications", {});
     if (saved && Object.keys(saved).length > 0) {
-      return { ...DEFAULTS, ...saved };
+      // Deep merge to preserve nested defaults
+      return {
+        email: { ...DEFAULTS.email, ...saved.email, smtp: { ...DEFAULTS.email.smtp, ...(saved.email?.smtp || {}) } },
+        telegram: { ...DEFAULTS.telegram, ...saved.telegram },
+        max: { ...DEFAULTS.max, ...saved.max },
+        webhook: { ...DEFAULTS.webhook, ...saved.webhook },
+      };
     }
-  } catch {}
-  // Fallback: local file
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      const raw = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
-      return { ...DEFAULTS, ...raw };
-    }
-  } catch {}
+  } catch (e) {
+    console.error("[notifications] Failed to load from Supabase:", e);
+  }
   return DEFAULTS;
 }
 
