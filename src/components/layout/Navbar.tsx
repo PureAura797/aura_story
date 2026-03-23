@@ -285,28 +285,28 @@ export default function Navbar() {
       {/* Fullscreen overlay — clip-path animated */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 bg-[var(--bg-primary)]/95 backdrop-blur-xl z-[60] flex flex-col items-start justify-center px-10"
+        className="fixed inset-0 h-[100dvh] bg-[#0b0c0f] z-[60] flex flex-col items-start justify-center px-10"
         style={{ visibility: "hidden", clipPath: "circle(0% at calc(100% - 32px) 28px)" }}
         role="dialog"
         aria-modal="true"
         aria-label="Меню навигации"
       >
         <div className="flex flex-col gap-6">
-          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>
-          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.expertise")}</button>
-          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.pricing")}</button>
-          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-[var(--text-primary)] hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.contact")}</button>
+          <button onClick={() => handleMobileNav("services")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.services")}</button>
+          <button onClick={() => handleMobileNav("expertise")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.expertise")}</button>
+          <button onClick={() => handleMobileNav("pricing")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.pricing")}</button>
+          <button onClick={() => handleMobileNav("contact")} className="text-4xl font-bold uppercase tracking-tighter text-white hover:opacity-80 transition-opacity mobile-link text-left cursor-pointer">{t("nav.contact")}</button>
           
-          <div className="w-16 h-[1px] bg-[var(--border-strong)] my-4 menu-divider origin-left"></div>
+          <div className="w-16 h-[1px] bg-white/10 my-4 menu-divider origin-left"></div>
           
-          <a href={`tel:${contacts.phone}`} className="text-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center gap-3 transition-colors mobile-link" aria-label={`Позвонить ${contacts.phoneDisplay}`}>
+          <a href={`tel:${contacts.phone}`} className="text-lg text-neutral-400 hover:text-white flex items-center gap-3 transition-colors mobile-link" aria-label={`Позвонить ${contacts.phoneDisplay}`}>
             <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
             {contacts.phoneDisplay}
           </a>
           
           <button
             onClick={(e) => toggleTheme(e)}
-            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mobile-link cursor-pointer"
+            className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mobile-link cursor-pointer"
           >
             {theme === 'dark' ? <Moon className="w-4 h-4" strokeWidth={1.5} /> : <Sun className="w-4 h-4" strokeWidth={1.5} />}
             {theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}
@@ -314,7 +314,7 @@ export default function Navbar() {
 
           <button
             onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-            className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mobile-link cursor-pointer"
+            className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors mobile-link cursor-pointer"
           >
             <Globe className="w-4 h-4" strokeWidth={1.5} />
             {t("lang.switch")}
@@ -322,16 +322,16 @@ export default function Navbar() {
 
           <button 
             onClick={() => { closeMenu(); setTimeout(() => setModalOpen(true), 600); }}
-            className="btn-primary px-6 py-3 text-sm mt-2 mobile-link"
+            className="px-6 py-3 text-sm mt-2 mobile-link bg-white text-black font-bold uppercase tracking-wider text-xs hover:bg-neutral-200 transition-colors cursor-pointer"
           >
             {t("nav.callback")}
           </button>
           
           <div className="flex gap-8 mt-2 mobile-link">
-            <a href={contacts.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-[var(--text-muted)] uppercase tracking-widest hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
+            <a href={contacts.max} target="_blank" rel="noopener noreferrer" aria-label="Написать в MAX" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
               MAX <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
-            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-[var(--text-muted)] uppercase tracking-widest hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
+            <a href={contacts.telegram} target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram" className="text-sm text-neutral-500 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-1">
               Telegram <ArrowUpRight className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
             </a>
           </div>
