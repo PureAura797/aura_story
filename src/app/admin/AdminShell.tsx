@@ -21,7 +21,6 @@ const navItems = [
   { href: "/admin/faq", label: "FAQ", icon: MessageCircle },
   { href: "/admin/certificates", label: "Сертификаты", icon: Award },
   { href: "/admin/seo", label: "SEO", icon: Search },
-  { href: "/admin/media", label: "Медиа", icon: Image },
   { href: "/admin/contacts", label: "Контакты", icon: Phone },
   { href: "/admin/notifications", label: "Уведомления", icon: Bell },
   { href: "/admin/analytics", label: "Аналитика", icon: BarChart3 },
@@ -135,7 +134,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         <div className="h-[52px] md:hidden" />
 
         {/* Navigation */}
-        <nav className="flex-1 py-3 px-2 overflow-y-auto" aria-label="Админ-навигация">
+        <nav className="flex-1 py-3 px-2 overflow-y-auto min-h-0 overscroll-contain" aria-label="Админ-навигация">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
