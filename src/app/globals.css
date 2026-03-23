@@ -64,6 +64,33 @@
   --placeholder: #aaaaaa;
 }
 
+/* ═══ Admin: always dark regardless of data-theme ═══ */
+[data-admin="true"],
+[data-admin="true"][data-theme="light"] {
+  color-scheme: dark;
+  --accent: #5eead4;
+  --accent-deep: #14b8a6;
+  --sand: #d4a574;
+  --sand-dim: #a67c52;
+  --bg-deep: #0b0c0f;
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #121418;
+  --surface: #121418;
+  --bg-card: rgba(255,255,255,0.025);
+  --bg-card-hover: rgba(255,255,255,0.05);
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-muted: #525252;
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.12);
+  --glass-bg: rgba(0,0,0,0.6);
+  --glass-card: rgba(255,255,255,0.03);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+  --accent-glow: rgba(94, 234, 212, 0.15);
+  --fade-color: #0b0c0f;
+  --placeholder: #525252;
+}
+
 /* 3D canvas — softer on light theme so text stays readable */
 [data-theme="light"] .scene-container {
   opacity: 0.35;
