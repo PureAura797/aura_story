@@ -9,7 +9,6 @@ import AdminBgLogo from "./AdminBgLogo";
 
 const navItems = [
   { href: "/admin", label: "Дашборд", icon: LayoutDashboard },
-  { href: "/admin/content", label: "Контент", icon: FileText },
   { href: "/admin/services", label: "Услуги", icon: Briefcase },
   { href: "/admin/portfolio", label: "Портфолио", icon: FolderOpen },
   { href: "/admin/equipment", label: "Оборудование", icon: Wrench },
