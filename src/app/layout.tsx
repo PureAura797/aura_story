@@ -6,6 +6,7 @@ import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
 import VerificationMeta from "@/components/VerificationMeta";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -389,6 +390,7 @@ export default function RootLayout({
           {children}
         </Providers>
         <AnalyticsScripts />
+        <SpeedInsights />
       </body>
     </html>
   );
