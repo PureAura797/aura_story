@@ -44,11 +44,8 @@ export default function Home() {
 
       <Navbar />
 
-      {/* Skip to content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-[var(--accent)] focus:text-[var(--bg-deep)] focus:px-4 focus:py-2 focus:rounded-full focus:text-sm focus:font-bold"
-      >
+      {/* Skip to content link for accessibility — hidden until Tab focus */}
+      <a href="#main-content" className="skip-link">
         Перейти к основному содержимому
       </a>
 
