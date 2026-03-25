@@ -14,7 +14,7 @@ const unbounded = Unbounded({ subsets: ["latin", "cyrillic"], variable: "--font-
 const jost = Jost({ subsets: ["latin", "cyrillic"], variable: "--font-jost" });
 
 // Site URL from env — change in Vercel dashboard when domain changes
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://pureaura.ru";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://aurachistoty.ru";
 
 export const viewport: Viewport = {
   themeColor: "#0b0c0f",
