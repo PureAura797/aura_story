@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://aurachistoty.ru'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://аурачистоты.рф'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
