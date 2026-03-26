@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { readData } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 const DEFAULTS = {
   certificateDownloadEnabled: true,
   certificateMaskLicense: false,

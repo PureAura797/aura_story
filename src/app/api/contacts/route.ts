@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { readData } from "@/lib/supabase";
 
+export const dynamic = "force-dynamic";
+
 const DEFAULTS = {
   phone: "+74999640042",
   phoneDisplay: "8 (499) 964-00-42",
