@@ -33,6 +33,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // ── Standalone output for container deployments ──
+  output: "standalone",
+
   // ── Compression ──
   compress: true,
 
