@@ -269,24 +269,26 @@ export default function AnalyticsPage() {
       </div>
 
       {/* ── Save Bar ── */}
-      {hasChanges && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-black/90 backdrop-blur-xl px-6 py-4">
+      {(hasChanges || saved) && (
+        <div className={`fixed bottom-0 left-0 right-0 z-50 border-t px-6 py-4 backdrop-blur-xl transition-all duration-300 ${saved ? "border-green-500/20 bg-green-950/90" : "border-white/10 bg-black/90"}`}>
           <div className="max-w-2xl mx-auto flex items-center justify-between">
-            <p className="text-xs text-neutral-400">Есть несохранённые изменения</p>
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="btn-primary px-6 py-2.5 flex items-center gap-2"
-            >
-              {saving ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : saved ? (
-                <CheckCircle className="w-4 h-4" />
-              ) : (
-                <Save className="w-4 h-4" strokeWidth={1.5} />
-              )}
-              {saved ? "Сохранено" : "Сохранить"}
-            </button>
+            <p className={`text-xs ${saved ? "text-green-400" : "text-neutral-400"}`}>
+              {saved ? "✓ Изменения сохранены" : "Есть несохранённые изменения"}
+            </p>
+            {!saved && (
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="btn-primary px-6 py-2.5 flex items-center gap-2"
+              >
+                {saving ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" strokeWidth={1.5} />
+                )}
+                {saving ? "Сохранение..." : "Сохранить"}
+              </button>
+            )}
           </div>
         </div>
       )}
