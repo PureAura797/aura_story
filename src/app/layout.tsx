@@ -5,8 +5,8 @@ import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
+import ServerAnalytics from "@/components/ServerAnalytics";
 import VerificationMeta from "@/components/VerificationMeta";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -346,8 +346,8 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} suppressHydrationWarning>
       <head>
+        <ServerAnalytics />
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
-        {/* Theme flash prevention — reads localStorage before paint */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var isAdmin=location.pathname.indexOf('/admin')===0;if(isAdmin){document.documentElement.setAttribute('data-admin','true');document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.background='#0b0c0f';return}var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.background='#0b0c0f'}else{document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}})()` }} />
         <style dangerouslySetInnerHTML={{ __html: `body{background:transparent!important}` }} />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -390,7 +390,6 @@ export default function RootLayout({
         </Providers>
         <AnalyticsScripts />
         <VerificationMeta />
-        <SpeedInsights />
       </body>
     </html>
   );
