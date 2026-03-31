@@ -1,26 +1,21 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { readData } from "@/lib/supabase";
 
-const DATA_FILE = path.join(process.cwd(), "src/data/analytics.json");
+export const dynamic = "force-dynamic";
+
+const DEFAULTS = {
+  yandexMetrika: "",
+  googleAnalytics: "",
+  googleTagManager: "",
+  vkPixel: "",
+  customScripts: [] as { id: string; name: string; position: "head" | "body"; code: string; enabled: boolean }[],
+};
 
 export async function GET() {
-  const defaults = {
-    yandexMetrika: "",
-    googleAnalytics: "",
-    googleTagManager: "",
-    vkPixel: "",
-    customScripts: [],
-  };
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const data = { ...defaults, ...JSON.parse(fs.readFileSync(DATA_FILE, "utf-8")) };
-      return NextResponse.json(data, {
-        headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
-      });
-    }
-  } catch {}
-  return NextResponse.json(defaults, {
-    headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
-  });
+    const saved = await readData<typeof DEFAULTS>("analytics", DEFAULTS);
+    return NextResponse.json({ ...DEFAULTS, ...saved });
+  } catch {
+    return NextResponse.json(DEFAULTS);
+  }
 }
