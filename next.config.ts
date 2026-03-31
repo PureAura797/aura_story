@@ -25,7 +25,7 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com data:",
       "img-src 'self' data: blob: https://*.supabase.co https://mc.yandex.ru https://mc.yandex.com",
       "media-src 'self' blob: https://*.supabase.co",
-      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com https://raw.githack.com https://raw.githubusercontent.com https://mc.yandex.ru https://mc.yandex.com https://www.gstatic.com",
+      "connect-src 'self' https://*.supabase.co https://*.vercel-insights.com https://*.vercel-analytics.com https://raw.githack.com https://raw.githubusercontent.com https://mc.yandex.ru https://mc.yandex.com wss://mc.yandex.ru wss://mc.yandex.com https://www.gstatic.com",
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",
     ].join("; "),
