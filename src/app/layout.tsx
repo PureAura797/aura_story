@@ -5,7 +5,6 @@ import SmoothScroller from "@/components/effects/SmoothScroller";
 import CustomCursor from "@/components/effects/CustomCursor";
 import Providers from "@/components/Providers";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
-import ServerAnalytics from "@/components/ServerAnalytics";
 import VerificationMeta from "@/components/VerificationMeta";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
@@ -346,7 +345,17 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} suppressHydrationWarning>
       <head>
-        <ServerAnalytics />
+        {/* <!-- Yandex.Metrika counter --> */}
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{ __html: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108295612','ym');ym(108295612,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});` }}
+        />
+        <noscript>
+          <div>
+            <img src="https://mc.yandex.ru/watch/108295612" style={{ position: "absolute", left: "-9999px" }} alt="" />
+          </div>
+        </noscript>
+        {/* <!-- /Yandex.Metrika counter --> */}
         {/* Prevent white flash — dark html bg before CSS loads; body stays transparent for -z-10 Canvas */}
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var isAdmin=location.pathname.indexOf('/admin')===0;if(isAdmin){document.documentElement.setAttribute('data-admin','true');document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.background='#0b0c0f';return}var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');document.documentElement.style.background='#0b0c0f'}else{document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}}catch(e){document.documentElement.setAttribute('data-theme','light');document.documentElement.style.background='#f7f7f8'}})()` }} />
         <style dangerouslySetInnerHTML={{ __html: `body{background:transparent!important}` }} />
