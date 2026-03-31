@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
   ];
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-2xl pb-24">
       <h1 className="text-2xl font-bold tracking-tight mb-2">Аналитика</h1>
       <p className="text-sm text-neutral-500 mb-8">
         Счётчики аналитики и рекламные пиксели. Рекламщик может настроить всё сам.
@@ -291,7 +291,13 @@ export default function AnalyticsPage() {
             }`}>
               {saveError ? `✕ ${saveError}` : saved ? "✓ Изменения сохранены" : "Есть несохранённые изменения"}
             </p>
-            {!saved && (
+            <div className="flex items-center gap-3">
+              {saveError?.includes("Unauthorized") && (
+                <a href="/admin" className="text-xs text-amber-400 hover:text-amber-300 underline underline-offset-2 transition-colors">
+                  Перелогиниться
+                </a>
+              )}
+              {!saved && (
               <button
                 onClick={handleSave}
                 disabled={saving}
@@ -304,7 +310,8 @@ export default function AnalyticsPage() {
                 )}
                 {saving ? "Сохранение..." : saveError ? "Повторить" : "Сохранить"}
               </button>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
