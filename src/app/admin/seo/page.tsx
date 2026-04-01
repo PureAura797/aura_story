@@ -47,7 +47,9 @@ export default function SeoAdmin() {
     formData.append("path", path);
     const res = await fetch("/api/admin/media", { method: "POST", body: formData });
     if (res.ok) {
-      setter(`/${path}?t=${Date.now()}`);
+      const data = await res.json();
+      // Use the Supabase public URL for the preview (where the file actually lives)
+      setter(data.url || `/${path}?t=${Date.now()}`);
     }
     setUploading(false);
   };

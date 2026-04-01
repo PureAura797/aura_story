@@ -7,6 +7,7 @@ import Providers from "@/components/Providers";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
 import ServerAnalytics from "@/components/ServerAnalytics";
 import VerificationMeta from "@/components/VerificationMeta";
+import { getSeo } from "@/lib/data";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-body" });
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" });
@@ -338,11 +339,12 @@ const jsonLdReviews = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const seo = await getSeo();
   return (
     <html lang="ru" className={`${inter.variable} ${bebasNeue.variable} ${unbounded.variable} ${jost.variable}`} suppressHydrationWarning>
       <head>
@@ -353,7 +355,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
+        <link rel="icon" href={seo.favicon || "/favicon.ico"} sizes="32x32" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }}
