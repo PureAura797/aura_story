@@ -69,31 +69,30 @@ export default function NotificationsPage() {
   };
 
   const handleTest = async (channel: string) => {
+    // Save first if there are unsaved changes
+    if (hasChanges) {
+      await handleSave();
+    }
     setTesting(channel);
     setTestResult(null);
     try {
-      const res = await fetch("/api/submit-form", {
+      const res = await fetch("/api/admin/test-notification", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          form_type: "test",
-          name: "Тестовая заявка",
-          phone: "+7 (999) 000-00-00",
-          message: `Тест канала: ${channel}`,
-          source: "Админ-панель (тест)",
-          submitted_at: new Date().toISOString(),
-        }),
+        body: JSON.stringify({ channel }),
       });
       const data = await res.json();
-      if (data.ok && data.channels?.includes(channel)) {
-        setTestResult({ channel, ok: true, msg: "Тест отправлен ✓" });
-      } else if (data.ok && data.channels?.length === 0) {
-        setTestResult({ channel, ok: false, msg: "Канал не настроен" });
-      } else {
-        setTestResult({ channel, ok: false, msg: data.errors?.[0] || "Ошибка отправки" });
+      setTestResult({
+        channel,
+        ok: data.ok,
+        msg: data.msg || (data.ok ? "Тест отправлен ✓" : "Ошибка отправки"),
+      });
+      // Log diagnostics to console for debugging
+      if (data.diagnostics) {
+        console.log(`[Test ${channel}] Diagnostics:`, data.diagnostics);
       }
     } catch {
-      setTestResult({ channel, ok: false, msg: "Ошибка сети" });
+      setTestResult({ channel, ok: false, msg: "Ошибка сети — не удалось связаться с сервером" });
     }
     setTesting(null);
   };
