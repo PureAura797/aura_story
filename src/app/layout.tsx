@@ -62,11 +62,7 @@ export const metadata: Metadata = {
     images: [`${SITE_URL}/og-image.png`],
   },
   verification: {},
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: '32x32' },
-    ],
-  },
+  // icons removed — managed dynamically via <link> in <head> from SEO settings
   other: {
     "geo.region": "RU-MOW",
     "geo.placename": "Москва",
