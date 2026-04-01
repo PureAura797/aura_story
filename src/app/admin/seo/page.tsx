@@ -231,7 +231,7 @@ export default function SeoAdmin() {
         <label className="text-[11px] uppercase tracking-wider text-neutral-500 font-bold block mb-3">Превью в поисковой выдаче</label>
         <div className="bg-white/[0.04] border border-white/[0.06] p-4">
           <p className="text-[13px] text-[#8ab4f8] truncate mb-0.5">{seo.title || "Заголовок не указан"}</p>
-          <p className="text-[11px] text-green-400/70 mb-1 font-mono">pureaura.ru</p>
+          <p className="text-[11px] text-green-400/70 mb-1 font-mono">аурачистоты.рф</p>
           <p className="text-[11px] text-neutral-500 line-clamp-2">{seo.description || "Описание не указано"}</p>
         </div>
       </div>
