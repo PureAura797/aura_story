@@ -67,6 +67,7 @@ export const ALLOWED_EXTENSIONS: Record<string, string[]> = {
   equipment: [".png", ".jpg", ".jpeg", ".webp"],
   team: [".png", ".jpg", ".jpeg", ".webp"],
   certificates: [".png", ".jpg", ".jpeg", ".webp", ".pdf"],
+  seo: [".ico", ".png", ".jpg", ".jpeg", ".webp", ".svg"],
 };
 
 /** Allowed MIME types — server-side validation */
@@ -74,6 +75,9 @@ const ALLOWED_MIMES: Record<string, boolean> = {
   "image/png": true,
   "image/jpeg": true,
   "image/webp": true,
+  "image/x-icon": true,
+  "image/vnd.microsoft.icon": true,
+  "image/svg+xml": true,
   "video/mp4": true,
   "video/webm": true,
   "video/quicktime": true,

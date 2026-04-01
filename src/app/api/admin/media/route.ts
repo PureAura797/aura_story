@@ -97,13 +97,16 @@ export async function POST(request: NextRequest) {
 
     // ── Path traversal protection ──
     const ALLOWED_PREFIXES = ["stories/", "images/", "equipment/", "team/", "certificates/"];
+    // Root-level files that are allowed (SEO assets)
+    const ALLOWED_ROOT_FILES = ["favicon.ico", "og-image.png", "og-image.webp", "logo.svg"];
     const cleanPath = targetPath
       .replace(/\.\./g, "")           // block ../
       .replace(/\/\//g, "/")          // normalize //
       .replace(/\0/g, "")            // block null bytes
       .replace(/^\/+/, "");           // strip leading /
     
-    if (!ALLOWED_PREFIXES.some((p) => cleanPath.startsWith(p))) {
+    const isAllowedRoot = ALLOWED_ROOT_FILES.includes(cleanPath);
+    if (!isAllowedRoot && !ALLOWED_PREFIXES.some((p) => cleanPath.startsWith(p))) {
       return NextResponse.json(
         { error: "Недопустимый путь загрузки" },
         { status: 400 }
@@ -199,5 +202,7 @@ function detectCategory(filePath: string): string {
   }
   if (filePath.startsWith("team/")) return "team";
   if (filePath.startsWith("certificates/")) return "certificates";
+  // Root-level SEO assets (favicon.ico, og-image.png, logo.svg)
+  if (!filePath.includes("/")) return "seo";
   return "portfolio";
 }
