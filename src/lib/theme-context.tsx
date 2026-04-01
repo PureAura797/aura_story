@@ -21,6 +21,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const isTransitioning = useRef(false);
 
   useEffect(() => {
+    // Admin pages are always dark — don't let saved theme override
+    const isAdmin = window.location.pathname.startsWith("/admin");
+    if (isAdmin) {
+      setThemeState("dark");
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-admin", "true");
+      return;
+    }
+
     const saved = localStorage.getItem("theme") as Theme | null;
     if (saved === "light" || saved === "dark") {
       setThemeState(saved);

@@ -965,21 +965,21 @@ body.loading {
 }
 
 /* ── Form Inputs ───────────────────────────────────────── */
-[data-theme="light"] input,
-[data-theme="light"] textarea,
-[data-theme="light"] select {
+[data-theme="light"]:not([data-admin]) input,
+[data-theme="light"]:not([data-admin]) textarea,
+[data-theme="light"]:not([data-admin]) select {
   border-color: rgba(0, 0, 0, 0.1) !important;
   color: #111 !important;
 }
 
-[data-theme="light"] input::placeholder,
-[data-theme="light"] textarea::placeholder {
+[data-theme="light"]:not([data-admin]) input::placeholder,
+[data-theme="light"]:not([data-admin]) textarea::placeholder {
   color: #aaa !important;
 }
 
-[data-theme="light"] input:focus,
-[data-theme="light"] textarea:focus,
-[data-theme="light"] select:focus {
+[data-theme="light"]:not([data-admin]) input:focus,
+[data-theme="light"]:not([data-admin]) textarea:focus,
+[data-theme="light"]:not([data-admin]) select:focus {
   border-color: var(--accent) !important;
 }
 
