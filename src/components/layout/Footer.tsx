@@ -128,13 +128,13 @@ export default function Footer() {
 
       {/* Developer credit */}
       <div className="w-full border-t border-[var(--border)] py-4">
-        <p className="text-center text-[10px] text-[var(--text-muted)]/40 tracking-[0.1em]">
+        <p className="text-center text-[10px] text-neutral-600 tracking-[0.1em]">
           Made by{" "}
           <a
             href="https://t.me/asphxdel"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--text-muted)]/60 hover:text-teal-400/70 transition-colors duration-300"
+            className="text-neutral-500 hover:text-teal-400 transition-colors duration-300"
           >
             @asphxdel
           </a>
