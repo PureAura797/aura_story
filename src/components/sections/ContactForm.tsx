@@ -2,11 +2,14 @@
 
 import { useRef, useState } from "react";
 import { Phone, Send, ArrowUpRight } from "lucide-react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import { useContacts } from "@/lib/contacts-context";
+
+const PrivacyModal = dynamic(() => import("@/components/ui/PrivacyModal"), { ssr: false });
 
 export default function ContactForm() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -17,11 +20,13 @@ export default function ContactForm() {
 
   const [formData, setFormData] = useState({ name: "", phone: "", message: "", website: "" });
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [agreed, setAgreed] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   // Validation helpers
   const isNameValid = formData.name.trim().length >= 2;
   const isPhoneComplete = formData.phone.replace(/\D/g, "").length === 11;
-  const isFormValid = isNameValid && isPhoneComplete;
+  const isFormValid = isNameValid && isPhoneComplete && agreed;
 
   const fieldBorder = (field: string, isValid: boolean) => {
     if (!touched[field]) return 'border-[var(--border-strong)]';
@@ -135,7 +140,25 @@ export default function ContactForm() {
                   <><Send className="w-4 h-4" strokeWidth={1.5} />{t("contact.submit")}</>
                 )}
               </button>
-              <p className="text-[11px] text-[var(--text-muted)] tracking-wide">{t("contact.consent")}</p>
+              <label className="flex items-start gap-3 cursor-pointer select-none group">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 shrink-0 accent-teal-500 cursor-pointer"
+                />
+                <span className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                  Нажимая кнопку, я даю согласие на обработку{" "}
+                  <button
+                    type="button"
+                    onClick={(e) => { e.preventDefault(); setPrivacyOpen(true); }}
+                    className="text-teal-400/80 hover:text-teal-300 underline underline-offset-2 transition-colors cursor-pointer"
+                  >
+                    персональных данных
+                  </button>
+                </span>
+              </label>
+              <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
             </form>
           ) : (
             <div className="flex flex-col items-center justify-center py-24">

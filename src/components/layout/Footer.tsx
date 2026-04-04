@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Phone, ArrowUpRight } from "lucide-react";
+import dynamic from "next/dynamic";
 import Logo from "@/components/ui/Logo";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 import { useContacts } from "@/lib/contacts-context";
+
+const PrivacyModal = dynamic(() => import("@/components/ui/PrivacyModal"), { ssr: false });
 
 /** Scroll to section by id — without polluting the URL hash */
 function scrollToSection(id: string) {
@@ -16,6 +20,7 @@ function scrollToSection(id: string) {
 export default function Footer() {
   const { t } = useTranslation();
   const contacts = useContacts();
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   return (
     <footer id="site-footer" data-dark-ui className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative z-[60] border-t border-[var(--border)]" role="contentinfo" aria-label="Footer">
@@ -107,9 +112,18 @@ export default function Footer() {
         <p className="text-[11px] text-[var(--text-muted)] uppercase tracking-[0.15em]">
           {t("footer.copyright")}
         </p>
-        <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-[0.15em]">
-          {t("footer.location")}
-        </p>
+        <div className="flex items-center gap-6">
+          <button
+            onClick={() => setPrivacyOpen(true)}
+            className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-secondary)] uppercase tracking-[0.15em] transition-colors cursor-pointer"
+          >
+            Политика конфиденциальности
+          </button>
+          <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-[0.15em]">
+            {t("footer.location")}
+          </p>
+        </div>
+        <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
       </div>
     </footer>
   );

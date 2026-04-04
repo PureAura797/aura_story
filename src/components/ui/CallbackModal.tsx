@@ -3,6 +3,9 @@
 import { useRef, useEffect, useState } from "react";
 import { X, Phone, Loader2, CheckCircle } from "lucide-react";
 import gsap from "gsap";
+import dynamic from "next/dynamic";
+
+const PrivacyModal = dynamic(() => import("@/components/ui/PrivacyModal"), { ssr: false });
 
 interface CallbackModalProps {
   isOpen: boolean;
@@ -17,10 +20,12 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [agreed, setAgreed] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   const isPhoneComplete = phone.replace(/\D/g, "").length === 11;
   const isNameValid = name.trim().length >= 2;
-  const isFormValid = isNameValid && isPhoneComplete;
+  const isFormValid = isNameValid && isPhoneComplete && agreed;
 
   const fieldBorder = (field: string, isValid: boolean) => {
     if (!touched[field]) return 'border-white/10';
@@ -61,6 +66,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
         setName("");
         setPhone("");
         setTouched({});
+        setAgreed(false);
       }, 400);
     }
   }, [isOpen]);
@@ -183,9 +189,25 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                 )}
               </button>
 
-              <p className="text-[11px] text-neutral-600 text-center">
-                Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-              </p>
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 shrink-0 accent-teal-500 cursor-pointer"
+                />
+                <span className="text-[11px] text-neutral-500 leading-relaxed">
+                  Я даю согласие на обработку{" "}
+                  <button
+                    type="button"
+                    onClick={(e) => { e.preventDefault(); setPrivacyOpen(true); }}
+                    className="text-teal-400/80 hover:text-teal-300 underline underline-offset-2 transition-colors cursor-pointer"
+                  >
+                    персональных данных
+                  </button>
+                </span>
+              </label>
+              <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
             </form>
           </>
         ) : (
