@@ -8,6 +8,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import StoryModal from "@/components/ui/StoryModal";
 import { useTranslation } from "@/lib/i18n/LanguageContext";
 
+interface StoryMediaItem {
+  type: "photo" | "video";
+  src: string;
+}
+
 interface StoryData {
   id: string;
   title: string;
@@ -15,6 +20,7 @@ interface StoryData {
   color: string;
   cover: string;
   videos: string[];
+  media?: StoryMediaItem[];
 }
 
 export default function StoriesSection() {

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Admin data (local only — Vercel uses env fallback)
 src/data/
+
+# Original client media (raw files before processing)
+client-media/

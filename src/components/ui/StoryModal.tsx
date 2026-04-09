@@ -5,6 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Volume2, VolumeX } from "lucide-react";
 
 const SWIPE_THRESHOLD = 50;
+const PHOTO_DURATION = 5000; // ms — auto-advance for photos
+
+interface StoryMediaItem {
+  type: "photo" | "video";
+  src: string;
+}
 
 interface Story {
   id: string | number;
@@ -13,6 +19,7 @@ interface Story {
   gradient?: string;
   color: string;
   videos: string[];
+  media?: StoryMediaItem[];
 }
 
 interface StoryModalProps {
@@ -35,10 +42,18 @@ export default function StoryModal({
   const [isPaused, setIsPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const photoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const photoStartTime = useRef<number>(0);
+  const photoRAF = useRef<number>(0);
 
   const story = stories[storyIndex];
-  const clips = story?.videos ?? [];
-  const totalClips = clips.length;
+  // Use new media[] if available, otherwise fall back to legacy videos[]
+  const mediaItems: StoryMediaItem[] = story?.media && story.media.length > 0
+    ? story.media
+    : (story?.videos ?? []).map((src) => ({ type: "video" as const, src }));
+  const totalClips = mediaItems.length;
+  const currentMedia = mediaItems[clipIndex];
+  const isPhoto = currentMedia?.type === "photo";
 
   // Sync initial index when modal opens
   useEffect(() => {
@@ -58,7 +73,7 @@ export default function StoryModal({
   }, []);
 
   // When clip ends → go to next clip or next story
-  const handleVideoEnded = useCallback(() => {
+  const advanceClip = useCallback(() => {
     if (clipIndex < totalClips - 1) {
       setClipIndex((i) => i + 1);
       setProgress(0);
@@ -71,14 +86,46 @@ export default function StoryModal({
     }
   }, [clipIndex, totalClips, storyIndex, stories.length, onClose]);
 
-  // Auto-play video when clip/story changes
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !isOpen) return;
+  const handleVideoEnded = advanceClip;
 
-    video.load();
-    video.play().catch(() => {});
-  }, [storyIndex, clipIndex, isOpen]);
+  // Auto-play video OR start photo timer when clip/story changes
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Clear any existing photo timer
+    if (photoTimer.current) clearTimeout(photoTimer.current);
+    if (photoRAF.current) cancelAnimationFrame(photoRAF.current);
+
+    if (isPhoto) {
+      // Photo: animate progress over PHOTO_DURATION, then advance
+      photoStartTime.current = performance.now();
+      const animate = () => {
+        if (isPaused) return;
+        const elapsed = performance.now() - photoStartTime.current;
+        const pct = Math.min((elapsed / PHOTO_DURATION) * 100, 100);
+        setProgress(pct);
+        if (pct < 100) {
+          photoRAF.current = requestAnimationFrame(animate);
+        }
+      };
+      photoRAF.current = requestAnimationFrame(animate);
+      photoTimer.current = setTimeout(() => {
+        if (!isPaused) advanceClip();
+      }, PHOTO_DURATION);
+    } else {
+      // Video: load and play
+      const video = videoRef.current;
+      if (video) {
+        video.load();
+        video.play().catch(() => {});
+      }
+    }
+
+    return () => {
+      if (photoTimer.current) clearTimeout(photoTimer.current);
+      if (photoRAF.current) cancelAnimationFrame(photoRAF.current);
+    };
+  }, [storyIndex, clipIndex, isOpen, isPhoto, isPaused, advanceClip]);
 
   // Navigate between stories
   const goNextStory = useCallback(() => {
@@ -255,7 +302,7 @@ export default function StoryModal({
           >
             {/* Progress bars — one per clip */}
             <div className="absolute top-0 left-0 right-0 z-40 flex gap-1 px-3 pt-3">
-              {clips.map((_, idx) => (
+              {mediaItems.map((_, idx) => (
                 <div
                   key={idx}
                   className="flex-1 h-[2px] rounded-full overflow-hidden"
@@ -309,16 +356,26 @@ export default function StoryModal({
               </button>
             </div>
 
-            {/* Video player */}
-            <video
-              ref={videoRef}
-              src={clips[clipIndex]}
-              muted={muted}
-              playsInline
-              onTimeUpdate={handleTimeUpdate}
-              onEnded={handleVideoEnded}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            {/* Media player — photo or video */}
+            {isPhoto ? (
+              <img
+                key={currentMedia.src}
+                src={currentMedia.src}
+                alt={`${story.title} — ${story.subtitle}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                draggable={false}
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                src={currentMedia?.src}
+                muted={muted}
+                playsInline
+                onTimeUpdate={handleTimeUpdate}
+                onEnded={handleVideoEnded}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
 
             {/* Paused indicator */}
             <AnimatePresence>
