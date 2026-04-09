@@ -54,8 +54,12 @@ const newStories = [
   ], published: true, sort_order: 2 },
   { id: "4", title: "Кейс", subtitle: "Дезинфекция", color: "#d4a574", cover: "/assets/process/fogger-tcd-hallway.webp", videos: [], media: [
     { type: "photo", src: "/assets/process/fogger-tcd-hallway.webp" },
+    { type: "video", src: "/stories/fogger-hostel-treatment.mp4" },
     { type: "photo", src: "/assets/process/fogger-tcd-bedroom.webp" },
+    { type: "video", src: "/stories/balcony-damage-preparation.mp4" },
+    { type: "video", src: "/stories/ozone-equipment-ventilation.mp4" },
     { type: "photo", src: "/assets/process/disinfection-childrens-room.webp" },
+    { type: "video", src: "/stories/dry-fog-room-filled.mp4" },
     { type: "photo", src: "/assets/process/room-after-treatment-wet.webp" },
   ], published: true, sort_order: 3 },
   { id: "5", title: "Кейс", subtitle: "Результат", color: "#14b8a6", cover: "/assets/portfolio/fire-room-balcony-before-after.webp", videos: [], media: [
