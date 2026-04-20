@@ -50,17 +50,16 @@ export default function Logo({ size = "md", ghost = false, className }: LogoProp
         </g>
       </svg>
 
-      {/* Text */}
+      {/* Wordmark — lowercase, tighter tracking, .рф in accent */}
       <span
         className={clsx(
-          "font-light uppercase tracking-[0.12em]",
+          "font-light lowercase tracking-[0.02em]",
           cfg.text,
           ghost ? "text-white/[0.04]" : "text-white"
         )}
         style={{ fontFamily: "var(--font-unbounded), sans-serif" }}
       >
-        АУРАЧИСТОТЫ
-        <span style={{ color: accentColor }}>.</span>
+        аурачистоты<span style={{ color: accentColor }}>.рф</span>
       </span>
     </div>
   );
