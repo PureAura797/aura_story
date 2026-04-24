@@ -364,7 +364,7 @@ const ru: Record<string, string> = {
   "footer.company.4": "Частые вопросы",
   "footer.contact_label": "Экстренная линия",
   "footer.contact_schedule": "Круглосуточно. 365 дней. Москва и МО.",
-  "footer.copyright": "© 2026 АураЧистоты",
+  "footer.copyright": "© 2025 ИП Калиниченко",
   "footer.location": "Москва и Московская область",
 
   // ═══ Emergency Button ═══
