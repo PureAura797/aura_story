@@ -17,6 +17,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -84,6 +85,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (website) return; // honeypot — bot filled hidden field
     setLoading(true);
     try {
       await fetch("/api/submit-form", {
@@ -93,6 +95,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
           form_type: "callback",
           name,
           phone,
+          website,
           source: window.location.href,
           submitted_at: new Date().toISOString(),
         }),
@@ -173,6 +176,8 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                 />
                 {touched.phone && !isPhoneComplete && <p className="text-red-400 text-[11px] mt-1">Введите полный номер</p>}
               </div>
+              {/* Honeypot — invisible to humans, bots fill it */}
+              <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} className="absolute -left-[9999px] opacity-0" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
               <button
                 type="submit"

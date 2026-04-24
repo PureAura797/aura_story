@@ -158,6 +158,12 @@ export async function POST(request: NextRequest) {
 
     const raw = await request.json();
 
+    // ── Honeypot check (hidden field "website" — only bots fill it) ──
+    if (raw.website && String(raw.website).trim().length > 0) {
+      // Silently return success so bot thinks it worked
+      return NextResponse.json({ ok: true, channels: ["honeypot"] });
+    }
+
     // ── Sanitize input ──
     const data: Record<string, string> = {
       name: raw.name ? sanitize(String(raw.name), 100) : "",
